@@ -418,6 +418,45 @@
             </ul>
         </p>
 
+        
+
+        <h2 id="4.6">4.6 Check Past Tickets</h2>
+         <p>Use Case Name: Check my Past tickets</p>
+         <p>Actor: Driver/User</p>
+         <p>Type: Primary</p>
+         <p>Description: The Drivers/Users will be able to view their past ticket records.</p>
+         <table border="1">
+             <thead>
+                 <tr>
+                     <td><p><strong>Actor Actions</strong></p></td>
+                     <td><p><strong>System Responses</strong></p></td>
+                 </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                         <td>1. From the Dashboard, Select "Check My Past Tickets"</td>
+                         <td>2. System serves the Past Tickets page</td>
+                 </tr>
+                 <tr>
+                     <td>3. Actor inputs the information in the text box</td>
+                   
+                    </tr>
+                 <tr>
+                     <td>4. Actor selects the "create account" option</td>
+                     <td>5. System takes the input and shows "Account Created Successfully" message.
+                     </tr>
+ 
+             </tbody>
+         </table>
+         <p>Alternative course of events: </p>
+         <p>
+             <ul>
+                 <li>Search Results are empty, change the search parametes and try again.</li>
+             </ul>
+        </p>
+
+
+
         <h2 id="4.7">4.7 Create Police Account</h2>
          <p>Use Case Name: Create Account for Police</p>
          <p>Actor: Administrator</p>
@@ -432,18 +471,22 @@
              </thead>
              <tbody>
                  <tr>
-                         <td>1. From the Dashboard, Select "create police account"</td>
-                         <td>2. System serves the Admin Create Police Account Page</td>
+                         <td>1. From the Dashboard select "Check My Past Tickets" button</td>
+                         <td>2. System serves the Search Page</td>
                  </tr>
                  <tr>
-                     <td>3. Actor inputs the information in the text box</td>
-                   
-                    </tr>
+                     <td>3. Actor searches using any given search parameter</td>
+                     <td>4. System shows the search results below the form</td>
+                 </tr>
                  <tr>
-                     <td>4. Actor selects the "create account" option</td>
-                     <td>5. System takes the input and shows "Account Created Successfully" message.
-                     </tr>
+                     <td>5. Actor selects the ticket</td>
+                     <td>6. System serves the ticket details page</td>
+                 </tr>
  
+                 <tr>
+                     <td>7. Actor looks at the ticket data to serve his purpose and press dashboard on Navigation bar</td>
+                     <td>8. System serves the dashboard page</td>
+                 </tr>
              </tbody>
          </table>
          <p>Alternative course of events: </p>

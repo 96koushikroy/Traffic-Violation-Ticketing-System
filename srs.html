@@ -86,16 +86,27 @@
         <h1 id="introduction">1. Introduction</h1>
         
         <h2 id="purpose">1.1 Purpose</h2>
-        <p>The product deals with the Traffic violation; where the traffic police fines the driver with this software and the driver can log into the software and check his fine and due date. This is the initial version of the SRS.And has scopes in government in  traffic control centres.</p>
+        <p>The product deals with the Traffic violation; where the traffic police fines the driver with this software and the driver can log into the software and check his fine and due date. Afterwards , he pays his fine to the adminstrator, which can check and resolve all the tickets after the driver pays the fine. This is the initial version of the SRS.And has scopes in government in  traffic control centres.</p>
         
         <h2 id="documentconventions">1.2 Document Conventions</h2>
         <p>While writing this SRS, IEEE SRS formatting was used. All the six sections in this SRS has a bold font , and are larger than the subsections. Whereas, at the same time, the subsections also have bold fonts and are larger than the description of each subsections. The term <b>App</b> is also used throughout this document in short form of Application.</p>
         
         <h2 id="intendedaudience">1.3 Intended Audience and Reading Suggestions</h2>
-        <p>The readers that the document is intended for the developes , marketing staff , testers and users(police and general citizen).This SRS contains the descriptions of the users clases and interface, products, design and implementation Constraints, interfaces of the hardware , software and communications, the useclass of different systems and other non functional requirements.</p>
+        <p>The readers that the document is intended for the developes , marketing staff , testers and users(police, drivers and Adminstrator).This SRS contains the descriptions of the users clases and interface, products, design and implementation Constraints, interfaces of the hardware , software and communications, the useclass of different systems and other non functional requirements.</p>
         
         <h2 id="productscope">1.4 Product Scope</h2>
-        <p>The software deals with the implementation on a smart phone application which allows the traffic police and general citizens to deal with the process of ticketing after the violation of traffic. The police takes a picture of the lisence and vehicle registration plate by the use of the API , and fines the driver using the app; while the driver can log into the software and input the lisence number to check the due date and the fine they have to pay.The goal is to make the whole system of traffic violation ticketing easier than before , for both the police and driver. The benefits of this system is that it's more accessible, the users(driver) will not need to stand in line for hours to get their schedule to pay the fine; whereas the police will not need to keep tracks of papers and send it to the traffic office everyday to get the cases registered, it will get registered automatically.</p>
+        <p>The software deals with the implementation on a smart phone application which allows the traffic police and drivers to deal with the process of ticketing after the violation of traffic. The police takes a picture of the license and vehicle registration plate by the use of the API , and fines the driver using the app; while the driver can log into the software and input the registration ID to check the due date and the fine they have to pay. To pay this fine, the drivers then visit the adminstrator , who can also check the active tickets and resolve them. The goal is to make the whole system of traffic violation ticketing easier than before , for police,driver and also the adminstrator. 
+        The benefits of this system are: 
+        <ul>
+        <li>It's more accessible</li>
+        <li> The driver will not need to stand in line for hours to get their schedule to pay the fine</li>
+        <li>Less paperwork for adminstrator and police</li>
+        <li> Police will not have to go to the adminstrators office to submit the registered cases, as they will be updated automatically.</li>
+        <li> Drivers will not have any chances of losing the paper, since it will be in the app</li>
+        <li> Less time consuming</li>
+        <li> User-Friendly</li>
+        </ul>
+        </p>
         
         <h2 id="reference">1.5 References</h2>
         <p>
@@ -270,11 +281,11 @@
         <br>
         <!-- Use Case Diagrams End-->
 
-        <h2>4.1 Login System</h2>
-        <p>Use Case Name: </p>
-        <p>Actor: </p>
-        <p>Type: </p>
-        <p>Description: </p>
+        <h2 id="4.8">4.8 Check and Resolve Active Tickets</h2>
+        <p>Use Case Name: Check and Resolve Active Tickets</p>
+        <p>Actor: Administrator</p>
+        <p>Type: Primary</p>
+        <p>Description: The purpose of this use case is when the Driver/User needs to resolve their tickets. They need to come to the Administrator who will check and verify his documents and resolve that ticket along with the Ticket Fee.</p>
         <p>Typical Course of Events: </p>
         <table border="1">
             <thead>
@@ -285,12 +296,21 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>1. Go to rds.northsouth.edu</td>
-                    <td>2. System serves the login page</td>
+                    <td>1. From the Dashboard press Resolve active Ticket button</td>
+                    <td>2. System serves the Search Page</td>
                 </tr>
                 <tr>
-                    <td>3. Actor gives user id and password</td>
-                    <td>4. System authenticates user and shows portal page</td>
+                    <td>3. Actor searches using any given search parameter</td>
+                    <td>4. System shows the search results below the form</td>
+                </tr>
+                <tr>
+                    <td>5. Actor selects the ticket</td>
+                    <td>6. System serves the ticket details page</td>
+                </tr>
+
+                <tr>
+                    <td>7. Actor selects the Resolved option and presses update if the Driver has been verified and paid his dues</td>
+                    <td>8. System search page with success message</td>
                 </tr>
             </tbody>
         
@@ -298,12 +318,166 @@
         <p>Alternative course of events: </p>
         <p>
             <ul>
-                <li>Wrong Credential, repromp to login</li>
-                <li>Students barred from advising, Shows message</li>
+                <li>Driver could not be verified, so do not proceed to resolve the ticket.</li>
+                <li>Search Results are empty, change the search parametes and try again.</li>
             </ul>
         </p>
 
+
+        
+        <h2>4.4 View/Edit Profile</h2>
+        <p>Use Case Name: View/ Edit my profile </p>
+        <p>Actor: Police, Driver, Admin</p>
+        <p>Type: Primary</p>
+        <p>Description: Allows the police, Driver and admin to view their profiles, edit it and update accordingly. </p>
+        <p>Typical Course of Events: </p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td><p><strong>Actor Actions</strong></p></td>
+                    <td><p><strong>System Responses</strong></p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. Follow the "Login" course of events.</td>
+                    <td>2. Select 'View/Edit My Profile' option from the dashboard.</td>
+                </tr>
+                <tr>
+                    <td>3.Actor views and/or edits the information</td>
+                    <td>4. Actor selects the "Edit Profile" option.</td>
+                </tr>
+                <tr>
+                    <td>5. Shows page to view and edit profile. </td>
+                    <td>6.Shows page with a message "Successfully Updated" </td>
+                </tr>
+            </tbody>
+        
+        </table>
+        <p>Alternative course of events: </p>
+        <p>
+            <ul>
+                <li>'Password' does not match with the 'Confirm password', shows message</li>
+           </ul>
+        </p>
+
+        <h2 id="4.9">4.9 Check all past Tickets</h2>
+        <p>Use Case Name: Check all past tickets</p>
+        <p>Actor: Administrator</p>
+        <p>Type: Primary</p>
+        <p>Description: The purpose of this use case is to look at previous ticket data just for office and archive purposes.</p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td><p><strong>Actor Actions</strong></p></td>
+                    <td><p><strong>System Responses</strong></p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                        <td>1. From the Dashboard press Check Past Tickets button</td>
+                        <td>2. System serves the Search Page</td>
+                </tr>
+                <tr>
+                    <td>3. Actor searches using any given search parameter</td>
+                    <td>4. System shows the search results below the form</td>
+                </tr>
+                <tr>
+                    <td>5. Actor selects the ticket</td>
+                    <td>6. System serves the ticket details page</td>
+                </tr>
+
+                <tr>
+                    <td>7. Actor looks at the ticket data to serve his purpose and press dashboard on Navigation bar</td>
+                    <td>8. System serves the dashboard page</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Alternative course of events: </p>
+        <p>
+            <ul>
+                <li>Search Results are empty, change the search parametes and try again.</li>
+            </ul>
+
+        <h2 id="4.10">4.10 Add Traffic Violation Ticket</h2>
+        <p>Use Case Name: Add Traffic Violation Ticket</p>
+        <p>Actor: Police</p>
+        <p>Type: Primary</p>
+        <p>Description: The purpose of this use case is when the Police officer detects a Traffic Violation they can issue Traffic Violation Tickets to the driver..</p>
+        <p>Typical Course of Events: </p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td><p><strong>Actor Actions</strong></p></td>
+                    <td><p><strong>System Responses</strong></p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. From the Dashboard press Add License button</td>
+                    <td>2. Mobile phone opens up the camera</td>
+                </tr>
+                <tr>
+                    <td>3. Actor takes the photo and presses the Add No. plate button</td>
+                    <td>4. Mobile phone opens up the camera</td>
+                </tr>
+                <tr>
+                    <td>5. Actor takes the photo and fills up the rest of the form and presses submit</td>
+                    <td>6. System adds the ticket to the database and serves the dashboard page with success message</td>
+                </tr>
+            </tbody>
+        
+        </table>
+        <p>Alternative course of events: </p>
+        <p>
+            <ul>
+                <li>Ticket Due date is invalid, shows a prompt and reenter the due date.</li>
+            </ul>
+        </p>
+
+        <h2>4.5 Checking Active Tickets </h2>
+        <p>Use Case Name:Check my current active tickets </p>
+        <p>Actor: User/Driver</p>
+        <p>Type: Primary </p>
+        <p>Description: This allows the User/ Driver to check if he has any active tickets.</p>
+        <p>Typical Course of Events: </p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td><p><strong>Actor Actions</strong></p></td>
+                    <td><p><strong>System Responses</strong></p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. Follow the 'Login' course of Events.</td>
+                    <td>2. System serves the navigation page.</td>
+                </tr>
+                <tr>
+                    <td>3. Actor selects the "Check My Curerrently Active Tickets"</td>
+                    <td>4. System Shows the Currently Active tickets.</td>
+                </tr>
+                <tr>
+                    <td>5. Actor Selects from the options.</td>
+                    <td>6.System shows the details of the tickte (i.e. How much is due and the date of submitting the fine)</td>
+                </tr>
+            </tbody>
+        
+        </table>
+
+        <p>Alternative course of events: </p>
+        <p>
+            <ul>
+                <li>No Active ticktes available, Shows message</li>
+            </ul>
+        </p>
+
+
+
+
         <h2>4.2 System Feature 2 (and so on)</h2>
+
+
         <!--Non functional Reuiqrements start-->
         <h1 id="othernonfunctionalrequirements">5. Other Nonfunctional Requirements</h1>
         <h2 id="performancerequirements">5.1 Performance Requirements</h2>

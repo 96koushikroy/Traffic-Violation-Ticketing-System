@@ -38,12 +38,12 @@
                     <li><p><a href="">2.7 Assumptions and Dependencies</a></p></li>
                 </ul>
             </li>
-            <li><p><b><a href="">3. External Interface Requirements</a></b></p>
+            <li><p><b><a href="#externalinterfacerequirements">3. External Interface Requirements</a></b></p>
                 <ul>
-                    <li><p><a href="">3.1 User Interfaces</a></p></li>
-                    <li><p><a href="">3.2 Hardware Interfaces</a></p></li>
-                    <li><p><a href="">3.3 Software Interfaces</a></p></li>
-                    <li><p><a href="">3.4 Communications Interfaces</a></p></li>
+                    <li><p><a href="#userinterfaces">3.1 User Interfaces</a></p></li>
+                    <li><p><a href="#hardwareinterfaces">3.2 Hardware Interfaces</a></p></li>
+                    <li><p><a href="#softwareinterfaces">3.3 Software Interfaces</a></p></li>
+                    <li><p><a href="#communicationinterfaces">3.4 Communications Interfaces</a></p></li>
                 </ul>
             </li>
             <li><p><b><a href="#systemfeatures">4. System Features</a></b></p>
@@ -52,13 +52,13 @@
                     <li><p><a href="">4.2 System Feature 2 (and so on)</a></p></li>
                 </ul>
             </li>
-            <li><p><b><a href="">5. Other Nonfunctional Requirements</a></b></p>
+            <li><p><b><a href="#othernonfunctionalrequirements">5. Other Nonfunctional Requirements</a></b></p>
                 <ul>
-                    <li><p><a href="">5.1 Performance Requirements</a></p></li>
-                    <li><p><a href="">5.2 Safety Requirements</a></p></li>
-                    <li><p><a href="">5.3 Security Requirements</a></p></li>
-                    <li><p><a href="">5.4 Software Quality Attributes</a></p></li>
-                    <li><p><a href="">5.5 Business Rules</a></p></li>
+                    <li><p><a href="#performancerequirements">5.1 Performance Requirements</a></p></li>
+                    <li><p><a href="#safetyrequirements">5.2 Safety Requirements</a></p></li>
+                    <li><p><a href="#securityrequirements">5.3 Security Requirements</a></p></li>
+                    <li><p><a href="#softwarequalityattributes">5.4 Software Quality Attributes</a></p></li>
+                    <li><p><a href="#businessrules">5.5 Business Rules</a></p></li>
                 </ul>
             </li>
             <li><p><b><a href="">Other Requirements</a></b></p></li>
@@ -123,9 +123,9 @@
         <h2>2.7 Assumptions and Dependencies</h2>
         <p>&lt;List any assumed factors (as opposed to known facts) that could affect the requirements stated in the SRS. These could include third-party or commercial components that you plan to use, issues around the development or operating environment, or constraints. The project could be affected if these assumptions are incorrect, are not shared, or change. Also identify any dependencies the project has on external factors, such as software components that you intend to reuse from another project, unless they are already documented elsewhere (for example, in the vision and scope document or the project plan).&gt;</p>
         
-        <h1>3. External Interface Requirements</h1>
+        <h1 id="externalinterfacerequirements">3. External Interface Requirements</h1>
         
-        <h2>3.1 User Interfaces</h2>
+        <h2 id="userinterfaces">3.1 User Interfaces</h2>
         <p>The software for the Police and Drivers will be an Android Application, and the software for the admins will be a Web Application. The UI mockups for the mentioned characters are given below.</p>
         <!--UI Screenshot Start-->
 
@@ -235,16 +235,16 @@
         </div>
 
         <!--UI Screenshot End-->
-        <h2>3.2 Hardware Interfaces</h2>
+        <h2 id="hardwareinterfaces">3.2 Hardware Interfaces</h2>
         <p>We will be using the camera of a mobile phone to take photos when the Police will be adding the tickets.</p>
         
-        <h2>3.3 Software Interfaces</h2>
+        <h2 id="softwareinterfaces">3.3 Software Interfaces</h2>
         <p>The software interface can be describe using the figure below: </p>
         <img src="./assets/diagrams/Software_Interface.png" class="center-image" alt="Software Interface">
         <p class="center-text">Fig: Software Interface</p>
 
         
-        <h2>3.4 Communications Interfaces</h2>
+        <h2 id="communicationinterfaces">3.4 Communications Interfaces</h2>
         <p>We will be using REST(REpresentational State Transfer) architectural style for our data transmission services. It mainly depends on the internets HTTP protocol to send and receive data. The data security relies on the Secure Socket Layer(SSL) encryption and Transport Layer Security(TLS).</p>
         
         <h1 id="systemfeatures">4. System Features</h1>
@@ -276,17 +276,27 @@
         <p>REQ-1:</p>
         <p>REQ-2:</p>
         <h2>4.2 System Feature 2 (and so on)</h2>
-        <h1>5. Other Nonfunctional Requirements</h1>
-        <h2>5.1 Performance Requirements</h2>
-        <p>&lt;If there are performance requirements for the product under various circumstances, state them here and explain their rationale, to help the developers understand the intent and make suitable design choices. Specify the timing relationships for real time systems. Make such requirements as specific as possible. You may need to state performance requirements for individual functional requirements or features.&gt;</p>
-        <h2>5.2 Safety Requirements</h2>
-        <p>&lt;Specify those requirements that are concerned with possible loss, damage, or harm that could result from the use of the product. Define any safeguards or actions that must be taken, as well as actions that must be prevented. Refer to any external policies or regulations that state safety issues that affect the product&rsquo;s design or use. Define any safety certifications that must be satisfied.&gt;</p>
-        <h2>5.3 Security Requirements</h2>
-        <p>&lt;Specify any requirements regarding security or privacy issues surrounding use of the product or protection of the data used or created by the product. Define any user identity authentication requirements. Refer to any external policies or regulations containing security issues that affect the product. Define any security or privacy certifications that must be satisfied.&gt;</p>
-        <h2>5.4 Software Quality Attributes</h2>
-        <p>&lt;Specify any additional quality characteristics for the product that will be important to either the customers or the developers. Some to consider are: adaptability, availability, correctness, flexibility, interoperability, maintainability, portability, reliability, reusability, robustness, testability, and usability. Write these to be specific, quantitative, and verifiable when possible. At the least, clarify the relative preferences for various attributes, such as ease of use over ease of learning.&gt;</p>
-        <h2>5.5 Business Rules</h2>
-        <p>&lt;List any operating principles about the product, such as which individuals or roles can perform which functions under specific circumstances. These are not functional requirements in themselves, but they may imply certain functional requirements to enforce the rules.&gt;</p>
+        <!--Non functional Reuiqrements start-->
+        <h1 id="othernonfunctionalrequirements">5. Other Nonfunctional Requirements</h1>
+        <h2 id="performancerequirements">5.1 Performance Requirements</h2>
+        <p>We recommend to use a new generation Android phone to ensure smooth and lag free navigation in the mobile app. The camera of the Android phone for the Police should be of better quality to help during Image Processing. The web application should operate without any performance issues in any normal condition. When making API calls from both the Web app and the mobile app the duration of the response depends on the internet connection latency with the API Server. This factor will also affect when the API server will request the database server for data or manipulate data.</p>
+        <h2 id="safetyrequirements">5.2 Safety Requirements</h2>
+        <p>The information will be encrypted and will be transmitted securely to and from the server. The passwords will be encrypted using salted SHA1 algorithm which will ensure user account security.</p>
+        <h2 id="securityrequirements">5.3 Security Requirements</h2>
+        <p>No specific security requirement just that the users should maintain their own security physically around them to avoid their accounts being compromised.</p>
+        <h2 id="softwarequalityattributes">5.4 Software Quality Attributes</h2>
+        <p>
+            <ul>
+                <li><b>Easy To Use</b></li>
+                <p>The easy to use interfaces can be very helpful for the users to work and navigate through the app.</p>
+                <li><b>Credential Security</b></li>
+                <p>Ensure that the users credentials are throughly secured with secure data transfer protocols and encrypted on the server.</p>
+            </ul>
+        </p>
+        <h2 id="businessrules">5.5 Business Rules</h2>
+        <p>The Administrator Accounts will be created by default. The Administrator in this system is responsible for creating the Police Accounts. So, the Police Accounts mainly function after they have been created by the Administrator. On the other hand the User Accounts are independent of any other users/rules, as they can create the accounts themselves. The tickets that the users will see in their account will show up if the police adds a ticket for that particular users Driving License Number.</p>
+        <!--Non functional Reuiqrements start-->
+
         <h1>6. Other Requirements</h1>
         <p>&lt;Define any other requirements not covered elsewhere in the SRS. This might include database requirements, internationalization requirements, legal requirements, reuse objectives for the project, and so on. Add any new sections that are pertinent to the project.&gt;</p>
         <p>Appendix A: Glossary</p>
@@ -295,6 +305,5 @@
         <p>&lt;Optionally, include any pertinent analysis models, such as data flow diagrams, class diagrams, state-transition diagrams, or entity-relationship diagrams.&gt;</p>
         <p>Appendix C: To Be Determined List</p>
         <p>&lt;Collect a numbered list of the TBD (to be determined) references that remain in the SRS so they can be tracked to closure.&gt;</p>
-        <p>The Rubik's Cube is the perfect gift for any occasion. The famous 3D puzzle can easily be solved with the <a href="https://rubiks-cube-solver.com/" rel="nofollow noopener">online solver</a>, there's no need to memorize algorithms.</p>
     </body>
 </html>

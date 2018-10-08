@@ -290,11 +290,11 @@
         <br>
         <!-- Use Case Diagrams End-->
 
-        <h2>4.1 Login System</h2>
-        <p>Use Case Name: </p>
-        <p>Actor: </p>
-        <p>Type: </p>
-        <p>Description: </p>
+        <h2>4.1 Driver Registration</h2>
+        <p>Use Case Name: Driver Registration</p>
+        <p>Actor: Driver/User</p>
+        <p>Type: Primary</p>
+        <p>Description: Allow drivers to register for application to check their updates regarding traffic violence.</p>
         <p>Typical Course of Events: </p>
         <table border="1">
             <thead>
@@ -305,11 +305,44 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>1. Go to rds.northsouth.edu</td>
+                    <td>1. Go to "Traffic Violence Ticketing System"</td>
+                    <td>2. System serves the "Signup" page</td>
+                </tr>
+                <tr>
+                    <td>3. Enter Full Name, Email, Password and Drivers License No</td>
+                    <td>4. System authenticates user id and information and shows portal page</td>
+                </tr>
+            </tbody>
+        
+        </table>
+        <p>Alternative course of events: </p>
+        <p>
+            <ul>
+                <li>Wrong Credential, back to the signup page. </li>
+                <li>Give message to the system. </li>
+            </ul>
+        </p>
+
+        <h2>4.2 Login System</h2>
+        <p>Use Case Name: Login to actor's account</p>
+        <p>Actor: Police, Driver, Administrator</p>
+        <p>Type: Primary</p>
+        <p>Description: Allow to login to their accounts.</p>
+        <p>Typical Course of Events: </p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td><p><strong>Actor Actions</strong></p></td>
+                    <td><p><strong>System Responses</strong></p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. Go to "Traffic Violation Ticketing System"</td>
                     <td>2. System serves the login page</td>
                 </tr>
                 <tr>
-                    <td>3. Actor gives user id and password</td>
+                    <td>3. Actor gives email id and password</td>
                     <td>4. System authenticates user and shows portal page</td>
                 </tr>
             </tbody>
@@ -319,7 +352,39 @@
         <p>
             <ul>
                 <li>Wrong Credential, repromp to login</li>
-                <li>Students barred from advising, Shows message</li>
+            </ul>
+        </p>
+
+        <h2>4.3 Check User Type</h2>
+        <p>Use Case Name: Check User Type</p>
+        <p>Actor: Police, Driver and Administrator</p>
+        <p>Type: Secondary</p>
+        <p>Description: Check the user whether it's police or driver or administrator.</p>
+        <p>Typical Course of Events: </p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td><p><strong>Actor Actions</strong></p></td>
+                    <td><p><strong>System Responses</strong></p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. Follow the "Login"</td>
+                    <td>2. System shows the user type</td>
+                </tr>
+                <tr>
+                    <td>3. Actor select the user type</td>
+                    <td>4. System shows the dashboard accordingly</td>
+                </tr>
+            </tbody>
+        
+        </table>
+        <p>Alternative course of events: </p>
+        <p>
+            <ul>
+                <li>Wrong Credential, gives a message</li>
+                <li>Goes back to the dashboard</li>
             </ul>
         </p>
 

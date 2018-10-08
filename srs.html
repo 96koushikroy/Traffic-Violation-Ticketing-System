@@ -8,9 +8,11 @@
         <h1>for</h1>
         <h1>Traffic Violation Ticketing System</h1>
         <p>Version 1.0 approved</p>
-        <p>Prepared by &lt;author&gt;</p>
-        <p>&lt;organization&gt;</p>
-        <p>&lt;date created&gt;</p>
+        <p>Prepared by: </p>
+        <p><b>Koushik Roy</b></p>
+        <p><b>Sidratul Muntaha</b></p>
+        <p><b>Nushrat Tanzeem</b></p>
+        <p>Date: 8th October 2018</p>
 
         <!-- TABLE OF CONTENTS START -->
         <h1 id="tableofcontents">Table of Contents</h1>
@@ -70,10 +72,12 @@
                     <li><p><a href="#businessrules">5.5 Business Rules</a></p></li>
                 </ul>
             </li>
+            <!--
             <li><p><b><a href="">Other Requirements</a></b></p></li>
             <li><p><b><a href="">Appendix A: Glossary</a></b></p></li>
             <li><p><b><a href="">Appendix B: Analysis Models</a></b></p></li>
             <li><p><b><a href="">Appendix C: To Be Determined List</a></b></p></li>
+            -->
         </ul>
         <!-- TABLE OF CONTENTS END -->
 
@@ -81,13 +85,21 @@
         <!-- Revision History Starts -->
         <h1 id="revisionhistory">Revision History</h1>
         <table border="1">
+        <thead>
+            <tr>
+                <td><p><strong>Name</strong></p></td>
+                <td><p><strong>Date</strong></p></td>
+                <td><p><strong>Reason For Changes</strong></p></td>
+                <td><p><strong>Version</strong></p></td>
+            </tr>
+        </thead>
         <tbody>
-        <tr>
-        <td><p><strong>Name</strong></p></td>
-        <td><p><strong>Date</strong></p></td>
-        <td><p><strong>Reason For Changes</strong></p></td>
-        <td><p><strong>Version</strong></p></td>
-        </tr>
+            <tr>
+                <td>Initial Revision</td>
+                <td>08-10-2018</td>
+                <td>No changes</td>
+                <td>1.0</td>
+            </tr>
         </tbody>
         </table>
         <!-- Revision History Ends -->
@@ -117,7 +129,7 @@
         </ul>
         </p>
         
-        <h2 id="reference">1.5 References</h2>
+        <h2 id="references">1.5 References</h2>
         <p>
             <ul>
                 <li><a href="https://www.fluidui.com" target="_blank">Fluid UI</a>, which was used for UI wireframing.</li>
@@ -290,7 +302,7 @@
         <br>
         <!-- Use Case Diagrams End-->
 
-        <h2>4.1 Driver Registration</h2>
+        <h2 id="4.1">4.1 Driver Registration</h2>
         <p>Use Case Name: Driver Registration</p>
         <p>Actor: Driver/User</p>
         <p>Type: Primary</p>
@@ -323,7 +335,7 @@
             </ul>
         </p>
 
-        <h2>4.2 Login System</h2>
+        <h2 id="4.2">4.2 Login System</h2>
         <p>Use Case Name: Login to actor's account</p>
         <p>Actor: Police, Driver, Administrator</p>
         <p>Type: Primary</p>
@@ -355,7 +367,7 @@
             </ul>
         </p>
 
-        <h2>4.3 Check User Type</h2>
+        <h2 id="4.3">4.3 Check User Type</h2>
         <p>Use Case Name: Check User Type</p>
         <p>Actor: Police, Driver and Administrator</p>
         <p>Type: Secondary</p>
@@ -371,11 +383,7 @@
             <tbody>
                 <tr>
                     <td>1. Follow the "Login"</td>
-                    <td>2. System shows the user type</td>
-                </tr>
-                <tr>
-                    <td>3. Actor select the user type</td>
-                    <td>4. System shows the dashboard accordingly</td>
+                    <td>2. System checks the user type and returns the dashboard accordingly</td>
                 </tr>
             </tbody>
         
@@ -384,7 +392,6 @@
         <p>
             <ul>
                 <li>Wrong Credential, gives a message</li>
-                <li>Goes back to the dashboard</li>
             </ul>
         </p>
 
@@ -705,9 +712,7 @@
                 <li>Search Result is empty, System will display a message saying no search result returned. So, user should change the search parameters and retry the search.</li>
             </ul>
         </p>
-
-
-        <h2>4.2 System Feature 2 (and so on)</h2>
+        
         <!--Non functional Reuiqrements start-->
         <h1 id="othernonfunctionalrequirements">5. Other Nonfunctional Requirements</h1>
         <h2 id="performancerequirements">5.1 Performance Requirements</h2>
@@ -728,7 +733,7 @@
         <h2 id="businessrules">5.5 Business Rules</h2>
         <p>The Administrator Accounts will be created by default. The Administrator in this system is responsible for creating the Police Accounts. So, the Police Accounts mainly function after they have been created by the Administrator. On the other hand the User Accounts are independent of any other users/rules, as they can create the accounts themselves. The tickets that the users will see in their account will show up if the police adds a ticket for that particular users Driving License Number.</p>
         <!--Non functional Reuiqrements start-->
-
+    <!--
         <h1>6. Other Requirements</h1>
         <p>&lt;Define any other requirements not covered elsewhere in the SRS. This might include database requirements, internationalization requirements, legal requirements, reuse objectives for the project, and so on. Add any new sections that are pertinent to the project.&gt;</p>
         <p>Appendix A: Glossary</p>
@@ -737,5 +742,10 @@
         <p>&lt;Optionally, include any pertinent analysis models, such as data flow diagrams, class diagrams, state-transition diagrams, or entity-relationship diagrams.&gt;</p>
         <p>Appendix C: To Be Determined List</p>
         <p>&lt;Collect a numbered list of the TBD (to be determined) references that remain in the SRS so they can be tracked to closure.&gt;</p>
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">var scrolltotop={setting:{startline:100,scrollto:0,scrollduration:1e3,fadeduration:[500,100]},controlHTML:'<img src="https://i1155.photobucket.com/albums/p559/scrolltotop/arrow19.png" />',controlattrs:{offsetx:5,offsety:5},anchorkeyword:"#top",state:{isvisible:!1,shouldvisible:!1},scrollup:function(){this.cssfixedsupport||this.$control.css({opacity:0});var t=isNaN(this.setting.scrollto)?this.setting.scrollto:parseInt(this.setting.scrollto);t="string"==typeof t&&1==jQuery("#"+t).length?jQuery("#"+t).offset().top:0,this.$body.animate({scrollTop:t},this.setting.scrollduration)},keepfixed:function(){var t=jQuery(window),o=t.scrollLeft()+t.width()-this.$control.width()-this.controlattrs.offsetx,s=t.scrollTop()+t.height()-this.$control.height()-this.controlattrs.offsety;this.$control.css({left:o+"px",top:s+"px"})},togglecontrol:function(){var t=jQuery(window).scrollTop();this.cssfixedsupport||this.keepfixed(),this.state.shouldvisible=t>=this.setting.startline?!0:!1,this.state.shouldvisible&&!this.state.isvisible?(this.$control.stop().animate({opacity:1},this.setting.fadeduration[0]),this.state.isvisible=!0):0==this.state.shouldvisible&&this.state.isvisible&&(this.$control.stop().animate({opacity:0},this.setting.fadeduration[1]),this.state.isvisible=!1)},init:function(){jQuery(document).ready(function(t){var o=scrolltotop,s=document.all;o.cssfixedsupport=!s||s&&"CSS1Compat"==document.compatMode&&window.XMLHttpRequest,o.$body=t(window.opera?"CSS1Compat"==document.compatMode?"html":"body":"html,body"),o.$control=t('<div id="topcontrol">'+o.controlHTML+"</div>").css({position:o.cssfixedsupport?"fixed":"absolute",bottom:o.controlattrs.offsety,right:o.controlattrs.offsetx,opacity:0,cursor:"pointer"}).attr({title:"Scroll to Top"}).click(function(){return o.scrollup(),!1}).appendTo("body"),document.all&&!window.XMLHttpRequest&&""!=o.$control.text()&&o.$control.css({width:o.$control.width()}),o.togglecontrol(),t('a[href="'+o.anchorkeyword+'"]').click(function(){return o.scrollup(),!1}),t(window).bind("scroll resize",function(t){o.togglecontrol()})})}};scrolltotop.init();</script>
+    <noscript>Not seeing a <a href="https://www.scrolltotop.com/">Scroll to Top Button</a>? Go to our FAQ page for more info.</noscript>
+    
     </body>
 </html>

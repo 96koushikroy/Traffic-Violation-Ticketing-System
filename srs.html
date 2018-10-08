@@ -120,25 +120,25 @@
         <h1 id="overalldescription">2. Overall Description</h1>
         
         <h2 id="productperspective">2.1 Product Perspective</h2>
-        <p>&lt;Traffic violation ticketing system is a user friendly application which works under three different parts; police gives tickets using the app, drivers use the app to check their current and previous tickets and administrators use the the app to resolve the tickets. So basically, the purpose behind this app is to make the police ticketing suystem more easier and save the data for future purpose. &gt;</p>
+        <p>Traffic violation ticketing system is a user friendly application which works under three different parts; police gives tickets using the app, drivers use the app to check their current and previous tickets and administrators use the the app to resolve the tickets. So basically, the purpose behind this app is to make the police ticketing suystem more easier and save the data for future purpose.</p>
         
         <h2 id="productfunctions">2.2 Product Functions</h2>
-        <p>&lt;This app is basically for the police and the drivers to main the traffic rules. By using this app the police can easily track the people who violate the traffic rules and they will give a ticket by using this app. Drivers will get the ticket and the other information and due date to resolve the ticket through the app. Car owners can also login for their cars to know the fees , ticket's last date to resolve etc through the app.&gt;</p>
+        <p>This app is basically for the police and the drivers to main the traffic rules. By using this app the police can easily track the people who violate the traffic rules and they will give a ticket by using this app. Drivers will get the ticket and the other information and due date to resolve the ticket through the app. Car owners can also login for their cars to know the fees , ticket's last date to resolve etc through the app.</p>
         
         <h2 id="userclasses">2.3 User Classes and Characteristics</h2>
-        <p>&lt;Administrators can create account for police. They can check/resolve active tickets and will also check all past tickets. They can also edit profile and check the type of user. Drivers will register as driver in the app. They can login to the account. They can check their currently active and past tickets. They can also view or edit the profile. Police officers can add traffic violation tickets for any violation. They can also check the previous reported tickets. They can also view or edit any drivers profile.&gt;</p>
+        <p>Administrators can create account for police. They can check/resolve active tickets and will also check all past tickets. They can also edit profile and check the type of user. Drivers will register as driver in the app. They can login to the account. They can check their currently active and past tickets. They can also view or edit the profile. Police officers can add traffic violation tickets for any violation. They can also check the previous reported tickets. They can also view or edit any drivers profile.</p>
         
         <h2 id="operatingenvironment">2.4 Operating Environment</h2>
         <p>Our Software will maintain a Client and Server System. The Client System will be in form of an mobile App which will require an <b>Android Phone</b> and a Web Application which can be used from any <b>Web Browser</b>. The Android App will be a native app and will be built using <b>Java</b> and the Web App will be built with <b>Javascript</b> using <b>React Framework</b> for front-end and <b>Redux</b> to allow central data storage. The backend will consist of the REST Apis which be developed with <b>Javascript</b> with <b>Node.js Library</b> using the <b>Express Framework</b>. The database system to be used is MongoDB.</p>
         
         <h2 id="designconstraints">2.5 Design and Implementation Constraints</h2>
-        <p>&lt;According to the app design, OCR API is needed for the image of license and number plate of the car taken by the police. So good quality image is required to get the exact results.&gt;</p>
+        <p>According to the app design, OCR API is needed for the image of license and number plate of the car taken by the police. So good quality image is required to get the exact results.</p>
         
         <h2 id="userdocumentation">2.6 User Documentation</h2>
-        <p>&lt;It is an user friendly app but still we will provide user manual with screenshot to help the users.&gt;</p>
+        <p>It is an user friendly app but still we will provide user manual with screenshot to help the users.&gt;</p>
         
         <h2 id="assumptions">2.7 Assumptions and Dependencies</h2>
-        <p>&lt;In our app, for OCR we have used API which will be the third party. So we assume that it will cooperate with almost zero error percentage providing a good result.&gt;</p>
+        <p>In our app, for OCR we have used API which will be the third party. So we assume that it will cooperate with almost zero error percentage providing a good result.</p>
         
         <h1 id="externalinterfacerequirements">3. External Interface Requirements</h1>
         
@@ -315,7 +315,7 @@
         </p>
 
 
-        <h2>4.4 View/Edit Profile</h2>
+        <h2 id="4.4">4.4 View/Edit Profile</h2>
         <p>Use Case Name: View/ Edit my profile </p>
         <p>Actor: Police, Driver, Admin</p>
         <p>Type: Primary</p>
@@ -331,14 +331,15 @@
             <tbody>
                 <tr>
                     <td>1. Follow the "Login" course of events.</td>
-                    <td>3. Select 'View/Edit My Profile' option from the dashboard.</td>
-                    <td>4.Actor views and/or edits the information</td>
-                    <td>5. Actor selects the "Edit Profile" option.</td>
+                    <td>2. Select 'View/Edit My Profile' option from the dashboard.</td>
                 </tr>
                 <tr>
-                    <td>2. Shows page to view and edit profile. </td>
+                    <td>3. Shows page to view and edit profile. </td>
+                    <td>4.Actor views and/or edits the information</td>
+                </tr>
+                <tr>
+                    <td>5. Actor selects the "Edit Profile" option.</td>
                     <td>6.Shows page with a message "Successfully Updated" </td>
-
                 </tr>
             </tbody>
         
@@ -350,11 +351,48 @@
            </ul>
         </p>
 
+        <h2 id="4.5">4.5 Checking Active Tickets </h2>
+        <p>Use Case Name:Check my current active tickets </p>
+        <p>Actor: User/Driver</p>
+        <p>Type: Primary </p>
+        <p>Description: This allows the User/ Driver to check if he has any active tickets.</p>
+        <p>Typical Course of Events: </p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td><p><strong>Actor Actions</strong></p></td>
+                    <td><p><strong>System Responses</strong></p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. Follow the 'Login' course of Events.</td>
 
-
-
-
+                    <td>2. System serves the navigation page.</td>
+                    
+                </tr>
+                <tr>
+                    <td>3. Actor selects the "Check My Curerrently Active Tickets"</td>
+                    <td>4. System Shows the Currently Active tickets.</td>
+                </tr>
+                <tr>
+                    <td>5. Actor Selects from the options.</td>
+                    <td>6.System shows the details of the ticket (i.e. How much is due and the date of submitting the fine)</td>
+                </tr>
+            </tbody>
         
+        </table>
+        <p>Alternative course of events: </p>
+        <p>
+            <ul>
+                <li>No Active ticktes available, Shows message</li>
+            
+            </ul>
+        </p>
+
+
+
+
         <h2 id="4.10">4.10 Add Traffic Violation Ticket</h2>
         <p>Use Case Name: Add Traffic Violation Ticket</p>
         <p>Actor: Police</p>
@@ -392,40 +430,7 @@
         </p>
 
 
-        <h2>4.5 Checking Active Tickets </h2>
-        <p>Use Case Name:Check my current active tickets </p>
-        <p>Actor: User/Driver</p>
-        <p>Type: Primary </p>
-        <p>Description: This allows the User/ Driver to check if he has any active tickets.</p>
-        <p>Typical Course of Events: </p>
-        <table border="1">
-            <thead>
-                <tr>
-                    <td><p><strong>Actor Actions</strong></p></td>
-                    <td><p><strong>System Responses</strong></p></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1. Follow the 'Login' course of Events.</td>
-                    <td>3.Actor selects the "Check My Curerrently Active Tickets"</td>
-                    <td>5. Actor Selects from the options.</td>
-                </tr>
-                <tr>
-                    <td>2. System serves the navigation page.</td>
-                    <td>4. System Shows the Currently Active tickets.</td>
-                    <td>6.System shows the details of the tickte (i.e. How much is due and the date of submitting the fine)</td>
-                </tr>
-            </tbody>
         
-        </table>
-        <p>Alternative course of events: </p>
-        <p>
-            <ul>
-                <li>No Active ticktes available, Shows message</li>
-            
-            </ul>
-        </p>
 
 
 

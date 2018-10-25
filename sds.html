@@ -91,13 +91,61 @@
         <h1 id="2.0">2. Architectural Design</h1>
 
         <h2 id="2.1">2.1 Overall Description</h2>
-        <p>Write about Architectural Design Description. Put some Schematic diagram of the architecture</p>
+        <p>
+            We will be following the client-server model in our system. Here, the client is responsible for sending requests and receive responses from the server. As this is the most common 
+            model when implementing a system so, we opted to go with this one. Along with the Client-Server model we have chosen to follow the Service Oriented Architecture as our Software Design 
+            pattern. This is because our server side is solely based on REST data transfer protocol and the client components will act as the services which will use the REST services to do their 
+            job.
+        </p>
+        <p>A basic schematic for the Service Oriented Architechture for our system is given below: </p>
+        <img src="./assets/sds/diagrams/SOA.png" class="center-image" alt="">
+        <p class="center-text">Fig: A basic block diagram of our Service Oriented Architecture</p>
 
         <h2 id="2.2">2.2 Framework</h2>
-        <p>Write about which framework will be used and why, The Schematic diagram of the framework</p>
+        <p>
+            On the client side of our system we will be using <b>React Library</b> along with the <b>Redux Library</b>. In order to develop client end applications using these libraries
+            we will be needing Javascript and follow the ES6 coding standard. The reason for choosing React and Redux is because due to easier client side state management.
+            Previously it has been seen that managing variables in client end using some vanilla Javascript code can be tedious. So, here come Redux which gives us a centralized
+            data store to use them on our client side. And use React to modularise our app into several components and integrate them whereever we need them in our application.
+            The codes are usually very easy to maintain. React follows the MVVM software architecture. This architechture has four main blocks: 
+            <br><br>
+            a) The View which is the UI layer that the user interacts with. 
+            <br>
+            b) The Model which is the applications data source.
+            <br>
+            c) The ViewModel which has access to the Model and responsible for the business logic.
+            <br>
+            d) The ViewController which has access to the ViewModel and handles the user interactions like input etc.
+            <br><br>
+            <p>A basic schematic of the MVVM architecture is shown below: </p>
+            <img src="./assets/sds/diagrams/MVVM.png" class="center-image" alt="">
+            <p class="center-text">Fig: MVVM architecture Schematic diagram</p>
+            <br><br>
+            For redux we work with three different components provided by the library: 
+            <br><br>
+            a) Store
+            <br>
+            b) Actions
+            <br>
+            c) Dispatcher
+            <br><br>
+            The way these components connect to each other can be represented using the figure below: 
+            <br>
+            <img class="center-image" src="./assets/sds/diagrams/Redux.png" alt="">
+            <p class="center-text">Fig: Communication pattern within a React using the Redux Library</p>
+        </p>
+        <p>On the server side we will be using <b>Express Framework</b> which will be used as the REST API server. This will follow the common Express Application structure.</p>
 
         <h2 id="2.3">2.3 Database</h2>
-        <p>Write about which database we will use and why we will use it. Need to mention about sharding as well.</p>
+        <p>
+            For this system we will be using <b>MySQL</b> as our database service. The reason behind choosing this is due to the having relational data in our application. The API server
+            will serve data from this database server to the client side. The data will be normalized as much as to the third norm form and will be stored as efficiently as possible. 
+        </p>
+        <p>
+            In future if the number of users increase significantly so, there will be an increase in server load as well. In order to prevent it on our database server we can use sharding
+            technique to distribute the load to other servers as well. For example, we can keep the Police data which has high data request frequency on one server which can be more power than 
+            the server where the data for the admin might be kept in.
+        </p>
 
 
 

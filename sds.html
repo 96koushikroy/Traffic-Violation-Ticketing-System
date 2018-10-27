@@ -12,7 +12,7 @@
         <p><b>Koushik Roy</b></p>
         <p><b>Sidratul Muntaha</b></p>
         <p><b>Nushrat Tanzeem</b></p>
-        <p>Date: 8th October 2018</p>
+        <p>Date: 28th October 2018</p>
 
 
         <!-- TABLE OF CONTENTS START -->
@@ -20,31 +20,33 @@
         <ul style="list-style-type:none">
             <li><p><b><a href="#tableofcontents">Table of Contents</a></b></p></li>
             <li><p><b><a href="#revisionhistory">Revision History</a></b></p></li>
-            <li><p><b><a href="#introduction">1. Introduction</a></b></p>
+            <li><p><b><a href="#1.0">1. Introduction</a></b></p>
                 <ul>
-                    <li><p><a href="#purpose">1.1 Description</a></p></li>
-                    <li><p><a href="#documentconventions">1.2 Document Conventions</a></p></li>
-                    <li><p><a href="#references">1.3 References</a></p></li>
+                    <li><p><a href="#1.1">1.1 Description</a></p></li>
+                    <li><p><a href="#1.2">1.2 Document Conventions</a></p></li>
+                    <li><p><a href="#1.3">1.3 References</a></p></li>
                 </ul>
-            <li><p><b><a href="#architecturaldesign">2. Architectural Design</a></b></p>
+            <li><p><b><a href="#2.0">2. Architectural Design</a></b></p>
                 <ul>
                     
-                    <li><p><a href="#purpose">2.1 Overall Descrition</a></p></li>
-                    <li><p><a href="#purpose">2.2 Framework</a></p></li>
-                    <li><p><a href="#purpose">2.3 Database</a></p></li>
+                    <li><p><a href="#2.1">2.1 Overall Descrition</a></p></li>
+                    <li><p><a href="#2.2">2.2 Framework</a></p></li>
+                    <li><p><a href="#2.3">2.3 Database</a></p></li>
                 </ul>
             
-            <li><p><b><a href="#data">3. Data</a></b></p>
+            <li><p><b><a href="#3.0">3. Data</a></b></p>
                 <ul>
-                    <li><p><a href="#purpose">3.1 Description</a></p></li>
-                    <li><p><a href="#purpose">3.2 ER Diagram</a></p></li>
-                    <li><p><a href="#purpose">3.3 ORM</a></p></li>
-                    <li><p><a href="#purpose">3.4 Model Class Diagram</a></p></li>
+                    <li><p><a href="#3.1">3.1 Description</a></p></li>
+                    <li><p><a href="#3.2">3.2 ER Diagram</a></p></li>
+                    <li><p><a href="#3.3">3.3 ORM</a></p></li>
+                    <li><p><a href="#3.4">3.4 Model Class Diagram</a></p></li>
                     <ul>
-                        <li><p><a href="#purpose">3.4.1 Model Class 1 Name</a></p></li>
-                        <li><p><a href="#purpose">3.4.2 Model Class 2 Name</a></p></li>
-                        <li><p><a href="#purpose">3.4.3 Model Class 3 Name</a></p></li>
-                        <li><p><a href="#purpose">3.4.4 Model Class 4 Name</a></p></li>
+                        <li><p><a href="#3.4.1">3.4.1 Police Class</a></p></li>
+                        <li><p><a href="#3.4.2">3.4.2 Driver Class</a></p></li>
+                        <li><p><a href="#3.4.3">3.4.3 Admin Class</a></p></li>
+                        <li><p><a href="#3.4.4">3.4.4 User Class</a></p></li>
+                        <li><p><a href="#3.4.5">3.4.5 Ticket Class</a></p></li>
+                        <li><p><a href="#3.4.6">3.4.6 Ticket_Reasons Class</a></p></li>
                     </ul>
                     
                 </ul>
@@ -67,8 +69,8 @@
         <tbody>
             <tr>
                 <td>Initial Revision</td>
-                <td>xxxx</td>
-                <td>xxxx</td>
+                <td>28-11-2018</td>
+                <td>No Changes</td>
                 <td>1.0</td>
             </tr>
         </tbody>
@@ -169,11 +171,22 @@
         <img src="./assets/sds/diagrams/Model.png" class="center-image" alt="">
         <p class="center-text">Fig: The High Level Model Class diagram</p>
 
-        <h3 id="3.4.1">3.4.1 Model Class 1 Name</h3>
-        <p>Write Model Class 1 Description here</p>
+        <h3 id="3.4.1">3.4.1 Police Class</h3>
+        <p>The Purpose of this class is to manage the data related to the Traffic Police Officer. This may contain attributes like their police id, name etc. This class has a many to many relationship with the Ticket Class beacause many police officers will be able to assign many tickets.</p>
 
-        <h3 id="3.4.2">3.4.2 Model Class 2 Name</h3>
-        <p>Write Model Class 2 Description here</p>
+        <h3 id="3.4.2">3.4.2 Driver Class</h3>
+        <p>The purpoose of this class is to manage the data for the Drivers/Users. This class can contain attributes like the driver id, the car number of the driver, and many other bare minimum information. This class has a many to many relationship with the Ticket Class because many users will be able te get many tickets.</p>
         
+        <h3 id="3.4.3">3.4.3 Admin Class</h3>
+        <p>The purpose of this class is to manage the information regarding the Admin. This class may contain attributes like admin name. This class has a many to many relationship with the Ticket Class because there can be many admins and they will be able to verify many tickets.</p>
+        
+        <h3 id="3.4.4">3.4.4 User Class</h3>
+        <p>The User class is the parent class of the Driver, Police and Admin class because all three of them are <b>Users</b> themselves. The User Class may contain information about the currently logged in User like what type of User is currently logged in, their name, email etc.</p>
+        
+        <h3 id="3.4.5">3.4.5 Ticket Class</h3>
+        <p>The Ticket class is responsible for the data of a ticket. This class may contain attributes like ticket id, ticket reason, the id of the police who issued the ticket and the car number for which the ticket was issued.</p>
+        
+        <h3 id="3.4.6">3.4.3 Ticket Reasons Class</h3>
+        <p>This an abstract class which will be responsible for managing the Ticket Reasons. New Ticket Reasons can be added by the admins everyday and shall contain informations like the Ticket Reason Id and the Ticket Reason details itself.</p>
     </body>
 </html>

@@ -91,7 +91,24 @@
                             <li><p><a href="#5.1.10">5.1.10 Manage Profile</a></p></li>
                     </ul> -->
                 </ul>
-            </li> 
+            </li>
+            
+            <li>
+                <p><b><a href="#6.0">6. Sequence Diagrams</a></b></p>
+                <ul>
+                    <li><p><a href="#6.1">6.1 Login</a></p></li>
+                    <li><p><a href="#6.2">6.2 Driver Registration</a></p></li>
+                    <li><p><a href="#6.3">6.3 Manage Profile</a></p></li>
+                    <li><p><a href="#6.4">6.4 Police Add Ticket</a></p></li>
+                    <li><p><a href="#6.5">6.5 Police Check Ticket</a></p></li>
+                    <li><p><a href="#6.6">6.6 Driver Active Ticket</a></p></li>
+                    <li><p><a href="#6.7">6.7 Driver Past Ticket</a></p></li>
+                    <li><p><a href="#6.8">6.8 Admin Create Police</a></p></li>
+                    <li><p><a href="#6.9">6.9 Admin Modify Ticket</a></p></li>
+                    <li><p><a href="#6.10">6.10 Admin Check Ticket</a></p></li>
+                </ul>
+            </li>
+
         </ul>
                 <!-- TABLE OF CONTENTS END -->
 
@@ -269,6 +286,49 @@
         <p>The high level View class diagram for our system is shown below: </p>
         <img src="./assets/sds/diagrams/ViewClass.png" style="height:80%; width: 25%" class="center-image" alt="">
         <p class="center-text">Fig: The High Level View Class Diagram</p>
+
+        <br>
+        <h1 id="6.0">6. Sequence Diagrams</h1>
+
+        <h2 id="6.1">6.1 Login</h2>
+        <img src="./assets/sds/sequence/Login.png"  class="center-image" alt="">
+        <p class="center-text">Fig: The Sequence Diagram for Login</p>
+
+        <h2 id="6.2">6.2 Driver Registration</h2>
+        <img src="./assets/sds/sequence/DriverRegistration.png"  class="center-image" alt="">
+        <p class="center-text">Fig: The Sequence Diagram for Driver Registration</p>
+
+        <h2 id="6.3">6.3 Manage Profile</h2>
+        <img src="./assets/sds/sequence/ManageProfile.png"  class="center-image" alt="">
+        <p class="center-text">Fig: The Sequence Diagram for Manage Profile</p>
+
+        <h2 id="6.4">6.4 Police Add Ticket</h2>
+        <img src="./assets/sds/sequence/PoliceAddTicket.png"  class="center-image" alt="">
+        <p class="center-text">Fig: The Sequence Diagram for Police to Add Tickets</p>
+
+        <h2 id="6.5">6.5 Police Check Ticket</h2>
+        <img src="./assets/sds/sequence/PoliceCheckTickets.png"  class="center-image" alt="">
+        <p class="center-text">Fig: The Sequence Diagram for Police to Check Tickets</p>
+
+        <h2 id="6.6">6.6 Driver Active Ticket</h2>
+        <img src="./assets/sds/sequence/DriverActiveTickets.png"  class="center-image" alt="">
+        <p class="center-text">Fig: The Sequence Diagram for Drivers to Check Active Tickets</p>
+
+        <h2 id="6.7">6.7 Driver Past Ticket</h2>
+        <img src="./assets/sds/sequence/DriverCheckPastTickets.png"  class="center-image" alt="">
+        <p class="center-text">Fig: The Sequence Diagram for Drivers to Check Past Tickets</p>
+
+        <h2 id="6.8">6.8 Admin Create Police</h2>
+        <img src="./assets/sds/sequence/AdminCreatePoliceAccount.png"  class="center-image" alt="">
+        <p class="center-text">Fig: The Sequence Diagram for Admins to Create Police Accounts</p>
+        
+        <h2 id="6.9">6.9 Admin Modify Ticket</h2>
+        <img src="./assets/sds/sequence/AdminModifyTickets.png"  class="center-image" alt="">
+        <p class="center-text">Fig: The Sequence Diagram for Admins to Modify Tickets</p>
+
+        <h2 id="6.10">6.10 Admin Check Ticket</h2>
+        <img src="./assets/sds/sequence/AdminCheckTickets.png"  class="center-image" alt="">
+        <p class="center-text">Fig: The Sequence Diagram for Admins to Check any Tickets</p>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">var scrolltotop={setting:{startline:100,scrollto:0,scrollduration:1e3,fadeduration:[500,100]},controlHTML:'<img src="https://i1155.photobucket.com/albums/p559/scrolltotop/arrow19.png" />',controlattrs:{offsetx:5,offsety:5},anchorkeyword:"#top",state:{isvisible:!1,shouldvisible:!1},scrollup:function(){this.cssfixedsupport||this.$control.css({opacity:0});var t=isNaN(this.setting.scrollto)?this.setting.scrollto:parseInt(this.setting.scrollto);t="string"==typeof t&&1==jQuery("#"+t).length?jQuery("#"+t).offset().top:0,this.$body.animate({scrollTop:t},this.setting.scrollduration)},keepfixed:function(){var t=jQuery(window),o=t.scrollLeft()+t.width()-this.$control.width()-this.controlattrs.offsetx,s=t.scrollTop()+t.height()-this.$control.height()-this.controlattrs.offsety;this.$control.css({left:o+"px",top:s+"px"})},togglecontrol:function(){var t=jQuery(window).scrollTop();this.cssfixedsupport||this.keepfixed(),this.state.shouldvisible=t>=this.setting.startline?!0:!1,this.state.shouldvisible&&!this.state.isvisible?(this.$control.stop().animate({opacity:1},this.setting.fadeduration[0]),this.state.isvisible=!0):0==this.state.shouldvisible&&this.state.isvisible&&(this.$control.stop().animate({opacity:0},this.setting.fadeduration[1]),this.state.isvisible=!1)},init:function(){jQuery(document).ready(function(t){var o=scrolltotop,s=document.all;o.cssfixedsupport=!s||s&&"CSS1Compat"==document.compatMode&&window.XMLHttpRequest,o.$body=t(window.opera?"CSS1Compat"==document.compatMode?"html":"body":"html,body"),o.$control=t('<div id="topcontrol">'+o.controlHTML+"</div>").css({position:o.cssfixedsupport?"fixed":"absolute",bottom:o.controlattrs.offsety,right:o.controlattrs.offsetx,opacity:0,cursor:"pointer"}).attr({title:"Scroll to Top"}).click(function(){return o.scrollup(),!1}).appendTo("body"),document.all&&!window.XMLHttpRequest&&""!=o.$control.text()&&o.$control.css({width:o.$control.width()}),o.togglecontrol(),t('a[href="'+o.anchorkeyword+'"]').click(function(){return o.scrollup(),!1}),t(window).bind("scroll resize",function(t){o.togglecontrol()})})}};scrolltotop.init();</script>

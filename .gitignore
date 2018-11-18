@@ -1,0 +1,6 @@
+#misc
+.DS_Store
+
+# dependencies
+project/client/node_modules
+project/server/node_modules

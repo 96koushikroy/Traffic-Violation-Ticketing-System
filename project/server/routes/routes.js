@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
+var TicketReasonController = require('../controllers/TicketReasonController')
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send('a data');
-});
+router.post('/api/ticketreason/insert', TicketReasonController.insertTicketReason);
+router.get('/api/ticketreason/view', TicketReasonController.viewAllTicketReasons);
+router.get('/api/ticketreason/view/:id', TicketReasonController.viewOneTicketReasons);
+router.post('/api/ticketreason/update/:id', TicketReasonController.updateTicketReason);
+router.get('/api/ticketreason/delete/:id', TicketReasonController.deleteTicketReason);
 
-router.get('/hello/:id', function(req, res, next) {
-  res.send('your data i: ' + req.params.id);
-});
+
+
 
 module.exports = router;

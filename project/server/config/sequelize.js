@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const TicketReasonModel = require('../models/ticketreason')
-
+const TicketModel = require('../models/ticket')
 var opts = {
     define: {
         //prevent sequelize from pluralizing table names
@@ -24,8 +24,10 @@ const sequelize = new Sequelize('ticketing_system', 'root', '', {
   });
 
 
-  const TicketReason = TicketReasonModel(sequelize, Sequelize);
+const TicketReason = TicketReasonModel(sequelize, Sequelize);
+const Ticket = TicketModel(sequelize, Sequelize);
 
-  module.exports = {
-    TicketReason
-  }
+module.exports = {
+  TicketReason,
+  Ticket
+}

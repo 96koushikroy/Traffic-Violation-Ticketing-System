@@ -1,4 +1,4 @@
-import {ADD_TICKET_REASONS, DELETE_TICKET_REASON, UPDATE_TICKET_REASON, GET_TICKET_REASONS} from './actionType'
+import {ADD_TICKET_REASONS, DELETE_TICKET_REASON, GET_TICKET_REASONS} from './actionType'
 import axios from 'axios'
 
 

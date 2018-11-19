@@ -8,10 +8,11 @@ const Navbar = () => {
             <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-light">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <Link to="/" className="navbar-brand">Blooog</Link>
+                        <Link to="/" className="navbar-brand">Traffic Ticketing System</Link>
                     </div>
                     <ul className="nav navbar-nav">
                         <li className="nav-item"><Link className="nav-link" to="/addticketreason">Add Ticket Reason</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/addticket">Add Ticket</Link></li>
                     </ul>
                 </div>
             </nav>

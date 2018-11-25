@@ -1,12 +1,17 @@
 const Sequelize = require('sequelize')
 const TicketReasonModel = require('../models/ticketreason')
 const TicketModel = require('../models/ticket')
+const UserModel = require('../models/user')
+const PoliceModel = require('../models/police')
+const DriverModel = require('../models/driver')
+
 var opts = {
     define: {
         //prevent sequelize from pluralizing table names
         freezeTableName: true
     }
 }
+
 const sequelize = new Sequelize('ticketing_system', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
@@ -26,8 +31,14 @@ const sequelize = new Sequelize('ticketing_system', 'root', '', {
 
 const TicketReason = TicketReasonModel(sequelize, Sequelize);
 const Ticket = TicketModel(sequelize, Sequelize);
+const Police = PoliceModel(sequelize, Sequelize);
+const User = UserModel(sequelize, Sequelize);
+const Driver = DriverModel(sequelize, Sequelize);
 
 module.exports = {
   TicketReason,
-  Ticket
+  Ticket,
+  Police,
+  User,
+  Driver
 }

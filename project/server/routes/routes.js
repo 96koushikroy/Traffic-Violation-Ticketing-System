@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var TicketReasonController = require('../controllers/TicketReasonController')
 var TicketController = require('../controllers/TicketController')
+var PoliceController = require('../controllers/PoliceController')
+var DriverController = require('../controllers/DriverController')
 
 router.post('/api/ticketreason/insert', TicketReasonController.insertTicketReason);
 router.get('/api/ticketreason/view', TicketReasonController.viewAllTicketReasons);
@@ -14,7 +16,8 @@ router.get('/api/ticket/view/details/:tid', TicketController.viewOneTicket);
 router.get('/api/ticket/delete/:tid', TicketController.deleteOneTicket);
 
 
-
+router.post('/api/police/register', PoliceController.registerPolice);
+router.post('/api/driver/register', DriverController.registerDriver);
 
 
 module.exports = router;

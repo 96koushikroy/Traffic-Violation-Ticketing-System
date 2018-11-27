@@ -7,3 +7,5 @@ export const ADD_TICKET = 'ADD_TICKET';
 export const VIEW_TICKET = 'VIEW_TICKET';
 export const DELETE_TICKET = 'DELETE_TICKET';
 
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+

@@ -1,16 +1,15 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import {loginUser} from '../../Actions/authActions'
+import isEmpty from '../../Validation/isEmpty'
 
 class Login extends Component{
     state = {
         email: '',
         password: '',
-        errors: {}
+        error: {}
     }
 
-
-    
     componentDidMount() {
         if (this.props.auth.isAuthenticated) {
             this.props.history.push('/');
@@ -20,6 +19,9 @@ class Login extends Component{
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
             this.props.history.push('/');
+        }
+        if (nextProps.error) {
+            this.setState({ error: nextProps.error });
         }
     }
 
@@ -41,6 +43,23 @@ class Login extends Component{
     }
 
     render(){
+        const {error} = this.state;
+        const ErrorPanel = () => {
+            if(!isEmpty(error)){
+                return(
+                    <div className="alert alert-dismissible alert-danger">
+                        <strong>Oh snap!</strong> {error.title}
+                    </div>
+                )
+            }
+            else{
+                return(
+                    <div></div>
+                )
+            }
+
+        }
+
         return(
             <div className="container">
                 <div className="row text-center">
@@ -48,6 +67,7 @@ class Login extends Component{
                     <div className="col-md-4">
                         <h5><strong>Login</strong></h5>
                         <br/>
+                        <ErrorPanel />
                         <form onSubmit={this.handleSubmit}>
                             <div className="input-field">
                                 <label htmlFor="email">Email</label>
@@ -73,6 +93,7 @@ class Login extends Component{
 }
 const mapStateToProps = state => ({
     auth: state.auth,
+    error: state.error
 });
   
   export default connect(

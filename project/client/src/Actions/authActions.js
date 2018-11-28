@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { SET_CURRENT_USER } from './actionType'
+import { SET_CURRENT_USER, GET_ERRORS } from './actionType'
 import jwt_decode from 'jwt-decode'
 const setAuthToken = token => {
     if (token) {
@@ -18,6 +18,12 @@ export const loginUser = userData => dispatch => {
         setAuthToken(token)
         const decoded = jwt_decode(token);
         dispatch(setCurrentUser(decoded));
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
     })
 }
 

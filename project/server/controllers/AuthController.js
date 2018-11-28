@@ -17,9 +17,9 @@ exports.login = (req, res) => {
         }
     })
     .then(user => {
-        if(user.length == 0){
+        if(isEmpty(user)){
             error.title = "User not found"
-            res.json(error, 403);
+            res.json(error, 401);
         }
         else{
 
@@ -89,7 +89,7 @@ exports.login = (req, res) => {
                 }
                 else{
                     error.title = "Password did not match"
-                    res.json(error, 403);
+                    res.json(error, 401);
                 }
             
             });
@@ -110,5 +110,11 @@ exports.login = (req, res) => {
             }
         );
     }
+
+    isEmpty = value =>
+        value === undefined ||
+        value === null ||
+        (typeof value === 'object' && Object.keys(value).length === 0) ||
+        (typeof value === 'string' && value.trim().length === 0);
 
 }

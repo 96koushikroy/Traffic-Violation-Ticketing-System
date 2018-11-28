@@ -3,7 +3,6 @@ import axios from 'axios'
 
 
 export const addTicket = (TicketData) => dispatch => {
-    let newData = TicketData
     TicketData.reason_id = TicketData.selectedReason.value;
     delete TicketData.selectedReason;
 

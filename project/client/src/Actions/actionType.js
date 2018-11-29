@@ -9,5 +9,7 @@ export const DELETE_TICKET = 'DELETE_TICKET';
 
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
+export const ADD_POLICE = 'ADD_POLICE';
+
 export const GET_ERRORS = 'GET_ERRORS';
 

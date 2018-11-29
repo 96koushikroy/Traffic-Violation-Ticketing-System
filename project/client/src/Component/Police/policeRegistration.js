@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
-
+import {addPolice} from '../../Actions/policeActions'
+import {connect} from 'react-redux'
+import {NotificationManager} from 'react-notifications';
 
 class PoliceRegistration extends Component{
 
@@ -8,9 +10,32 @@ class PoliceRegistration extends Component{
         email:'',
         password:'',
     }
+    
+    componentDidMount(){
+        const Auth = this.props.auth
+        if(Auth.isAuthenticated == false){
+            this.props.history.push('/login');
+            NotificationManager.error('Please Login to continue..')
+            //error message
+        }
+        else if(Auth.isAuthenticated == true && Auth.user.user_type != 2){
+            this.props.history.push('/');
+            //error message
+            NotificationManager.error('You are not allowed to enter this link')
+        }
+        
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated == false) {
+            this.props.history.push('/login');
+        }
+    }
+
 
     handleSubmit = (e) => {
-
+        e.preventDefault();
+        this.props.addPolice(this.state)
     }
 
     handleChange = (e) => {
@@ -60,4 +85,15 @@ class PoliceRegistration extends Component{
 
 }
 
-export default PoliceRegistration
+const mapStateToProps = (state, ownProps) => {
+    return {
+        police: state.police.polices,
+        error: state.error,
+        auth: state.auth
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    { addPolice }
+  )(PoliceRegistration);

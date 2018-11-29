@@ -10,7 +10,8 @@ import setAuthToken from './Utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 import store from './store'
 import {setCurrentUser, logoutUser} from './Actions/authActions'
-
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer} from 'react-notifications';
 
 
 // check for token
@@ -46,6 +47,7 @@ class App extends Component {
             <Route path="/register/police" component={PoliceRegistration} />
             <Route path="/login" component={Login} />
           </Switch>
+          <NotificationContainer />
         </div>
       </BrowserRouter>
     );

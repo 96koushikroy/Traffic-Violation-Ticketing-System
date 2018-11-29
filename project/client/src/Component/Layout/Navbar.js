@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import { connect } from 'react-redux';
 import {logoutUser} from '../../Actions/authActions'
-
+import {NotificationManager} from 'react-notifications';
 
 class Navbar extends Component {
 
     handleLogout = (e) => {
         e.preventDefault();
         this.props.logoutUser()
+        NotificationManager.info('Logged Out Successfully');
+        
     }
 
     render(){
+        console.log(this.props)
         const { isAuthenticated, user } = this.props.auth;
         
         const LoginButton = () => {

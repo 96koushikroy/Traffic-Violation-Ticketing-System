@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import {loginUser} from '../../Actions/authActions'
 import isEmpty from '../../Validation/isEmpty'
-
 class Login extends Component{
     state = {
         email: '',
@@ -12,13 +11,13 @@ class Login extends Component{
 
     componentDidMount() {
         if (this.props.auth.isAuthenticated) {
-            this.props.history.push('/');
+            this.props.history.goBack();
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
-            this.props.history.push('/');
+            this.props.history.goBack();
         }
         if (nextProps.error) {
             this.setState({ error: nextProps.error });

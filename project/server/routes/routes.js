@@ -18,6 +18,10 @@ router.get('/api/ticket/delete/:tid', TicketController.deleteOneTicket);
 
 
 router.post('/api/police/register', PoliceController.registerPolice);
+router.get('/api/police/view', PoliceController.viewAllPolice)
+router.get('/api/police/view/:pid', PoliceController.viewOnePolice)
+router.get('/api/police/delete/:pid', PoliceController.deletePolice)
+
 router.post('/api/driver/register', DriverController.registerDriver);
 
 

@@ -18,7 +18,6 @@ exports.registerPolice = (req,res) => {
             return res.json(error,400)
         }
         else{
-
             bcrypt.genSalt(10, (err, salt) => {
                 const PoliceObject = req.body
                 let pid = uniqid()
@@ -41,20 +40,63 @@ exports.registerPolice = (req,res) => {
                         .then(data =>{
                             res.json(police,200)                            
                         })
-
                     })
                     .catch(err => {
                         console.log(err)
                     })
-
-                    
-
-                    
 				});
 			});
-
-            
         }
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        error = err
+        res.json(error, 500);
+    })
+}
+
+exports.viewAllPolice = (req,res) => {
+    let error = {}
+
+    Police.findAll()
+    .then(data => {
+        res.json(data, 200);
+    })
+    .catch(err => {
+        error = err
+        res.json(error, 500);
+    })
+
+}
+
+exports.viewOnePolice = (req,res) => {
+    let error = {}
+    Police.findOne({
+        where: {
+            id: req.params.pid
+        }
+    })
+    .then(data => {
+        res.json(data, 200);
+    })
+    .catch(err => {
+        error = err
+        res.json(error, 500);
+    })
+}
+
+
+exports.deletePolice = (req, res) => {
+    let error = {}
+    Police.destroy({ 
+        where: { 
+            id: req.params.pid 
+        } 
+    })
+    .then(data => {
+        res.json(data, 200)
+    })
+    .catch(err => {
+        error = err;
+        res.json(error, 500);
+    })
 }

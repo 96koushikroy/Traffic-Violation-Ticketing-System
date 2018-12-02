@@ -6,6 +6,9 @@ var PoliceController = require('../controllers/PoliceController')
 var DriverController = require('../controllers/DriverController')
 var AuthController = require('../controllers/AuthController')
 
+
+router.get('/api/me', AuthController.getCurrentUserProfile);
+
 router.post('/api/ticketreason/insert', TicketReasonController.insertTicketReason);
 router.get('/api/ticketreason/view', TicketReasonController.viewAllTicketReasons);
 router.get('/api/ticketreason/delete/:id', TicketReasonController.deleteTicketReason);
@@ -26,5 +29,6 @@ router.post('/api/driver/register', DriverController.registerDriver);
 
 
 router.post('/api/login', AuthController.login);
+
 
 module.exports = router;

@@ -1,10 +1,12 @@
 const { User, Police, Driver, Admin } = require('../config/sequelize')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const passport = require('../config/passport')
 const DRIVER_TYPE = 1;
 const POLICE_TYPE = 2;
 const ADMIN_TYPE = 3;
 const secretKey = "someSecretKey";
+const jwt_decode = require('jwt-decode')
 
 exports.login = (req, res) => {
     let error = {}
@@ -117,4 +119,11 @@ exports.login = (req, res) => {
         (typeof value === 'object' && Object.keys(value).length === 0) ||
         (typeof value === 'string' && value.trim().length === 0);
 
+}
+
+
+exports.getCurrentUserProfile = (req, res) => {
+    const userToken = req.headers['authorization']
+    const decoded = jwt_decode(userToken)
+    res.json(decoded, 200)
 }

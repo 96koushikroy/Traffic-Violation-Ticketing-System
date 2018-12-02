@@ -4,6 +4,7 @@ import {getTicketReasons} from '../../Actions/ticketReasonActions'
 import {addTicket, getTickets, deleteTicket} from '../../Actions/ticketActions'
 import Select from 'react-select'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
 
 class AddTicket extends Component{
     state = {
@@ -52,7 +53,11 @@ class AddTicket extends Component{
     }
 
     handleDelete = (e) => {
-        this.props.deleteTicket(e.target.id)
+        axios.get('/api/me')
+        .then(res => {
+            console.log('chkchk',res.data)
+        })
+        //this.props.deleteTicket(e.target.id)
     }
 
     render(){

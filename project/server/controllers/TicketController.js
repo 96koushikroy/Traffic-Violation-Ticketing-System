@@ -1,5 +1,6 @@
 const { Ticket } = require('../config/sequelize')
-
+const isEmpty = require('../Validation/isEmpty')
+const jwt_decode = require('jwt-decode')
 
 exports.insertTicket = (req,res) => {
     Ticket.create(req.body)
@@ -7,13 +8,23 @@ exports.insertTicket = (req,res) => {
     .catch(err => console.log(err))
 }
 
-exports.viewAllTickets = (req, res) => {
-    Ticket.findAll({
-        where: {
-            police_id: req.params.uid
-        }
-    })
-    .then(tickets => res.json(tickets, 200));
+exports.viewPoliceTickets = (req, res) => {
+
+    const userToken = req.headers['authorization']
+    error = {}
+    if(isEmpty(userToken)){
+        error.title = "User not authorized"
+        res.json(error, 401);
+    }
+    else{
+        const decoded = jwt_decode(userToken)
+        Ticket.findAll({
+            where: {
+                police_id: decoded.id
+            }
+        })
+        .then(tickets => res.json(tickets, 200));
+    }
 }
 
 exports.viewOneTicket = (req, res) => {

@@ -1,4 +1,4 @@
-import {ADD_TICKET, GET_TICKETS, VIEW_TICKET, DELETE_TICKET} from './actionType'
+import {ADD_TICKET, GET_TICKETS, VIEW_TICKET, DELETE_TICKET, GET_ERRORS} from './actionType'
 import axios from 'axios'
 
 
@@ -31,11 +31,17 @@ export const addTicket = (TicketData) => dispatch => {
 }
 
 export const getTickets = () => dispatch => {
-    axios.get('/api/ticket/view/42')
+    axios.get('/api/ticket/police/view')
     .then(res =>{
         dispatch({
             type: GET_TICKETS,
             payload: res.data
+        })
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
         })
     })
     

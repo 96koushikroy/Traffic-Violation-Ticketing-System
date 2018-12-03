@@ -99,3 +99,18 @@ const mapStateToProps = state => ({
     mapStateToProps,
     { loginUser }
   )(Login);
+
+  /*
+  
+  auth:
+    isAuthenticated: true
+    user:
+        email: "96koushikroy@gmail.com"
+        exp: 1543865295
+        iat: 1543861695
+        id: "5gt9n4joxfoz8z"
+        name: "Koushik Roy"
+        user_type: 2
+
+
+*/

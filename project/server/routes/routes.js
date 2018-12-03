@@ -15,7 +15,7 @@ router.get('/api/ticketreason/delete/:id', TicketReasonController.deleteTicketRe
 
 
 router.post('/api/ticket/insert', TicketController.insertTicket);
-router.get('/api/ticket/view/:uid', TicketController.viewAllTickets);
+router.get('/api/ticket/police/view', TicketController.viewPoliceTickets);
 router.get('/api/ticket/view/details/:tid', TicketController.viewOneTicket);
 router.get('/api/ticket/delete/:tid', TicketController.deleteOneTicket);
 

@@ -14,7 +14,6 @@ class Navbar extends Component {
     }
 
     render(){
-        console.log(this.props)
         const { isAuthenticated, user } = this.props.auth;
         
         const LoginButton = () => {
@@ -22,25 +21,23 @@ class Navbar extends Component {
         }
 
         const LogoutButton = () => {
-            return (<li className="nav-item"><a className="nav-link" href="" onClick={this.handleLogout}>Logout</a></li>)
+            return (<li className="nav-item"><Link className="nav-link" to="" onClick={this.handleLogout}>Logout</Link></li>)
         }
         
         const UserProfile = () => {
             return (<li className="nav-item"><Link className="nav-link" to="" >{user.name}</Link></li>)
         }
 
-        const AuthNav = () => {
-            if(isAuthenticated){
-                return (
-                    <div>
-                        <UserProfile />
-                        <LogoutButton />
-                    </div>
-                )
-            }
-            else{
-                return <LoginButton />
-            }
+        const AddTicket = () => {
+            return (<li className="nav-item"><Link className="nav-link" to="/addticket">Add Ticket</Link></li>)
+        }
+
+        const AddTicketReason = () => {
+            return (<li className="nav-item"><Link className="nav-link" to="/addticketreason">Add Ticket Reason</Link></li>)
+        }
+
+        const RegisterPolice = () => {
+            return (<li className="nav-item"><Link className="nav-link" to="/register/police">Police Registration</Link></li>)
         }
 
         return(
@@ -51,11 +48,24 @@ class Navbar extends Component {
                             <Link to="/" className="navbar-brand">Traffic Ticketing System</Link>
                         </div>
                         <ul className="nav navbar-nav">
-                            
-                            <AuthNav />
-                            <li className="nav-item"><Link className="nav-link" to="/addticketreason">Add Ticket Reason</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/addticket">Add Ticket</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/register/police">Police Registration</Link></li>
+                            {isAuthenticated && user.user_type == 2 &&
+                                <AddTicket />
+                            }
+                            {isAuthenticated && user.user_type == 3 &&
+                                <AddTicketReason />
+                            }
+                            {isAuthenticated && user.user_type == 3 &&
+                                <RegisterPolice />
+                            }
+                            {isAuthenticated &&
+                                    <UserProfile />
+                            }
+                            {isAuthenticated ?  (
+                                <LogoutButton />
+                                ):(
+                                    <LoginButton />
+                                )
+                            }
                         </ul>
                     </div>
                 </nav>

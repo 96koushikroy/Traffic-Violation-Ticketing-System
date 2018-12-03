@@ -7,6 +7,7 @@ const POLICE_TYPE = 2;
 const ADMIN_TYPE = 3;
 const secretKey = "someSecretKey";
 const jwt_decode = require('jwt-decode')
+const isEmpty = require('../Validation/isEmpty')
 
 exports.login = (req, res) => {
     let error = {}
@@ -24,11 +25,8 @@ exports.login = (req, res) => {
             res.json(error, 401);
         }
         else{
-
-
             bcrypt.compare(password, user.password).then(match => {
                 if(match == true){
-                    //console.log(user)
                     let dddd = {};
                     if(user.user_type == DRIVER_TYPE){
                         Driver.findOne({
@@ -44,7 +42,6 @@ exports.login = (req, res) => {
                                 'email': user.email,
                                 'user_type': user.user_type
                             }
-                            
                             sendJWT(dddd);
                         })
                     }
@@ -81,19 +78,13 @@ exports.login = (req, res) => {
                                 'user_type': user.user_type
                             }
                             sendJWT(dddd);
-                        })
-                        
+                        })   
                     }
-
-                    
-
-
                 }
                 else{
                     error.title = "Password did not match"
                     res.json(error, 401);
                 }
-            
             });
 
         }
@@ -113,17 +104,30 @@ exports.login = (req, res) => {
         );
     }
 
-    isEmpty = value =>
-        value === undefined ||
-        value === null ||
-        (typeof value === 'object' && Object.keys(value).length === 0) ||
-        (typeof value === 'string' && value.trim().length === 0);
+    
 
 }
 
 
 exports.getCurrentUserProfile = (req, res) => {
     const userToken = req.headers['authorization']
-    const decoded = jwt_decode(userToken)
-    res.json(decoded, 200)
+    error = {}
+    if(isEmpty(userToken)){
+        error.title = "User not authorized"
+        res.json(error, 401);
+    }
+    else{
+        const decoded = jwt_decode(userToken)
+        /*
+        {   
+            id: '5gt9n4joxfoz8z',
+            name: 'Koushik Roy',
+            email: '96koushikroy@gmail.com',
+            user_type: 2,
+            iat: 1543859699,
+            exp: 1543863299 
+        }        
+        */
+        res.json(decoded, 200)
+    }
 }

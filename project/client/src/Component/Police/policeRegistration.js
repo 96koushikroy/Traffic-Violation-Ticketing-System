@@ -18,7 +18,7 @@ class PoliceRegistration extends Component{
             NotificationManager.error('Please Login to continue..')
             //error message
         }
-        else if(Auth.isAuthenticated == true && Auth.user.user_type != 2){
+        else if(Auth.isAuthenticated == true && Auth.user.user_type != 3){
             this.props.history.push('/');
             //error message
             NotificationManager.error('You are not allowed to enter this link')
@@ -36,6 +36,12 @@ class PoliceRegistration extends Component{
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.addPolice(this.state)
+        NotificationManager.success('Police Added Successfully');
+        this.setState({
+            name:'',
+            email:'',
+            password:''
+        });
     }
 
     handleChange = (e) => {

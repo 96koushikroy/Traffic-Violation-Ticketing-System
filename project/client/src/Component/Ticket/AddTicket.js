@@ -4,7 +4,9 @@ import {getTicketReasons} from '../../Actions/ticketReasonActions'
 import {addTicket, getTickets, deleteTicket} from '../../Actions/ticketActions'
 import Select from 'react-select'
 import {Link} from 'react-router-dom'
-import axios from 'axios'
+import {NotificationManager} from 'react-notifications';
+import isEmpty from '../../Validation/isEmpty'
+
 
 class AddTicket extends Component{
     state = {
@@ -18,11 +20,26 @@ class AddTicket extends Component{
     }
 
     componentDidMount(){
-        this.setState({
-            police_id: 42
-        });
-        this.props.getTicketReasons();
-        this.props.getTickets();
+        if (this.props.auth.isAuthenticated == false) {
+            this.props.history.push('/login');
+            NotificationManager.error('Please Login to continue..')
+        }
+        else if(this.props.auth.user.user_type != 2){
+            this.props.history.push('/');
+            NotificationManager.error('You are not allowed to enter this link')
+        }
+        else if(this.props.auth.isAuthenticated && this.props.auth.user.user_type == 2){    
+            this.setState({
+                police_id: this.props.auth.user.id
+            });
+            this.props.getTicketReasons();
+            this.props.getTickets();
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated == false) {
+            this.props.history.push('/login');
+        }
     }
 
     handleChange = (e) => {
@@ -53,11 +70,10 @@ class AddTicket extends Component{
     }
 
     handleDelete = (e) => {
-        axios.get('/api/me')
-        .then(res => {
-            console.log('chkchk',res.data)
-        })
-        //this.props.deleteTicket(e.target.id)
+        let rr = window.confirm("Are you sure to delete this!?");
+        if (rr == true) {
+            this.props.deleteTicket(e.target.id)
+        }
     }
 
     render(){
@@ -67,20 +83,44 @@ class AddTicket extends Component{
                 options.push({value: reasons.id, label: reasons.reason_name})
             )
         })
+        const Tickets = this.props.tickets;
+        const TicketList = !isEmpty(Tickets) ? (
+            <table className="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">Ticket ID</th>
+                    <th scope="col">Car Number</th>
+                    <th scope="col">Issue Date</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">View Ticket?</th>
+                    <th scope="col">Delete Ticket?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Tickets.map((ticket)=>{
+                        return(
+                            <tr key={ticket.id}>
+                                <td>{ticket.id}</td>
+                                <td>{ticket.car_number}</td>
+                                <td>{ticket.issue_date}</td>
+                                <td>{ticket.amount}</td>
+                                <td>{ticket.status}</td>
+                                <td><Link to={"/ticket/view/" + ticket.id}><button className="btn btn-danger">View</button></Link></td>
+                                <td><button className="btn btn-danger" id={ticket.id} onClick={this.handleDelete}>Delete</button></td>
+                            </tr>
+                        )
+                    })}            
+                    </tbody>
+                </table>
 
-        const TicketList = this.props.tickets.map((ticket)=>{
-            return(
-                <tr key={ticket.id}>
-                    <td>{ticket.id}</td>
-                    <td>{ticket.car_number}</td>
-                    <td>{ticket.issue_date}</td>
-                    <td>{ticket.amount}</td>
-                    <td>{ticket.status}</td>
-                    <td><Link to={"/ticket/view/" + ticket.id}><button className="btn btn-danger">View</button></Link></td>
-                    <td><button className="btn btn-danger" id={ticket.id} onClick={this.handleDelete}>Delete</button></td>
-                </tr>
-            )
-        })
+
+        ) :
+        (
+            <p>No Data Available..</p>
+        )
+        
+        
 
 
 
@@ -139,23 +179,8 @@ class AddTicket extends Component{
                 <div className="row text-center">
                         <div className="col-md-1"></div>
                         <div className="col-md-10">
-                        <h5>My Tickets</h5>
-                        <table className="table table-hover">
-                            <thead>
-                                <tr>
-                                <th scope="col">Ticket ID</th>
-                                <th scope="col">Car Number</th>
-                                <th scope="col">Issue Date</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">View Ticket?</th>
-                                <th scope="col">Delete Ticket?</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {TicketList}
-                            </tbody>
-                        </table>
+                            <h5>My Tickets</h5>
+                            {TicketList}
                         </div>
                         <div className="col-md-1"></div>
                     </div>
@@ -167,7 +192,9 @@ class AddTicket extends Component{
 const mapStateToProps = (state, ownProps) => {
     return {
         reasons: state.ticketReason.reasons,
-        tickets: state.ticket.tickets
+        tickets: state.ticket.tickets,
+        errors: state.error,
+        auth: state.auth
     }
 }
 export default connect(mapStateToProps, {getTicketReasons,addTicket,getTickets,deleteTicket})(AddTicket);

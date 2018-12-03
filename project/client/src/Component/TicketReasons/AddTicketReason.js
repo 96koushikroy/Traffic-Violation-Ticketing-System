@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {addTicketReason,getTicketReasons, deleteTicketReason} from '../../Actions/ticketReasonActions'
+import isEmpty from '../../Validation/isEmpty'
+import {NotificationManager} from 'react-notifications';
 class AddTicketReason extends Component{
     state = {
         reason_name: '',
@@ -9,8 +11,23 @@ class AddTicketReason extends Component{
     }
     
     componentDidMount(){
+        if (this.props.auth.isAuthenticated == false) {
+            this.props.history.push('/login');
+            NotificationManager.error('Please Login to continue..')
+        }
+        else if(this.props.auth.user.user_type != 3){
+            this.props.history.push('/');
+            NotificationManager.error('You are not allowed to enter this link')
+        }
+        else{
+            this.props.getTicketReasons();
+        }
+    }
 
-        this.props.getTicketReasons();
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated == false) {
+            this.props.history.push('/login');
+        }
     }
 
     handleChange = (e) => {
@@ -40,17 +57,36 @@ class AddTicketReason extends Component{
     }
 
     render(){
-
-        const TicketList = this.props.reasons.map((reasons)=>{
-            return(
-                <tr key={reasons.id}>
-                    <td>{reasons.id}</td>
-                    <td>{reasons.reason_name}</td>
-                    <td>{reasons.reason_details}</td>
-                    <td><button className="btn btn-danger" id={reasons.id} onClick={this.handleDelete}>Delete</button></td>
+        const Reasons = this.props.reasons;
+        const TicketList = !isEmpty(Reasons) ?
+        (
+            <table className="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">Ticket Reason ID</th>
+                <th scope="col">Ticket Reason Name</th>
+                <th scope="col">Ticket Reason Details</th>
+                <th scope="col">Delete Ticket?</th>
                 </tr>
-            )
-        })
+            </thead>
+            <tbody>
+            {this.props.reasons.map((reasons)=>{
+                return(
+                    <tr key={reasons.id}>
+                        <td>{reasons.id}</td>
+                        <td>{reasons.reason_name}</td>
+                        <td>{reasons.reason_details}</td>
+                        <td><button className="btn btn-danger" id={reasons.id} onClick={this.handleDelete}>Delete</button></td>
+                    </tr>
+                )
+            })}
+            </tbody>
+            </table>
+        ):
+        (
+            <p>Loading Data</p>
+        )
+        
 
         return(
             <div className="container">
@@ -82,19 +118,8 @@ class AddTicketReason extends Component{
                     <div className="col-md-3"></div>
                     <div className="col-md-6">
                     <h5>Ticket Reasons List</h5>
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                            <th scope="col">Ticket Reason ID</th>
-                            <th scope="col">Ticket Reason Name</th>
-                            <th scope="col">Ticket Reason Details</th>
-                            <th scope="col">Delete Ticket?</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {TicketList}
-                        </tbody>
-                    </table>
+                    {TicketList}
+                    
                     </div>
                     <div className="col-md-3"></div>
                 </div>
@@ -109,7 +134,9 @@ class AddTicketReason extends Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        reasons: state.ticketReason.reasons
+        reasons: state.ticketReason.reasons,
+        errors: state.errors,
+        auth: state.auth
     }
 }
 

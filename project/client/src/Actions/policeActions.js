@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {ADD_POLICE} from './actionType'
+import {ADD_POLICE, GET_ALL_POLICE} from './actionType'
 
 
 export const addPolice = (PoliceData) => dispatch => {
@@ -8,6 +8,18 @@ export const addPolice = (PoliceData) => dispatch => {
     .then(res => {
         dispatch({
             type: ADD_POLICE,
+            payload: res.data
+        })
+    })
+}
+
+
+export const getAllPolice = () => dispatch => {
+    axios
+    .get('/api/police/view')
+    .then(res => {
+        dispatch({
+            type: GET_ALL_POLICE,
             payload: res.data
         })
     })

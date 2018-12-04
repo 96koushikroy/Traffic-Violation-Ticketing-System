@@ -40,6 +40,10 @@ class Navbar extends Component {
             return (<li className="nav-item"><Link className="nav-link" to="/register/police">Police Registration</Link></li>)
         }
 
+        const ViewAllPolice = () => {
+            return (<li className="nav-item"><Link className="nav-link" to="/view/police">Police List</Link></li>)
+        }
+
         return(
             <div>
                 <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-light">
@@ -48,6 +52,7 @@ class Navbar extends Component {
                             <Link to="/" className="navbar-brand">Traffic Ticketing System</Link>
                         </div>
                         <ul className="nav navbar-nav">
+
                             {isAuthenticated && user.user_type == 2 &&
                                 <AddTicket />
                             }
@@ -56,6 +61,9 @@ class Navbar extends Component {
                             }
                             {isAuthenticated && user.user_type == 3 &&
                                 <RegisterPolice />
+                            }
+                            {isAuthenticated && user.user_type == 3 &&
+                                <ViewAllPolice />
                             }
                             {isAuthenticated &&
                                     <UserProfile />

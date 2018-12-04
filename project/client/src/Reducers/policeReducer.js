@@ -1,4 +1,4 @@
-import {ADD_POLICE} from '../Actions/actionType'
+import {ADD_POLICE, GET_ALL_POLICE} from '../Actions/actionType'
 
 const initState = {
     name:'',
@@ -15,6 +15,11 @@ const policeReducer = (state = initState, action) => {
              return{
                  ...state,
                  polices: dd
+             }
+        case GET_ALL_POLICE:
+             return{
+                 ...state,
+                 polices: action.payload
              }
         default: 
              return state

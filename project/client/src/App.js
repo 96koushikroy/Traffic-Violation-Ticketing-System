@@ -6,6 +6,7 @@ import ViewTicket from './Component/Ticket/ViewTicket'
 import Navbar from './Component/Layout/Navbar'
 import PoliceRegistration from './Component/Police/policeRegistration'
 import Login from './Component/Authentication/Login'
+import ViewAllPolice from './Component/Police/viewAllPolice' 
 import setAuthToken from './Utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 import store from './store'
@@ -46,6 +47,7 @@ class App extends Component {
             <Route path="/ticket/view/:tid" component={ViewTicket} />
             <Route path="/register/police" component={PoliceRegistration} />
             <Route path="/login" component={Login} />
+            <Route path="/view/police" component={ViewAllPolice} />
           </Switch>
           <NotificationContainer />
         </div>

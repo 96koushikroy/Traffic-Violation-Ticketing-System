@@ -1,11 +1,52 @@
-const { Ticket } = require('../config/sequelize')
+const { Ticket, Driver } = require('../config/sequelize')
 const isEmpty = require('../Validation/isEmpty')
 const jwt_decode = require('jwt-decode')
 
 exports.insertTicket = (req,res) => {
-    Ticket.create(req.body)
-    .then(data => res.json(data, 200))
-    .catch(err => console.log(err))
+    const userToken = req.headers['authorization']
+    error = {}
+    if(isEmpty(userToken)){
+        error.title = "User not authorized"
+        res.json(error, 401);
+    }
+    else{
+        const decoded = jwt_decode(userToken)
+        if(decoded.user_type == 2){
+            const Data = req.body;
+            const Car_Number = Data.car_number;
+
+            Driver.findOne({
+                where: {
+                    car_number: Car_Number
+                },
+                attributes: ['id']
+            })
+            .then(DriverId => {
+                if(isEmpty(DriverId)){
+                    error.title = "Driver Not Found"
+                    res.json(error, 401);
+                }
+                else{
+                    Data.driver_id = DriverId
+                    Ticket.create(Data)
+                    .then(data => res.json(data, 200))
+                    .catch(err => console.log(err))
+                }
+                
+            })
+            .catch(err => {
+                error.title = "User not authorized"
+                res.json(error, 401);
+            })
+
+            
+        }
+        else{
+
+        }
+    }
+
+    
 }
 
 exports.viewPoliceTickets = (req, res) => {

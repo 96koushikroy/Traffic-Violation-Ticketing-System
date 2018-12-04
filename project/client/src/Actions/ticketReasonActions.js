@@ -26,6 +26,7 @@ export const getTicketReasons = () => dispatch => {
 }
 
 export const deleteTicketReason = (id) => dispatch => {
+    
     axios.get(`/api/ticketreason/delete/${id}`)
     .then(res =>{
         dispatch({

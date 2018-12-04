@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getAllPolice} from '../../Actions/policeActions'
+import {getAllPolice, deletePolice} from '../../Actions/policeActions'
 import {NotificationManager} from 'react-notifications';
 import isEmpty from '../../Validation/isEmpty'
+import {Link} from 'react-router-dom'
 
 class ViewAllPolice extends Component {
     state = {
@@ -35,19 +36,25 @@ class ViewAllPolice extends Component {
         }
     }
 
+    handleDelete = (e) => {
+        let rr = window.confirm("Are you sure to delete this!?");
+        if (rr == true) {
+            this.props.deletePolice(e.target.id)
+            NotificationManager.success('Deleted Successfully!')
+        }
+    }
+
     render(){
-        const Polices = this.props.police.polices;
+        const Polices = this.props.police;
         const PoliceList = !isEmpty(Polices) ? (
             Polices.map((police) => {
                 return(
-
-
                     <div className="card" key={police.id}>
                     <div className="card-body">
                         <h4 className="card-title">{police.name}</h4>
                         <h6 className="card-subtitle mb-2 text-muted">{police.email}</h6>
-                        <a href="#" className="card-link btn btn-outline-primary">View</a>
-                        <a href="#" className="card-link btn btn-outline-danger">Delete</a>
+                        <Link to={"/police/view/" + police.id} className="card-link btn btn-outline-primary">View</Link>
+                        <button onClick={this.handleDelete} id={police.id}  className="card-link btn btn-outline-danger">Delete</button>
                     </div>
                     </div>
                 )
@@ -87,8 +94,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         errors: state.error,
         auth: state.auth,
-        police: state.police
+        police: state.police.polices
     }
 }
 
-export default connect(mapStateToProps,{getAllPolice})(ViewAllPolice)
+export default connect(mapStateToProps,{getAllPolice, deletePolice})(ViewAllPolice)

@@ -41,7 +41,7 @@ class Navbar extends Component {
         }
 
         const ViewAllPolice = () => {
-            return (<li className="nav-item"><Link className="nav-link" to="/view/police">Police List</Link></li>)
+            return (<li className="nav-item"><Link className="nav-link" to="/police/view">Police List</Link></li>)
         }
 
         return(

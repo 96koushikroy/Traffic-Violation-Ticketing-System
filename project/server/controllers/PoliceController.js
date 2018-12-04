@@ -56,8 +56,6 @@ exports.registerPolice = (req,res) => {
 
 exports.viewAllPolice = (req,res) => {
     let error = {}
-
-    console.log('hello world')
     Police.findAll()
     .then(data => {
         res.json(data, 200);

@@ -120,11 +120,6 @@ class AddTicket extends Component{
             <p>No Data Available..</p>
         )
         
-        
-
-
-
-
         return(
             <div className="container">
                 <div className="row text-center">

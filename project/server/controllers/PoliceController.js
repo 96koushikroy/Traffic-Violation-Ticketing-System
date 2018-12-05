@@ -15,7 +15,7 @@ exports.registerPolice = (req,res) => {
         if(police.length != 0){
             console.log(police)
             error.title = "User Already Exists"
-            return res.json(error,400)
+            return res.json(error, 401)
         }
         else{
             bcrypt.genSalt(10, (err, salt) => {
@@ -56,8 +56,6 @@ exports.registerPolice = (req,res) => {
 
 exports.viewAllPolice = (req,res) => {
     let error = {}
-
-    console.log('hello world')
     Police.findAll()
     .then(data => {
         res.json(data, 200);

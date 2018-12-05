@@ -35,8 +35,7 @@ class PoliceRegistration extends Component{
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.addPolice(this.state)
-        NotificationManager.success('Police Added Successfully');
+        this.props.addPolice(this.state);
         this.setState({
             name:'',
             email:'',

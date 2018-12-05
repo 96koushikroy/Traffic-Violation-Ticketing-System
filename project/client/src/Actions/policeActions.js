@@ -1,5 +1,6 @@
 import axios from 'axios'
-import {ADD_POLICE, GET_ALL_POLICE, VIEW_POLICE, DELETE_POLICE} from './actionType'
+import {ADD_POLICE, GET_ALL_POLICE, VIEW_POLICE, DELETE_POLICE, GET_ERRORS} from './actionType'
+import {NotificationManager} from 'react-notifications';
 
 
 export const addPolice = (PoliceData) => dispatch => {
@@ -10,6 +11,15 @@ export const addPolice = (PoliceData) => dispatch => {
             type: ADD_POLICE,
             payload: res.data
         })
+        NotificationManager.success('Police Added Successfully');
+        
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+        NotificationManager.error(err.response.data.title);
     })
 }
 

@@ -14,5 +14,7 @@ export const GET_ALL_POLICE = 'GET_ALL_POLICE';
 export const VIEW_POLICE = 'VIEW_POLICE';
 export const DELETE_POLICE = 'DELETE_POLICE';
 
+export const ADD_DRIVER = 'ADD_DRIVER';
+
 export const GET_ERRORS = 'GET_ERRORS';
 

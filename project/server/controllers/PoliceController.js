@@ -15,7 +15,7 @@ exports.registerPolice = (req,res) => {
         if(police.length != 0){
             console.log(police)
             error.title = "User Already Exists"
-            return res.json(error,400)
+            return res.json(error, 401)
         }
         else{
             bcrypt.genSalt(10, (err, salt) => {

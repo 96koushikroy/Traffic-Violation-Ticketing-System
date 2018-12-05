@@ -27,6 +27,17 @@ exports.viewPoliceTickets = (req, res) => {
     }
 }
 
+exports.viewDriverTickets = (req, res) =>{
+
+        Ticket.findAll({
+            where: {
+                driver_id: 20
+            }
+        })
+        .then(tickets => res.json(tickets, 200));
+
+}
+
 exports.viewOneTicket = (req, res) => {
     Ticket.findAll({
         where:{

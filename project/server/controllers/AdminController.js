@@ -1,8 +1,8 @@
-const { Driver, User } = require('../config/sequelize')
+const { Admin, User } = require('../config/sequelize')
 var uniqid = require('uniqid');
 const bcrypt = require('bcryptjs');
 
-exports.registerDriver = (req,res) => {
+exports.registerAdmin = (req,res) => {
     
     let error = {}
 
@@ -11,37 +11,35 @@ exports.registerDriver = (req,res) => {
             'email': req.body.email
         }
     })
-    .then(driver => {
-        if(driver.length != 0){
-            console.log(driver)
+    .then(admin => {
+        if(admin.length != 0){
+            console.log(admin)
             error.title = "User Already Exists"
             return res.json(error,400)
         }
         else{
-
             bcrypt.genSalt(10, (err, salt) => {
-                const DriverObject = req.body
+                const AdminObject = req.body
                 let pid = uniqid()
-                DriverObject.id = pid
+                AdminObject.id = pid
 
-				bcrypt.hash(DriverObject.password, salt, (err, hash) => {
+				bcrypt.hash(AdminObject.password, salt, (err, hash) => {
                     if (err) console.log(err);
                     
-                    DriverObject.password = hash;
+                    AdminObject.password = hash;
                     
-					Driver.create(DriverObject)
-                    .then(driver => {
+					Admin.create(AdminObject)
+                    .then(admin => {
                         const UserObject = {
-                            id: pid,
-                            email: DriverObject.email,
-                            password: DriverObject.password,
-                            user_type: 1
+                            id: aid,
+                            email: AdminObject.email,
+                            password: AdminObject.password,
+                            user_type: 3
                         }
                         User.create(UserObject)
                         .then(data =>{
-                            res.json(driver,200)                            
+                            res.json(admin,200)                            
                         })
-
                     })
                     .catch(err => {
                         console.log(err)
@@ -50,9 +48,13 @@ exports.registerDriver = (req,res) => {
 			});
         }
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        error = err
+        res.json(error, 500);
+    })
 }
-exports.viewDriverProfile= (res, req)=>{
+
+exports.viewAdminProfile= (res, req)=>{
 
     const userToken = req.headers['authorization']
     error = {}
@@ -64,10 +66,10 @@ exports.viewDriverProfile= (res, req)=>{
         const decoded = jwt_decode(userToken)
         Driver.findAll({
             where: {
-                driver_id: decoded.id
+                admin_id: decoded.id
             }
         })
-        .then(drivers => res.json(drivers, 200));
+        .then(admins => res.json(admins, 200));
     }
 
 }

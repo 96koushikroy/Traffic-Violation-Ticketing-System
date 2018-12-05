@@ -31,4 +31,9 @@ router.post('/api/driver/register', DriverController.registerDriver);
 router.post('/api/login', AuthController.login);
 
 
+router.get('/api/ticket/driver/view', TicketController.viewDriverTickets)
+
+router.get('/api/driver/viewprofile',DriverController.viewDriverProfile)
+router.get('/api/police/viewprofile',PoliceController.viewPoliceProfile)
+router.get('/api/admin/viewprofile',AdminController.vireAdminProfile)
 module.exports = router;

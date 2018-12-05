@@ -101,3 +101,21 @@ exports.deletePolice = (req, res) => {
         res.json(error, 500);
     })
 }
+exports.viewPoliceProfile = (req, res) => {
+
+    const userToken = req.headers['authorization']
+    error = {}
+    if(isEmpty(userToken)){
+        error.title = "User not authorized"
+        res.json(error, 401);
+    }
+    else{
+        const decoded = jwt_decode(userToken)
+        Police.findAll({
+            where: {
+                police_id: decoded.id
+            }
+        })
+        .then(polices => res.json(polices, 200));
+    }
+}

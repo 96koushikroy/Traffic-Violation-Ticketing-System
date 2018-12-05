@@ -9,7 +9,6 @@ const initState = {
 }
 
 const policeReducer = (state = initState, action) => {
-    console.log(action.type)
     switch (action.type) {
         case ADD_POLICE:
             let dd = state.polices

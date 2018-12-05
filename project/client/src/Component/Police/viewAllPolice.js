@@ -7,7 +7,8 @@ import {Link} from 'react-router-dom'
 
 class ViewAllPolice extends Component {
     state = {
-        searchText:''
+        searchText:'',
+        policeResult: []
     }
 
     handleChange = (e) => {
@@ -34,6 +35,11 @@ class ViewAllPolice extends Component {
         if (nextProps.auth.isAuthenticated == false) {
             this.props.history.push('/login');
         }
+        if(!isEmpty(nextProps.police)){
+            this.setState({
+                policeResult: nextProps.police
+            })
+        }
     }
 
     handleDelete = (e) => {
@@ -45,24 +51,14 @@ class ViewAllPolice extends Component {
     }
 
     render(){
-        const Polices = this.props.police;
-        const PoliceList = !isEmpty(Polices) ? (
-            Polices.map((police) => {
-                return(
-                    <div className="card" key={police.id}>
-                    <div className="card-body">
-                        <h4 className="card-title">{police.name}</h4>
-                        <h6 className="card-subtitle mb-2 text-muted">{police.email}</h6>
-                        <Link to={"/police/view/" + police.id} className="card-link btn btn-outline-primary">View</Link>
-                        <button onClick={this.handleDelete} id={police.id}  className="card-link btn btn-outline-danger">Delete</button>
-                    </div>
-                    </div>
-                )
-            })
-        ) : (
-            <p>No Data Available..</p>
-        )
-
+        let Polices = this.state.policeResult;
+        let search = this.state.searchText.trim().toLowerCase();
+        if(!isEmpty(search)){
+            Polices = Polices.filter(function(police) {
+                return police.name.toLowerCase().match(search);
+            });
+        }
+        
         return(
             <div className="container">
                 <div className="row text-center">
@@ -70,7 +66,7 @@ class ViewAllPolice extends Component {
                     <div className="col-md-6">
                         <h4>Police Search</h4>
                         <div className="input-field">
-                            <input type="text" id="name" className="form-control" value={this.state.searchText} placeholder="Enter your search parameters here.."  onChange={this.handleChange}/>
+                            <input type="text" id="searchText" className="form-control" value={this.state.searchText} placeholder="Enter your search parameters here.."  onChange={this.handleChange}/>
                         </div>
                     </div>
                     <div className="col-md-3"></div>
@@ -80,7 +76,20 @@ class ViewAllPolice extends Component {
                     <div className="col-md-3"></div>
                     <div className="col-md-6">
                         <h4>Police List</h4>
-                        {PoliceList}
+                        {
+                            Polices.map((police) => {
+                                return(
+                                    <div className="card" key={police.id}>
+                                        <div className="card-body">
+                                            <h4 className="card-title">{police.name}</h4>
+                                            <h6 className="card-subtitle mb-2 text-muted">{police.email}</h6>
+                                            <Link to={"/police/view/" + police.id} className="card-link btn btn-outline-primary">View</Link>
+                                            <button onClick={this.handleDelete} id={police.id}  className="card-link btn btn-outline-danger">Delete</button>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                     
                     <div className="col-md-3"></div>

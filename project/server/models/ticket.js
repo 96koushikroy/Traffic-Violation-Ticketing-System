@@ -7,6 +7,7 @@ module.exports = (sequelize, type) => {
         },
         car_number: type.STRING,
         police_id: type.INTEGER,
+        driver_id: type.STRING,
         reason_id: type.INTEGER,
         amount: type.INTEGER,
         other_documents: type.STRING,

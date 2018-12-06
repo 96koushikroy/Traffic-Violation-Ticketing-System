@@ -1,6 +1,6 @@
-import {ADD_TICKET, GET_TICKETS, VIEW_TICKET, DELETE_TICKET, GET_ERRORS} from './actionType'
+import {ADD_TICKET, GET_TICKETS, VIEW_TICKET, DELETE_TICKET, GET_ADMIN_TICKETS, APPROVE_TICKET, APPROVE_SINGLE_TICKET, GET_ERRORS} from './actionType'
 import axios from 'axios'
-
+import {NotificationManager} from 'react-notifications';
 
 export const addTicket = (TicketData) => dispatch => {
     TicketData.reason_id = TicketData.selectedReason.value;
@@ -24,7 +24,9 @@ export const addTicket = (TicketData) => dispatch => {
             payload: res.data
         })
     })
-    
+    .catch(err => {
+        NotificationManager.error(err.response.data.title);
+    })
    
 
     //// handle error with an action .catch()
@@ -63,6 +65,59 @@ export const viewTicket = (id) => dispatch => {
         dispatch({
             type: VIEW_TICKET,
             payload: res.data
+        })
+    })
+}
+
+
+export const getAdminTickets = () => dispatch => {
+    axios.get('/api/ticket/admin/view')
+    .then(res =>{
+        dispatch({
+            type: GET_ADMIN_TICKETS,
+            payload: res.data
+        })
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    })
+    
+}
+
+export const approveTicket = (tid) => dispatch => {
+    axios.get(`/api/ticket/admin/approve/${tid}`)
+    .then(res =>{
+        dispatch({
+            type: APPROVE_TICKET,
+            payload: tid
+        })
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    })
+}
+
+//approveSingleTicket
+
+export const approveSingleTicket = (tid) => dispatch => {
+    axios.get(`/api/ticket/admin/approve/${tid}`)
+    .then(res =>{
+        dispatch({
+            type: APPROVE_SINGLE_TICKET,
+            payload: tid
+        })
+        
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
         })
     })
 }

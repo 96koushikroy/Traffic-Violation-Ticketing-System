@@ -92,6 +92,11 @@ exports.deletePolice = (req, res) => {
         } 
     })
     .then(data => {
+        User.destroy({ 
+            where: { 
+                id: req.params.pid 
+            } 
+        })
         res.json(data, 200)
     })
     .catch(err => {

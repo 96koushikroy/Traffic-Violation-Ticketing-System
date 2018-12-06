@@ -1,4 +1,4 @@
-const { Ticket, Driver } = require('../config/sequelize')
+const { Ticket, Driver, Police, TicketReason } = require('../config/sequelize')
 const isEmpty = require('../Validation/isEmpty')
 const jwt_decode = require('jwt-decode')
 
@@ -27,7 +27,7 @@ exports.insertTicket = (req,res) => {
                     res.json(error, 401);
                 }
                 else{
-                    Data.driver_id = DriverId
+                    Data.driver_id = DriverId.dataValues.id
                     Ticket.create(Data)
                     .then(data => res.json(data, 200))
                     .catch(err => console.log(err))
@@ -88,12 +88,24 @@ exports.viewDriverTickets = (req, res) =>{
 }
 
 exports.viewOneTicket = (req, res) => {
-    Ticket.findAll({
+    //Ticket.hasOne(Police)
+    Police.hasMany(Ticket, {foreignKey: 'police_id'})
+    Ticket.belongsTo(Police, {foreignKey: 'police_id'})
+
+    Driver.hasMany(Ticket, {foreignKey: 'driver_id'})
+    Ticket.belongsTo(Driver, {foreignKey: 'driver_id'})
+
+    TicketReason.hasMany(Ticket, {foreignKey: 'id'})
+    Ticket.belongsTo(TicketReason, {foreignKey: 'reason_id'})
+
+    Ticket.findOne({
         where:{
             id: req.params.tid
-        }
+        },
+        include: [Police, Driver, TicketReason]
     })
     .then(tickets => res.json(tickets, 200));
+    
 }
 
 exports.deleteOneTicket = (req, res) => {

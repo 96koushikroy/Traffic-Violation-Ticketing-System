@@ -35,11 +35,9 @@ class ViewAllPolice extends Component {
         if (nextProps.auth.isAuthenticated == false) {
             this.props.history.push('/login');
         }
-        if(!isEmpty(nextProps.police)){
-            this.setState({
-                policeResult: nextProps.police
-            })
-        }
+        this.setState({
+            policeResult: nextProps.police
+        })
     }
 
     handleDelete = (e) => {

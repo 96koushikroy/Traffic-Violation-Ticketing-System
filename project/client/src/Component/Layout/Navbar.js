@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Link, Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
 import {logoutUser} from '../../Actions/authActions'
 import {NotificationManager} from 'react-notifications';
@@ -49,6 +49,10 @@ class Navbar extends Component {
             return (<li className="nav-item"><Link className="nav-link" to="/register/driver">Driver Registration</Link></li>)
         }
 
+        const ApproveTickets = () => {
+            return (<li className="nav-item"><Link className="nav-link" to="/approveticket">Approve Tickets</Link></li>)
+        }
+
         return(
             <div>
                 <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-light">
@@ -71,6 +75,9 @@ class Navbar extends Component {
                             }
                             {isAuthenticated && user.user_type == 3 &&
                                 <ViewAllPolice />
+                            }
+                            {isAuthenticated && user.user_type == 3 &&
+                                <ApproveTickets />
                             }
                             {isAuthenticated &&
                                     <UserProfile />

@@ -46,4 +46,5 @@ router.get('/api/ticket/driver/view', TicketController.viewDriverTickets) //api 
 router.get('/api/driver/viewprofile',DriverController.viewDriverProfile)
 router.get('/api/police/viewprofile',PoliceController.viewPoliceProfile)
 router.get('/api/admin/viewprofile',AdminController.viewAdminProfile)
+
 module.exports = router;

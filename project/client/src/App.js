@@ -12,6 +12,7 @@ import DriverRegistration from './Component/Driver/driverRegistration'
 import ApproveTicketList from './Component/Ticket/approveTicketList'
 import ViewAllTicketDriver from './Component/Driver/viewAllDriverTicket'
 import AdminTicketSearch from './Component/Ticket/AdminTicketSearch'
+import UserProfile from './Component/Profile/userProfile'
 
 import setAuthToken from './Utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
@@ -59,6 +60,7 @@ class App extends Component {
             <Route path="/approveticket" component={ApproveTicketList} />
             <Route path="/mytickets" component={ViewAllTicketDriver} />
             <Route path="/admin/ticket/search" component={AdminTicketSearch} />
+            <Route path="/myprofile" component={UserProfile} />
           </Switch>
           <NotificationContainer />
         </div>

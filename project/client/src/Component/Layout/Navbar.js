@@ -10,7 +10,6 @@ class Navbar extends Component {
         e.preventDefault();
         this.props.logoutUser()
         NotificationManager.info('Logged Out Successfully');
-        
     }
 
     render(){
@@ -25,7 +24,14 @@ class Navbar extends Component {
         }
         
         const UserProfile = () => {
-            return (<li className="nav-item"><Link className="nav-link" to="" >{user.name}</Link></li>)
+            // using this to show police and admin tag beside the name on navbar
+            if(user.user_type == 1){
+                return (<li className="nav-item"><Link className="nav-link" to="/myprofile" >{user.name}</Link></li>)
+            }
+            else if(user.user_type == 2){
+                return (<li className="nav-item"><Link className="nav-link" to="/myprofile" >{user.name} (Police)</Link></li>)
+            }
+            else return (<li className="nav-item"><Link className="nav-link" to="/myprofile" >{user.name} (Administrator)</Link></li>)
         }
 
         const AddTicket = () => {

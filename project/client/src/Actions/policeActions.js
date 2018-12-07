@@ -2,7 +2,7 @@ import axios from 'axios'
 import {ADD_POLICE, GET_ALL_POLICE, VIEW_POLICE, DELETE_POLICE, GET_ERRORS} from './actionType'
 import {NotificationManager} from 'react-notifications';
 
-
+//action method to register a new police
 export const addPolice = (PoliceData) => dispatch => {
     axios
     .post('/api/police/register', PoliceData)
@@ -24,6 +24,7 @@ export const addPolice = (PoliceData) => dispatch => {
 }
 
 
+//action method to view all the police for admins
 export const getAllPolice = () => dispatch => {
     axios
     .get('/api/police/view')
@@ -36,6 +37,7 @@ export const getAllPolice = () => dispatch => {
 }
 
 
+//action method to view one of the police in the requested param for admins
 export const viewPolice = (id) => dispatch => {
     axios
     .get(`/api/police/view/${id}`)
@@ -48,6 +50,7 @@ export const viewPolice = (id) => dispatch => {
 }
 
 
+//action method to delete the police in the requested param for admins
 export const deletePolice = (id) => dispatch => {
     axios
     .get(`/api/police/delete/${id}`)

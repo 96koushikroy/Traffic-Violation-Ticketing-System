@@ -21,4 +21,7 @@ export const DELETE_POLICE = 'DELETE_POLICE';
 
 export const ADD_DRIVER = 'ADD_DRIVER';
 
+
+export const GET_USER_PROFILE = 'GET_USER_PROFILE';
+
 export const GET_ERRORS = 'GET_ERRORS';

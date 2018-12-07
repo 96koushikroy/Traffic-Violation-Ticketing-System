@@ -1,7 +1,8 @@
 const { Driver, User } = require('../config/sequelize')
 var uniqid = require('uniqid');
 const bcrypt = require('bcryptjs');
-
+const jwt_decode = require('jwt-decode')
+const isEmpty = require('../Validation/isEmpty')
 exports.registerDriver = (req,res) => {
     
     let error = {}
@@ -52,7 +53,7 @@ exports.registerDriver = (req,res) => {
     })
     .catch(err => console.log(err))
 }
-exports.viewDriverProfile= (res, req)=>{
+exports.viewDriverProfile= (req, res)=>{
 
     const userToken = req.headers['authorization']
     error = {}
@@ -62,9 +63,9 @@ exports.viewDriverProfile= (res, req)=>{
     }
     else{
         const decoded = jwt_decode(userToken)
-        Driver.findAll({
+        Driver.findOne({
             where: {
-                driver_id: decoded.id
+                id: decoded.id
             }
         })
         .then(drivers => res.json(drivers, 200));

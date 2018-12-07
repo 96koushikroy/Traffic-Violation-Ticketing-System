@@ -16,6 +16,7 @@ export const loginUser = userData => dispatch => {
     axios.post('/api/login', userData)
     .then(res => {
         const {token} = res.data
+        //store the token in browsers localstore
         localStorage.setItem('jwtToken', token)
         setAuthToken(token)
         const decoded = jwt_decode(token);
@@ -66,7 +67,7 @@ export const googleLoginUser = userData => dispatch => {
 
 
 
-// Set logged in user
+// Function to Set logged in user
 export const setCurrentUser = decoded => {
     return {
       type: SET_CURRENT_USER,

@@ -4,6 +4,7 @@ import ticketReducer from './ticketReducer'
 import authReducer from './authReducer'
 import errorReducer from './errorReducer'
 import policeReducer from './policeReducer'
+import profileReducer from './profileReducer'
 
 
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
     ticket: ticketReducer,
     auth: authReducer,
     error: errorReducer,
-    police: policeReducer
+    police: policeReducer,
+    profile: profileReducer
 });
 
 export default rootReducer

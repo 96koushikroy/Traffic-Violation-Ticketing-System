@@ -20,6 +20,7 @@ router.get('/api/ticket/view/details/:tid', TicketController.viewOneTicket);
 router.get('/api/ticket/delete/:tid', TicketController.deleteOneTicket);
 router.get('/api/ticket/admin/view', TicketController.viewAdminTickets);
 router.get('/api/ticket/admin/approve/:tid', TicketController.approveTickets);
+router.get('/api/ticket/admin/viewall', TicketController.viewAdminAllTickets);
 
 
 router.post('/api/police/register', PoliceController.registerPolice);

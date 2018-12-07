@@ -148,6 +148,26 @@ exports.viewAdminTickets = (req, res) => {
     }
 }
 
+exports.viewAdminAllTickets = (req, res) => {
+    const userToken = req.headers['authorization']
+    error = {}
+    if(isEmpty(userToken)){
+        error.title = "User not authorized"
+        res.json(error, 401);
+    }
+    else{
+        const decoded = jwt_decode(userToken)
+        if(decoded.user_type == 3){
+            Ticket.findAll()
+            .then(tickets => res.json(tickets, 200));
+        }
+        else{
+            error.title = "User not authorized"
+            res.json(error, 401);
+        }
+    }
+}
+
 exports.approveTickets = (req, res) => {
     let tid = req.params.tid;
 

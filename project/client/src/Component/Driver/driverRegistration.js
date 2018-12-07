@@ -2,6 +2,11 @@ import React, {Component} from 'react'
 import Select from 'react-select'
 import {NotificationManager} from 'react-notifications';
 import axios from 'axios'
+import { connect } from 'react-redux';
+import {loginUser, googleLoginUser} from '../../Actions/authActions'
+import isEmpty from '../../Validation/isEmpty'
+import { GoogleLogin } from 'react-google-login';
+
 class DriverRegistration extends Component{
     state = {
         name:'',
@@ -10,12 +15,16 @@ class DriverRegistration extends Component{
         car_number: ''
     }
 
-    componentDidMount(){
-
+    componentDidMount() {
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.goBack();
+        }
     }
 
-    componentWillReceiveProps(nextProps){
-
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.goBack();
+        }
     }
 
     handleChange = (e) => {
@@ -24,10 +33,23 @@ class DriverRegistration extends Component{
         })
     }
     handleChangeSelect = (selectedReason) => {
-        console.log(selectedReason)
+        //console.log(selectedReason)
         /*this.setState({
             selectedReason
         });*/
+    }
+
+    successResponseGoogle = (response) => {
+        const UserData = {
+            name: response.profileObj.name,
+            email: response.profileObj.email,
+            password: ''
+        }
+        this.props.googleLoginUser(UserData);
+    }
+
+    errorResponseGoogle = (response) => {
+        console.log(response);
     }
 
     handleSubmit = (e) => {
@@ -56,10 +78,21 @@ class DriverRegistration extends Component{
         ];
         return(
             <div className="container">
-                <div className="row">
+                <div className="row text-center">
                     <div className="col-md-3"></div>
                     <div className="col-md-6">
-                        <h4>Driver Registration</h4>
+                        <h3>Driver Registration</h3>
+                        <hr/>
+                        <GoogleLogin
+                            clientId="831620844321-oseic0v8rfnevtmf3kbc2f487kbrkred.apps.googleusercontent.com"
+                            buttonText="Signup with Google"
+                            onSuccess={this.successResponseGoogle}
+                            onFailure={this.errorResponseGoogle}
+                        />
+                        <br/>
+                        <br/>
+                        <h4>Or,</h4>
+                        <br/>
                         <form onSubmit={this.handleSubmit}>
                             <div className="input-field">
                                 <label htmlFor="name">Name</label>
@@ -105,4 +138,12 @@ class DriverRegistration extends Component{
 
 }
 
-export default DriverRegistration
+const mapStateToProps = state => ({
+    auth: state.auth,
+    error: state.error
+});
+  
+  export default connect(
+    mapStateToProps,
+    { googleLoginUser }
+  )(DriverRegistration);

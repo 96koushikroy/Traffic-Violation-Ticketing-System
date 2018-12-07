@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { SET_CURRENT_USER, GET_ERRORS } from './actionType'
 import jwt_decode from 'jwt-decode'
+
 const setAuthToken = token => {
     if (token) {
       // apply to every request
@@ -10,6 +11,7 @@ const setAuthToken = token => {
       delete axios.defaults.headers.common['Authorization'];
     }
 };
+
 export const loginUser = userData => dispatch => {
     axios.post('/api/login', userData)
     .then(res => {
@@ -26,6 +28,43 @@ export const loginUser = userData => dispatch => {
         })
     })
 }
+
+export const googleLoginUser = userData => dispatch => {
+    axios.post('/api/oauth/google/login', userData)
+    .then(res => {
+        if(res.data.requestForCarNumber == true){ //driver not present in the system so, requesting for the car number
+            var carnumber = prompt("Please enter your Car number");
+            userData.car_number = carnumber
+            
+            //send another request with the car number and create the new driver in the system
+            axios.post('/api/oauth/google/signup', userData)
+            .then(rrr => {
+                const {token} = rrr.data
+                localStorage.setItem('jwtToken', token)
+                setAuthToken(token)
+                const decoded = jwt_decode(token);
+                dispatch(setCurrentUser(decoded));
+            })
+        }
+        else{
+            const {token} = res.data
+            localStorage.setItem('jwtToken', token)
+            setAuthToken(token)
+            const decoded = jwt_decode(token);
+            dispatch(setCurrentUser(decoded));
+        }
+        
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    })
+}
+
+
+
 
 // Set logged in user
 export const setCurrentUser = decoded => {

@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
-import {loginUser} from '../../Actions/authActions'
+import {loginUser, googleLoginUser} from '../../Actions/authActions'
 import isEmpty from '../../Validation/isEmpty'
+import { GoogleLogin } from 'react-google-login';
 class Login extends Component{
     state = {
+        name: '',
         email: '',
         password: '',
         error: {}
@@ -22,6 +24,19 @@ class Login extends Component{
         if (nextProps.error) {
             this.setState({ error: nextProps.error });
         }
+    }
+
+    successResponseGoogle = (response) => {
+        const UserData = {
+            name: response.profileObj.name,
+            email: response.profileObj.email,
+            password: ''
+        }
+        this.props.googleLoginUser(UserData);
+    }
+
+    errorResponseGoogle = (response) => {
+        console.log(response);
     }
 
     handleChange = (e) => {
@@ -53,10 +68,9 @@ class Login extends Component{
             }
             else{
                 return(
-                    <div></div>
+                    <div></div> //need to return an empty div to finish the condition
                 )
             }
-
         }
 
         return(
@@ -64,9 +78,12 @@ class Login extends Component{
                 <div className="row text-center">
                     <div className="col-md-4"></div>
                     <div className="col-md-4">
-                        <h5><strong>Login</strong></h5>
+                        <h3><strong>Login</strong></h3>
                         <br/>
                         <ErrorPanel />
+                        
+                        <hr/>
+
                         <form onSubmit={this.handleSubmit}>
                             <div className="input-field">
                                 <label htmlFor="email">Email</label>
@@ -82,6 +99,15 @@ class Login extends Component{
                                 <button className="btn btn-primary">LOGIN</button>
                             </div>    
                         </form>
+                        <br/>
+                        <h4>Or,</h4>
+                        <br/>
+                        <GoogleLogin
+                            clientId="831620844321-oseic0v8rfnevtmf3kbc2f487kbrkred.apps.googleusercontent.com"
+                            buttonText="Login with Google"
+                            onSuccess={this.successResponseGoogle}
+                            onFailure={this.errorResponseGoogle}
+                        />
                     </div>
                     <div className="col-md-4"></div>
                 </div>
@@ -97,7 +123,7 @@ const mapStateToProps = state => ({
   
   export default connect(
     mapStateToProps,
-    { loginUser }
+    { loginUser, googleLoginUser }
   )(Login);
 
   /*

@@ -8,6 +8,7 @@ const ADMIN_TYPE = 3;
 const secretKey = "someSecretKey";
 const jwt_decode = require('jwt-decode')
 const isEmpty = require('../Validation/isEmpty')
+var uniqid = require('uniqid');
 
 exports.login = (req, res) => {
     let error = {}
@@ -108,6 +109,158 @@ exports.login = (req, res) => {
 
 }
 
+
+exports.googleLogin = (req, res) => {
+    let error = {}
+    const email = req.body.email;
+
+    User.findOne({
+        where:{
+            email: email
+        }
+    })
+    .then(user => {
+        let dddd = {};
+        if(isEmpty(user)){
+            //a new driver is signing up
+            dddd = {
+                requestForCarNumber: true
+            }
+            res.json(dddd, 200)
+        }
+        else{
+            //login the existing user
+
+            if(user.user_type == DRIVER_TYPE){
+                Driver.findOne({
+                    where: {
+                        id: user.id
+                    },
+                    attributes:['name']
+                })
+                .then(driver => {
+                    dddd = {
+                        'id': user.id,
+                        'name': driver.name,
+                        'email': user.email,
+                        'user_type': user.user_type
+                    }
+                    sendJWT(dddd);
+                })
+            }
+            else if(user.user_type == POLICE_TYPE){
+                Police.findOne({
+                    where: {
+                        id: user.id
+                    },
+                    attributes:['name']
+                })
+                .then(police => {
+                    dddd = {
+                        'id': user.id,
+                        'name': police.name,
+                        'email': user.email,
+                        'user_type': user.user_type
+                    }
+                    
+                    sendJWT(dddd);
+                })
+            }
+            else if(user.user_type == ADMIN_TYPE){
+                Admin.findOne({
+                    where: {
+                        id: user.id
+                    },
+                    attributes:['name']
+                })
+                .then(admin => {
+                    dddd = {
+                        'id': user.id,
+                        'name': admin.name,
+                        'email': user.email,
+                        'user_type': user.user_type
+                    }
+                    sendJWT(dddd);
+                })   
+            }
+
+
+        }
+    })
+
+    sendJWT = (data) => {
+        jwt.sign(
+            data,
+            secretKey,
+            { expiresIn: 3600 },
+            (err, token) => {
+                res.json({
+                    success: true,
+                    token: 'Bearer '+token
+                });
+            }
+        );
+    }
+
+}
+
+
+exports.googleSignup = (req, res) => {
+    let error = {}
+    let dddd = {}
+    const email = req.body.email;
+    const name = req.body.name;
+    const car_number = req.body.car_number
+    const DriverObject = {
+        email: email,
+        name: name,
+        password: '',
+        car_number: car_number
+    }
+    let pid = uniqid()
+    DriverObject.id = pid
+
+
+    Driver.create(DriverObject)
+    .then(driver => {
+        const UserObject = {
+            id: pid,
+            email: DriverObject.email,
+            password: '',
+            user_type: 1
+        }
+        User.create(UserObject)
+        .then(data =>{
+            dddd = {
+                'id': pid,
+                'name': name,
+                'email': email,
+                'user_type': 1
+            }
+            sendJWT(dddd);
+            //res.json(driver,200)                            
+        })
+
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+    sendJWT = (data) => {
+        jwt.sign(
+            data,
+            secretKey,
+            { expiresIn: 3600 },
+            (err, token) => {
+                res.json({
+                    success: true,
+                    token: 'Bearer '+token
+                });
+            }
+        );
+    }
+
+}
 
 exports.getCurrentUserProfile = (req, res) => {
     const userToken = req.headers['authorization']

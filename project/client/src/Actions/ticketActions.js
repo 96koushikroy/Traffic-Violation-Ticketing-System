@@ -103,8 +103,7 @@ export const approveTicket = (tid) => dispatch => {
     })
 }
 
-//approveSingleTicket
-
+//approve one ticket used in the single ticket view page
 export const approveSingleTicket = (tid) => dispatch => {
     axios.get(`/api/ticket/admin/approve/${tid}`)
     .then(res =>{

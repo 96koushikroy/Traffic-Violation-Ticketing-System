@@ -42,7 +42,6 @@ class AdminTicketSearch extends Component {
     }
 
     render(){
-        console.log(this.state.ticketList)
         let Tickets = this.state.ticketList;
         let search = this.state.searchText.trim().toLowerCase();
         if(!isEmpty(search)){

@@ -15,7 +15,7 @@
     "react-select": "^2.1.1",
     "jwt-decode": "^2.2.0",
     "react-notifications": "^1.4.3",
-    "react-modal": "^3.6.1"
+    "react-google-login": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

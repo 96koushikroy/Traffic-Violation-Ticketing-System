@@ -1,4 +1,4 @@
-import {ADD_TICKET, GET_TICKETS, VIEW_TICKET, DELETE_TICKET, GET_ADMIN_TICKETS, APPROVE_TICKET, APPROVE_SINGLE_TICKET} from '../Actions/actionType'
+import {ADD_TICKET, GET_TICKETS, VIEW_TICKET, DELETE_TICKET, GET_ADMIN_TICKETS, APPROVE_TICKET, APPROVE_SINGLE_TICKET, GET_DRIVER_TICKETS} from '../Actions/actionType'
 
 const initState = {
     car_number: '',
@@ -59,6 +59,12 @@ const ticketReducer = (state = initState, action) => {
         return{
             ...state,
             ticket: dd
+        }
+    }
+    else if(action.type === GET_DRIVER_TICKETS){
+        return{
+            ...state,
+            tickets: action.payload
         }
     }
     return state

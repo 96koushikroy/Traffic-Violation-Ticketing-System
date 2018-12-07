@@ -77,14 +77,20 @@ exports.viewDriverTickets = (req, res) =>{
     }
     else{
         const decoded = jwt_decode(userToken)
-        Ticket.findAll({
-            where: {
-                driver_id: decoded.id
-            }
-        })
-        .then(tickets => res.json(tickets, 200));
+
+        if(decoded.user_type == 1){
+            Ticket.findAll({
+                where: {
+                    driver_id: decoded.id
+                }
+            })
+            .then(tickets => res.json(tickets, 200));
+        }
+        else{
+            error.title = "User not authorized"
+            res.json(error, 401);
+        }        
     }
-        
 }
 
 exports.viewOneTicket = (req, res) => {

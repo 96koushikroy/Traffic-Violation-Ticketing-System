@@ -80,20 +80,28 @@ class ApproveTicketList extends Component {
                     <div className="col-md-6">
                         <h4>Ticket List</h4>
                         {
-                            Tickets.map((ticket) => {
-                                return(
-                                    <div className="card" key={ticket.id}>
-                                        <div className="card-body">
-                                            <h4 className="card-title">{ticket.car_number}</h4>
-                                            <h6 className="card-subtitle mb-2 text-muted">Driver ID: {ticket.driver_id}</h6>
-                                            <h6 className="card-subtitle mb-2 text-muted">Issue Date: {ticket.issue_date}</h6>
-                                            <h6 className="card-subtitle mb-2 text-muted">Deadline: {ticket.deadline_date}</h6>
-                                            <Link to={"/ticket/view/" + ticket.id} className="card-link btn btn-outline-primary">View</Link>
-                                            <button onClick={this.handleApprove} id={ticket.id}  className="card-link btn btn-outline-danger">Approve</button>
+                            isEmpty(Tickets) ? (
+                                <p>No search Results</p>
+                            ) : (
+                                Tickets.map((ticket) => {
+                                    return(
+                                        <div className="cardElem" key={ticket.id}>
+                                            <div className="card" >
+                                                <div className="card-body">
+                                                    <h4 className="card-title">{ticket.car_number}</h4>
+                                                    <h6 className="card-subtitle mb-2 text-muted">Driver ID: {ticket.driver_id}</h6>
+                                                    <h6 className="card-subtitle mb-2 text-muted">Issue Date: {ticket.issue_date}</h6>
+                                                    <h6 className="card-subtitle mb-2 text-muted">Deadline: {ticket.deadline_date}</h6>
+                                                    <Link to={"/ticket/view/" + ticket.id} className="card-link btn btn-outline-primary">View</Link>
+                                                    <button onClick={this.handleApprove} id={ticket.id}  className="card-link btn btn-outline-danger">Approve</button>
+                                                </div>
+                                            </div>
+                                            <br/>
                                         </div>
-                                    </div>
-                                )
-                            })
+                                    )
+                                })
+                            )
+                            
                         }
                     </div>
                     

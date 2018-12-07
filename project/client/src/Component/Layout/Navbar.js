@@ -53,9 +53,13 @@ class Navbar extends Component {
             return (<li className="nav-item"><Link className="nav-link" to="/approveticket">Approve Tickets</Link></li>)
         }
 
+        const ViewAllTicketsDriver = () => {
+            return (<li className="nav-item"><Link className="nav-link" to="/mytickets">My Tickets</Link></li>)
+        }
+
         return(
             <div>
-                <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+                <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
                     <div className="container-fluid">
                         <div className="navbar-header">
                             <Link to="/" className="navbar-brand">Traffic Ticketing System</Link>
@@ -78,6 +82,9 @@ class Navbar extends Component {
                             }
                             {isAuthenticated && user.user_type == 3 &&
                                 <ApproveTickets />
+                            }
+                            {isAuthenticated && user.user_type == 1 &&
+                                <ViewAllTicketsDriver />
                             }
                             {isAuthenticated &&
                                     <UserProfile />

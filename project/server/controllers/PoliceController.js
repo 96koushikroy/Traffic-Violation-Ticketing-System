@@ -20,6 +20,7 @@ exports.registerPolice = (req,res) => {
             return res.json(error, 401)
         }
         else{
+            //generate pass based on 10 salt rounds the result will be on salt var
             bcrypt.genSalt(10, (err, salt) => {
                 const PoliceObject = req.body
                 let pid = uniqid()

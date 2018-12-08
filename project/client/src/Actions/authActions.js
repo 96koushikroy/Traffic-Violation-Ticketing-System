@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { SET_CURRENT_USER, GET_ERRORS } from './actionType'
 import jwt_decode from 'jwt-decode'
+import isEmpty from '../Validation/isEmpty'
+import {NotificationManager} from 'react-notifications';
 
 const setAuthToken = token => {
     if (token) {
@@ -36,16 +38,21 @@ export const googleLoginUser = userData => dispatch => {
         if(res.data.requestForCarNumber == true){ //driver not present in the system so, requesting for the car number
             var carnumber = prompt("Please enter your Car number");
             userData.car_number = carnumber
+            if(isEmpty(carnumber)){
+                NotificationManager.error('Car Number cannot be Empty');
+            }
+            else{
+                //send another request with the car number and create the new driver in the system
+                axios.post('/api/oauth/google/signup', userData)
+                .then(rrr => {
+                    const {token} = rrr.data
+                    localStorage.setItem('jwtToken', token)
+                    setAuthToken(token)
+                    const decoded = jwt_decode(token);
+                    dispatch(setCurrentUser(decoded));
+                })
+            }
             
-            //send another request with the car number and create the new driver in the system
-            axios.post('/api/oauth/google/signup', userData)
-            .then(rrr => {
-                const {token} = rrr.data
-                localStorage.setItem('jwtToken', token)
-                setAuthToken(token)
-                const decoded = jwt_decode(token);
-                dispatch(setCurrentUser(decoded));
-            })
         }
         else{
             const {token} = res.data

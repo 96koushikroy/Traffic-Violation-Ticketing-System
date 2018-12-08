@@ -6,6 +6,7 @@ var PoliceController = require('../controllers/PoliceController')
 var DriverController = require('../controllers/DriverController')
 var AuthController = require('../controllers/AuthController')
 var AdminController = require('../controllers/AdminController')
+var OCRAPIController = require('../controllers/OCRAPIController')
 
 /* API Set for Ticket Controller */
 router.get('/api/me', AuthController.getCurrentUserProfile); //testing api to get the current profile data from request header
@@ -46,5 +47,9 @@ router.get('/api/ticket/driver/view', TicketController.viewDriverTickets) //api 
 router.get('/api/driver/viewprofile',DriverController.viewDriverProfile)
 router.get('/api/police/viewprofile',PoliceController.viewPoliceProfile)
 router.get('/api/admin/viewprofile',AdminController.viewAdminProfile)
+
+
+
+router.post('/api/ocr/handler',OCRAPIController.processImage)
 
 module.exports = router;

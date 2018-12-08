@@ -3,6 +3,7 @@ import {GET_USER_PROFILE, GET_ERRORS} from './actionType'
 import {NotificationManager} from 'react-notifications';
 
 
+//get admin profile form admin model on the server
 export const getAdminProfile = () => dispatch => {
     axios
     .get('/api/admin/viewprofile')
@@ -20,6 +21,8 @@ export const getAdminProfile = () => dispatch => {
         NotificationManager.error(err.response.data.title);
     })
 }
+
+//get police profile form police model on the server
 export const getPoliceProfile = () => dispatch => {
     axios
     .get('/api/police/viewprofile')
@@ -38,6 +41,7 @@ export const getPoliceProfile = () => dispatch => {
     })
 }
 
+//get driver profile form driver model on the server
 export const getDriverProfile = () => dispatch => {
     axios
     .get('/api/driver/viewprofile')

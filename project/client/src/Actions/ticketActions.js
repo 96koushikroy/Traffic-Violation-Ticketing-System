@@ -2,6 +2,7 @@ import {ADD_TICKET, GET_TICKETS, VIEW_TICKET, DELETE_TICKET, GET_ADMIN_TICKETS, 
 import axios from 'axios'
 import {NotificationManager} from 'react-notifications';
 
+//method to add a new ticket
 export const addTicket = (TicketData) => dispatch => {
     TicketData.reason_id = TicketData.selectedReason.value;
     delete TicketData.selectedReason;
@@ -14,7 +15,7 @@ export const addTicket = (TicketData) => dispatch => {
     (m.length == 1) && (m = '0' + m);
     var yyyymmdd = y + '-' + m + '-' + d;
 
-    TicketData.issue_date = yyyymmdd;
+    TicketData.issue_date = yyyymmdd; //issue date will be stored here in yyyy-mm-dd format
 
     axios
     .post('/api/ticket/insert', TicketData)
@@ -32,6 +33,7 @@ export const addTicket = (TicketData) => dispatch => {
     //// handle error with an action .catch()
 }
 
+//common action to view all the ticket for the police
 export const getTickets = () => dispatch => {
     axios.get('/api/ticket/police/view')
     .then(res =>{
@@ -70,6 +72,7 @@ export const viewTicket = (id) => dispatch => {
 }
 
 
+//admin gets all the tickets that needs to be approved here
 export const getAdminTickets = () => dispatch => {
     axios.get('/api/ticket/admin/view')
     .then(res =>{
@@ -87,6 +90,7 @@ export const getAdminTickets = () => dispatch => {
     
 }
 
+//approve ticket action handler
 export const approveTicket = (tid) => dispatch => {
     axios.get(`/api/ticket/admin/approve/${tid}`)
     .then(res =>{
@@ -121,6 +125,7 @@ export const approveSingleTicket = (tid) => dispatch => {
     })
 }
 
+//driver gets all the tickets that it has received
 export const getDriverTickets = () => dispatch => {
     axios.get('/api/ticket/driver/view')
     .then(res =>{
@@ -137,6 +142,7 @@ export const getDriverTickets = () => dispatch => {
     })
 }
 
+//admin gets all the tickets for ticket search
 export const getAdminAllTickets = () => dispatch => {
     axios.get('/api/ticket/admin/viewall')
     .then(res =>{

@@ -20,6 +20,8 @@ class ViewTicket extends Component {
         if (nextProps.auth.isAuthenticated == false) {
             this.props.history.push('/login');
         }
+        let tid = this.props.match.params.tid;
+        this.props.viewTicket(tid);
         //console.log(nextProps)
     }
 
@@ -54,6 +56,7 @@ class ViewTicket extends Component {
                     }
                 </div>
                 <ul className="list-group list-group-flush">
+                    <li className="list-group-item">Car Number: {this.props.ticket.car_number}</li>
                     <li className="list-group-item">Ticket Reason: {this.props.ticket.ticket_reason.reason_name}</li>
                     <li className="list-group-item">Ticket Issue Date: {this.props.ticket.issue_date}</li>
                     <li className="list-group-item">Ticket Deadline Date: {this.props.ticket.deadline_date}</li>

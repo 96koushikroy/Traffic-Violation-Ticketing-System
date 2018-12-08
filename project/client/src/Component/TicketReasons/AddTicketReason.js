@@ -28,6 +28,7 @@ class AddTicketReason extends Component{
         if (nextProps.auth.isAuthenticated == false) {
             this.props.history.push('/login');
         }
+        this.props.getTicketReasons();
     }
 
     handleChange = (e) => {
@@ -49,11 +50,15 @@ class AddTicketReason extends Component{
             reason_name:'',
             reason_details:''
         });
-        this.props.getTicketReasons();
+        NotificationManager.success('Ticket Reason Added Successfully')
     }
 
     handleDelete = (e) => {
-        this.props.deleteTicketReason(e.target.id);
+        let rr = window.confirm("Are you sure to delete this!?");
+        if (rr == true) {
+            this.props.deleteTicketReason(e.target.id);
+            NotificationManager.success('Deleted Successfully!')
+        }
     }
 
     render(){
@@ -91,8 +96,7 @@ class AddTicketReason extends Component{
         return(
             <div className="container">
                 <div className="row text-center">
-                    <div className="col-md-4"></div>
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                         <form onSubmit={this.handleSubmit}>
                             <h5 className="text-center">Add Ticket Reason</h5>
 
@@ -111,17 +115,10 @@ class AddTicketReason extends Component{
                             </div>
                         </form>
                     </div>
-                    <div className="col-md-4"></div>
-                </div>
-                <br/><br/>
-                <div className="row text-center">
-                    <div className="col-md-3"></div>
                     <div className="col-md-6">
-                    <h5>Ticket Reasons List</h5>
-                    {TicketList}
-                    
+                        <h5>Ticket Reasons List</h5>
+                        {TicketList}
                     </div>
-                    <div className="col-md-3"></div>
                 </div>
                 
             </div>

@@ -41,6 +41,9 @@ class AddTicket extends Component{
         if (nextProps.auth.isAuthenticated == false) {
             this.props.history.push('/login');
         }
+        if(nextProps.tickets.length != this.props.tickets){
+            this.props.getTickets();
+        }
     }
 
     handleChange = (e) => {
@@ -68,13 +71,14 @@ class AddTicket extends Component{
             deadline_date: ''
 
         });
-        this.props.getTickets();
+        NotificationManager.success('Ticket Added Successfully!')
     }
 
     handleDelete = (e) => {
         let rr = window.confirm("Are you sure to delete this!?");
         if (rr == true) {
             this.props.deleteTicket(e.target.id)
+            NotificationManager.success('Ticket Deleted Successfully!')
         }
     }
 
@@ -158,9 +162,7 @@ class AddTicket extends Component{
         return(
             <div className="container">
                 <div className="row text-center">
-                    <div className="col-md-4"></div>
-                    <div className="col-md-4">
-
+                    <div className="col-md-6">
                         <form onSubmit={this.handleSubmit}>
                             <h5 className="text-center">Add Ticket</h5>
 
@@ -204,21 +206,12 @@ class AddTicket extends Component{
                                 <button className="btn btn-primary">Submit</button>
                             </div>
                         </form>
-
                     </div>
-                    
-                    <div className="col-md-4"></div>
+                    <div className="col-md-6">
+                        <h5>My Tickets</h5>
+                        {TicketList}
+                    </div>
                 </div>
-                <br/>
-                <br/>
-                <div className="row text-center">
-                        <div className="col-md-1"></div>
-                        <div className="col-md-10">
-                            <h5>My Tickets</h5>
-                            {TicketList}
-                        </div>
-                        <div className="col-md-1"></div>
-                    </div>
             </div>
         )
     }

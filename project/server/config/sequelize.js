@@ -6,7 +6,7 @@ const PoliceModel = require('../models/police')
 const DriverModel = require('../models/driver')
 const AdminModel = require('../models/admin')
 
-const sequelize = new Sequelize('ticketing_system', 'root', '', {
+const sequelize = new Sequelize('ticketing_system', 'root', 'Qwert3201', {
     host: 'localhost',
     dialect: 'mysql',
     pool: {

@@ -10,6 +10,9 @@ const jwt_decode = require('jwt-decode')
 const isEmpty = require('../Validation/isEmpty')
 var uniqid = require('uniqid');
 
+/*
+    Method Used for General Login Purpose
+*/
 exports.login = (req, res) => {
     let error = {}
     const email = req.body.email;
@@ -23,7 +26,7 @@ exports.login = (req, res) => {
     .then(user => {
         if(isEmpty(user)){
             error.title = "User not found"
-            res.json(error, 401);
+            res.status(401).json(error);
         }
         else{
             bcrypt.compare(password, user.password).then(match => {
@@ -84,20 +87,22 @@ exports.login = (req, res) => {
                 }
                 else{
                     error.title = "Password did not match"
-                    res.json(error, 401);
+                    res.status(401).json(error);
                 }
             });
 
         }
     })
-
+/*
+    Method Used for sending JWT
+*/
     sendJWT = (data) => {
         jwt.sign(
             data,
             secretKey,
             { expiresIn: 3600 },
             (err, token) => {
-                res.json({
+                res.status(200).json({
                     success: true,
                     token: 'Bearer '+token
                 });
@@ -126,7 +131,7 @@ exports.googleLogin = (req, res) => {
             dddd = {
                 requestForCarNumber: true
             }
-            res.json(dddd, 200)
+            res.status(200).json(dddd)
         }
         else{
             //login the existing user
@@ -194,7 +199,7 @@ exports.googleLogin = (req, res) => {
             secretKey,
             { expiresIn: 3600 },
             (err, token) => {
-                res.json({
+                res.status(200).json({
                     success: true,
                     token: 'Bearer '+token
                 });
@@ -252,7 +257,7 @@ exports.googleSignup = (req, res) => {
             secretKey,
             { expiresIn: 3600 },
             (err, token) => {
-                res.json({
+                res.status(200).json({
                     success: true,
                     token: 'Bearer '+token
                 });
@@ -267,7 +272,7 @@ exports.getCurrentUserProfile = (req, res) => {
     error = {}
     if(isEmpty(userToken)){
         error.title = "User not authorized"
-        res.json(error, 401);
+        res.status(401).json(error);
     }
     else{
         const decoded = jwt_decode(userToken)
@@ -281,6 +286,6 @@ exports.getCurrentUserProfile = (req, res) => {
             exp: 1543863299 
         }        
         */
-        res.json(decoded, 200)
+        res.status(200).json(decoded)
     }
 }

@@ -25,8 +25,9 @@ exports.insertTicketReason = (req,res) => {
 }
 
 exports.viewAllTicketReasons = (req, res) => {
-
-    const userToken = req.headers['authorization']
+    TicketReason.findAll()
+    .then(TicketReasons => res.json(TicketReasons, 200));
+    /*const userToken = req.headers['authorization']
     error = {}
     if(isEmpty(userToken)){
         error.title = "User not authorized"
@@ -36,7 +37,7 @@ exports.viewAllTicketReasons = (req, res) => {
         TicketReason.findAll()
         .then(TicketReasons => res.json(TicketReasons, 200));
     }
-
+*/
     
 }
 

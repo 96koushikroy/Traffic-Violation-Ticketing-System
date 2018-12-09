@@ -117,3 +117,17 @@ exports.viewPoliceProfile = (req, res) => {
         .then(polices => res.json(polices, 200));
     }
 }
+
+exports.editPoliceProfile = (req, res) => {
+    Police.update(
+      {police_id: req.body.police_id},
+      {where: req.params.id}
+    )
+    .then((data) => {
+      res.json(data,200)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+   })

@@ -34,6 +34,9 @@ router.post('/api/login', AuthController.login);
 router.get('/api/ticket/driver/view', TicketController.viewDriverTickets)
 
 router.get('/api/driver/viewprofile',DriverController.viewDriverProfile)
+router.post('/api/driver/editprofile',DriverController/editDriverProfile)
 router.get('/api/police/viewprofile',PoliceController.viewPoliceProfile)
-router.get('/api/admin/viewprofile',AdminController.vireAdminProfile)
+router.post('/api/police/editprofile',PoliceController/editPoliceProfile)
+router.get('/api/admin/viewprofile',AdminController.viewAdminProfile)
+router.post('/api/admin/editprofile',AdminController/editAdminProfile)
 module.exports = router;

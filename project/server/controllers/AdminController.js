@@ -73,3 +73,17 @@ exports.viewAdminProfile= (res, req)=>{
     }
 
 }
+
+exports.editAdminProfile = (req, res) => {
+    Admin.update(
+      {admin_id: req.body.admin_id},
+      {where: req.params.id}
+    )
+    .then((data) => {
+      res.json(data,200)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+   })

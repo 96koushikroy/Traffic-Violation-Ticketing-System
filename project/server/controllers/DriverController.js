@@ -71,3 +71,18 @@ exports.viewDriverProfile= (res, req)=>{
     }
 
 }
+
+exports.editDriverProfile = (req, res) => {
+    Driver.update(
+      {driver_id: req.body.driver_id},
+      {where: req.params.id}
+    )
+    .then((data) => {
+      res.json(data,200)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+   })
+   

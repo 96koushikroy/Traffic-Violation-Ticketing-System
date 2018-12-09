@@ -1,15 +1,28 @@
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let server = require('../app');
-let should = chai.should();
-
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const server = require('../app');
+const should = chai.should();
+const {TicketReason} = require('../config/sequelize')
 
 chai.use(chaiHttp);
 describe('Ticket Reason Testing', () => {
-/*
-  * Test the /GET route for Ticket Reason
-  */
+    /*
+        Test the /GET route for Ticket Reason
+    */
     describe('/GET VIEW TicketReasons', () => {
+        before(function(done) {
+            TicketReason.sync({ force : true }) // drops table and re-creates it
+            .then(function() {
+                done(null);
+            })
+            .error(function(error) {
+                done(error);
+            });
+        });
+
+
+
+        
         it('it should return an array of all the Ticket Reasons', (done) => {
             chai.request(server)
                 .get('/api/ticketreason/view')

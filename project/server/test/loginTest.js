@@ -9,6 +9,7 @@ describe('Login/Authentication Testing', () => {
     /*
         Test the /POST route for Login Authentication with correct credential
     */
+    /*
     describe('/POST Login with Admin"s Correct Credential', () => {
         it('it should return an object, The logged in user"s JWT', (done) => {
        //token: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Imt3MzYxc2pwOHF1dHdkIiwibmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJ1c2VyX3R5cGUiOjMsImlhdCI6MTU0NDM3NjU1MSwiZXhwIjoxNTQ0MzgwMTUxfQ.tLmwYfg3meXaMPhVtc5Vq9cZpGE87fVXG7HkdSEzIjo' }
@@ -31,29 +32,7 @@ describe('Login/Authentication Testing', () => {
         });
     });
     
-    describe('/POST Login with Driver"s Correct Credential', () => {
-        it('it should return an object, The logged in user"s JWT', (done) => {
-            //Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVndGJmd2pwYmNjbGpwIiwibmFtZSI6IkRyaXZlciBYIiwiZW1haWwiOiJkcml2ZXJAZHJpdmVyLmNvbSIsInVzZXJfdHlwZSI6MSwiaWF0IjoxNTQ0Mzc5NjE5LCJleHAiOjE1NDQzODMyMTl9.L9eL5-X3ObQMNjP1EKkxiMOIxJvhaWY0nMmoWcWyfWc
-        
-            const Data = {
-                email: 'driver@driver.com',
-                password: 'driver'
-            }
-        
-            chai.request(server)
-            .post('/api/login')
-            .type('form')
-            .send(Data)
-            .end((err, res) => {
-                const DecodedToken = jwt_decode(res.body.token)
-                //console.log(res.body.token)
-                DecodedToken.user_type.should.be.equal(1)
-                res.should.have.status(200);
-                res.body.should.be.a('object');
-                done();
-            });
-        });
-    });
+    
 
     describe('/POST Login with Police"s Correct Credential', () => {
         it('it should return an object, The logged in user"s JWT', (done) => {
@@ -78,7 +57,7 @@ describe('Login/Authentication Testing', () => {
             });
         });
     });
-
+    */
     /*
         Test the /POST route for Login Authentication with incorrect credential
     */

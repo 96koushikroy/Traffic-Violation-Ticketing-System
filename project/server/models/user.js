@@ -6,7 +6,7 @@ module.exports = (sequelize, type) => {
         },
         email: type.STRING,
         password: type.STRING,
-        user_type: type.STRING
+        user_type: type.INTEGER
     },{
         timestamps: false
     })

@@ -2,6 +2,10 @@ const { TicketReason } = require('../config/sequelize')
 const isEmpty = require('../Validation/isEmpty')
 const jwt_decode = require('jwt-decode')
 
+/*
+    API Method to insert a new Ticket Reason
+*/
+
 exports.insertTicketReason = (req,res) => {
     const userToken = req.headers['authorization']
     error = {}
@@ -10,7 +14,7 @@ exports.insertTicketReason = (req,res) => {
         res.status(401).json(error);
     }
     else{
-        const decoded = jwt_decode(userToken)
+        const decoded = jwt_decode(userToken) // decode the token received from the auth header
         if(decoded.user_type == 3){
             const Data = req.body
             if(Data.reason_name.length > 20){
@@ -40,6 +44,10 @@ exports.insertTicketReason = (req,res) => {
     
 }
 
+
+/*
+    API Method to view all the ticket reasons
+*/
 exports.viewAllTicketReasons = (req, res) => {
     const userToken = req.headers['authorization']
     error = {}
@@ -53,6 +61,9 @@ exports.viewAllTicketReasons = (req, res) => {
     }
 }
 
+/*
+    API Method to delete a ticket reason where the ticket reason id is given the params
+*/
 exports.deleteTicketReason = (req, res) => {
     const userToken = req.headers['authorization']
     error = {}

@@ -5,37 +5,41 @@ const should = chai.should();
 const {TicketReason} = require('../config/sequelize')
 
 chai.use(chaiHttp);
-describe('Ticket Reason Testing', () => {
+describe('Testing Ticket Reasons API', () => {
+    /*
+        Clearing the Ticket Reasons Database before testing its api
+    */
+   
+    before(function(done) {
+        TicketReason.sync({ force : true }) // drops table and re-creates it
+        .then(function() {
+            done(null);
+        })
+        .error(function(error) {
+            done(error);
+        });
+    });
+    
     /*
         Test the /GET route for Ticket Reason
     */
     describe('/GET VIEW TicketReasons', () => {
-        before(function(done) {
-            TicketReason.sync({ force : true }) // drops table and re-creates it
-            .then(function() {
-                done(null);
-            })
-            .error(function(error) {
-                done(error);
-            });
-        });
-
-
-
-        
         it('it should return an array of all the Ticket Reasons', (done) => {
             chai.request(server)
-                .get('/api/ticketreason/view')
-                //set admin token
-                .set('authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Imt3MzYxc2pwOHF1dHdkIiwibmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJ1c2VyX3R5cGUiOjMsImlhdCI6MTU0NDM3NjU1MSwiZXhwIjoxNTQ0MzgwMTUxfQ.tLmwYfg3meXaMPhVtc5Vq9cZpGE87fVXG7HkdSEzIjo')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('array');
-                    done();
-                });
+            .get('/api/ticketreason/view')
+            //set admin token
+            .set('authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Imt3MzYxc2pwOHF1dHdkIiwibmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJ1c2VyX3R5cGUiOjMsImlhdCI6MTU0NDM3NjU1MSwiZXhwIjoxNTQ0MzgwMTUxfQ.tLmwYfg3meXaMPhVtc5Vq9cZpGE87fVXG7HkdSEzIjo')
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('array');
+                done();
+            });
         });
     });
 
+    /*
+        Test the /POST route for INSERTING a Ticket Reason
+    */
     describe('/POST INSERT Ticket Reason', () => {
         it('it should return an object of the inserted Ticket Reason', (done) => {
             
@@ -58,6 +62,9 @@ describe('Ticket Reason Testing', () => {
         });
     });
 
+    /*
+        Test the /POST route for INSERTING a Ticket Reason with an invalid data
+    */
     describe('/POST INSERT Ticket Reason with Long Data', () => {
         it('it should return an error ans reason_name is too long', (done) => {
             
@@ -80,6 +87,9 @@ describe('Ticket Reason Testing', () => {
         });
     });
 
+    /*
+        Test the /POST route for INSERTING a Ticket Reason without authentication
+    */
     describe('/GET VIEW Ticket Reasons without Authentication', () => {
         it('it should return an error as the user is not logged in', (done) => {
             chai.request(server)

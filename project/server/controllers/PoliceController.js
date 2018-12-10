@@ -17,7 +17,7 @@ exports.registerPolice = (req,res) => {
         if(police.length != 0){
             console.log(police)
             error.title = "User Already Exists"
-            return res.json(error, 401)
+            return res.status(400).json(error)
         }
         else{
             //generate pass based on 10 salt rounds the result will be on salt var
@@ -41,7 +41,7 @@ exports.registerPolice = (req,res) => {
                         }
                         User.create(UserObject)
                         .then(data =>{
-                            res.json(police,200)                            
+                            res.status(200).json(police)                            
                         })
                     })
                     .catch(err => {
@@ -53,7 +53,7 @@ exports.registerPolice = (req,res) => {
     })
     .catch(err => {
         error = err
-        res.json(error, 500);
+        res.status(500).json(error);
     })
 }
 
@@ -67,7 +67,6 @@ exports.viewAllPolice = (req,res) => {
         error = err
         res.json(error, 500);
     })
-
 }
 
 exports.viewOnePolice = (req,res) => {

@@ -33,14 +33,14 @@ describe('Testing Driver API', () => {
     */
     describe('/POST Register as a new Driver', () => {
         it('it should return an object which contains the newly added driver', (done) => {
-        const Data = {
-            email: 'unitTest@driver.com',
-            password: 'driver',
-            name: 'Unit Test',
-            car_number: '898989989'
-        }
-        
-        chai.request(server)
+            const Data = {
+                email: 'unitTest@driver.com',
+                password: 'driver',
+                name: 'Unit Test',
+                car_number: '898989989'
+            }
+            
+            chai.request(server)
             .post('/api/driver/register')
             .type('form')
             .send(Data)
@@ -57,14 +57,14 @@ describe('Testing Driver API', () => {
     */
     describe('/POST Register as a new Driver with empty Email', () => {
         it('it should return an object which contains the error message', (done) => {
-        const Data = {
-            email: '',
-            password: 'driver',
-            name: 'Unit Test',
-            car_number: '898989989'
-        }
-        
-        chai.request(server)
+            const Data = {
+                email: '',
+                password: 'driver',
+                name: 'Unit Test',
+                car_number: '898989989'
+            }
+            
+            chai.request(server)
             .post('/api/driver/register')
             .type('form')
             .send(Data)
@@ -81,14 +81,14 @@ describe('Testing Driver API', () => {
     */
     describe('/POST Register as a new Driver with empty Password', () => {
         it('it should return an object which contains the error message', (done) => {
-        const Data = {
-            email: 'unitTest@driver.com',
-            password: '',
-            name: 'Unit Test',
-            car_number: '898989989'
-        }
-        
-        chai.request(server)
+            const Data = {
+                email: 'unitTest@driver.com',
+                password: '',
+                name: 'Unit Test',
+                car_number: '898989989'
+            }
+            
+            chai.request(server)
             .post('/api/driver/register')
             .type('form')
             .send(Data)
@@ -106,14 +106,14 @@ describe('Testing Driver API', () => {
     */
     describe('/POST Register as a new Driver with empty Car Number', () => {
         it('it should return an object which contains the error message', (done) => {
-        const Data = {
-            email: 'unitTest@driver.com',
-            password: 'driver',
-            name: 'Unit Test',
-            car_number: ''
-        }
-        
-        chai.request(server)
+            const Data = {
+                email: 'unitTest@driver.com',
+                password: 'driver',
+                name: 'Unit Test',
+                car_number: ''
+            }
+            
+            chai.request(server)
             .post('/api/driver/register')
             .type('form')
             .send(Data)
@@ -124,7 +124,9 @@ describe('Testing Driver API', () => {
             });
         });
     });
-
+    /*
+        Test the /GET route for Driver Profile
+    */
     describe('/GET VIEW Driver Profile', () => {
         it('it should return an object which is the driver profile from authorization header', (done) => {
             
@@ -132,7 +134,7 @@ describe('Testing Driver API', () => {
                 email: 'unitTest@driver.com',
                 password: 'driver'
             }
-        
+            //login in the driver then request the profile API
             chai.request(server)
             .post('/api/login')
             .type('form')

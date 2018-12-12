@@ -6,7 +6,7 @@ module.exports = (sequelize, type) => {
           autoIncrement: true
         },
         car_number: type.STRING,
-        police_id: type.INTEGER,
+        police_id: type.STRING,
         driver_id: type.STRING,
         reason_id: type.INTEGER,
         amount: type.INTEGER,

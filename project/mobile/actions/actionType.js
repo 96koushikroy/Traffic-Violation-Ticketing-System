@@ -1,0 +1,8 @@
+
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const GET_TICKET_REASONS = 'GET_TICKET_REASONS';
+export const GET_TICKETS = 'GET_TICKETS';
+export const ADD_TICKET = 'ADD_TICKET';
+export const VIEW_TICKET = 'VIEW_TICKET';
+export const DELETE_TICKET = 'DELETE_TICKET';
+export const GET_ERRORS = 'GET_ERRORS';

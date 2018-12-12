@@ -3,90 +3,139 @@ var uniqid = require('uniqid');
 const bcrypt = require('bcryptjs');
 const jwt_decode = require('jwt-decode')
 const isEmpty = require('../Validation/isEmpty')
-
+/*
+ API Method for registering a police officer by the admin
+*/
 exports.registerPolice = (req,res) => {
-    
+    const userToken = req.headers['authorization']
     let error = {}
-    /* First check User table if this user exists if exists then throw error else  generate an encrypted password using bcrypt and add the user to User and Police table*/
-    User.findAll({
-        where:{
-            'email': req.body.email
+    if(isEmpty(userToken)){
+        error.title = "User not authorized"
+        res.status(401).json(error);
+    }
+    else{
+        const decoded = jwt_decode(userToken)
+        if(decoded.user_type == 3){
+            if(isEmpty(req.body.email)){
+                error.title = "Email cannot be empty"
+                res.status(400).json(error);
+            }
+            else if(isEmpty(req.body.password)){
+                error.title = "Password cannot be empty"
+                res.status(400).json(error);
+            }
+            else{
+                let error = {}
+                /* First check User table if this user exists if exists then throw error else  generate an encrypted password using bcrypt and add the user to User and Police table*/
+                User.findAll({
+                    where:{
+                        'email': req.body.email
+                    }
+                })
+                .then(police => {
+                    if(!isEmpty(police)){
+                        error.title = "User Already Exists"
+                        res.status(400).json(error)
+                    }
+                    else{
+                        //generate pass based on 10 salt rounds the result will be on salt var
+                        bcrypt.genSalt(10, (err, salt) => {
+                            const PoliceObject = req.body
+                            let pid = uniqid()
+                            PoliceObject.id = pid
+            
+                            bcrypt.hash(PoliceObject.password, salt, (err, hash) => {
+                                if (err) console.log(err);
+                                
+                                PoliceObject.password = hash;
+                                
+                                Police.create(PoliceObject)
+                                .then(police => {
+                                    const UserObject = {
+                                        id: pid,
+                                        email: PoliceObject.email,
+                                        password: PoliceObject.password,
+                                        user_type: 2
+                                    }
+                                    User.create(UserObject)
+                                    .then(data =>{
+                                        res.status(200).json(police)                            
+                                    })
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                })
+                            });
+                        });
+                    }
+                })
+                .catch(err => {
+                    error = err
+                    res.status(500).json(error);
+                })
+            }
         }
-    })
-    .then(police => {
-        if(police.length != 0){
-            console.log(police)
-            error.title = "User Already Exists"
-            return res.json(error, 401)
-        }
-        else{
-            //generate pass based on 10 salt rounds the result will be on salt var
-            bcrypt.genSalt(10, (err, salt) => {
-                const PoliceObject = req.body
-                let pid = uniqid()
-                PoliceObject.id = pid
+    }
 
-				bcrypt.hash(PoliceObject.password, salt, (err, hash) => {
-                    if (err) console.log(err);
-                    
-                    PoliceObject.password = hash;
-                    
-					Police.create(PoliceObject)
-                    .then(police => {
-                        const UserObject = {
-                            id: pid,
-                            email: PoliceObject.email,
-                            password: PoliceObject.password,
-                            user_type: 2
-                        }
-                        User.create(UserObject)
-                        .then(data =>{
-                            res.json(police,200)                            
-                        })
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-				});
-			});
-        }
-    })
-    .catch(err => {
-        error = err
-        res.json(error, 500);
-    })
+
 }
-
+/*
+ API Method for vieweing all the police officers by the admin
+*/
 exports.viewAllPolice = (req,res) => {
+    const userToken = req.headers['authorization']
     let error = {}
-    Police.findAll()
-    .then(data => {
-        res.json(data, 200);
-    })
-    .catch(err => {
-        error = err
-        res.json(error, 500);
-    })
-
-}
-
-exports.viewOnePolice = (req,res) => {
-    let error = {}
-    Police.findOne({
-        where: {
-            id: req.params.pid
+    if(isEmpty(userToken)){
+        error.title = "User not authorized"
+        res.status(401).json(error);
+    }
+    else{
+        const decoded = jwt_decode(userToken)
+        if(decoded.user_type == 3){
+            Police.findAll()
+            .then(data => {
+                res.status(200).json(data);
+            })
+            .catch(err => {
+                error = err
+                res.status(500).json(error);
+            })
         }
-    })
-    .then(data => {
-        res.json(data, 200);
-    })
-    .catch(err => {
-        error = err
-        res.json(error, 500);
-    })
+    }
+}
+/*
+ API Method for vieweing one of the police officers by using the params requested by the admin
+*/
+exports.viewOnePolice = (req,res) => {
+    const userToken = req.headers['authorization']
+    let error = {}
+    if(isEmpty(userToken)){
+        error.title = "User not authorized"
+        res.status(401).json(error);
+    }
+    else{
+        const decoded = jwt_decode(userToken)
+        if(decoded.user_type == 3){
+            Police.findOne({
+                where: {
+                    id: req.params.pid
+                }
+            })
+            .then(data => {
+                res.json(data, 200);
+            })
+            .catch(err => {
+                error = err
+                res.json(error, 500);
+            })
+        }
+    }
+    
 }
 
-
+/*
+ API Method for deleting one of the police officers by using the params requested by the admin
+*/
 exports.deletePolice = (req, res) => {
     let error = {}
     Police.destroy({ 
@@ -107,6 +156,10 @@ exports.deletePolice = (req, res) => {
         res.json(error, 500);
     })
 }
+
+/*
+ API Method for viewing profile of the logged in police officer
+*/
 exports.viewPoliceProfile = (req, res) => {
 
     const userToken = req.headers['authorization']

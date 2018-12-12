@@ -20,7 +20,8 @@ const sequelize = new Sequelize('ticketing_system', 'root', 'Qwert3201', {
         //prevent sequelize from pluralizing table names
         freezeTableName: true,
         operatorsAliases: false
-    }
+    },
+    logging: false
   });
 
 //connect Models with the ORM

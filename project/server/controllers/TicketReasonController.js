@@ -49,7 +49,7 @@ exports.insertTicketReason = (req,res) => {
     API Method to view all the ticket reasons
 */
 exports.viewAllTicketReasons = (req, res) => {
-    const userToken = req.headers['authorization']
+    /*const userToken = req.headers['authorization']
     error = {}
     if(isEmpty(userToken)){
         error.title = "User not authorized"
@@ -58,7 +58,9 @@ exports.viewAllTicketReasons = (req, res) => {
     else{
         TicketReason.findAll()
         .then(TicketReasons => res.status(200).json(TicketReasons));
-    }
+    }*/
+    TicketReason.findAll()
+        .then(TicketReasons => res.status(200).json(TicketReasons));
 }
 
 /*

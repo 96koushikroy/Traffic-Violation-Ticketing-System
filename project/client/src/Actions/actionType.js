@@ -6,6 +6,11 @@ export const GET_TICKETS = 'GET_TICKETS';
 export const ADD_TICKET = 'ADD_TICKET';
 export const VIEW_TICKET = 'VIEW_TICKET';
 export const DELETE_TICKET = 'DELETE_TICKET';
+export const GET_ADMIN_TICKETS = 'GET_ADMIN_TICKETS';
+export const APPROVE_TICKET = 'APPROVE_TICKET';
+export const APPROVE_SINGLE_TICKET = 'APPROVE_SINGLE_TICKET';
+export const GET_DRIVER_TICKETS = 'GET_DRIVER_TICKETS';
+export const GET_ADMIN_ALL_TICKETS = 'GET_ADMIN_ALL_TICKETS';
 
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
@@ -16,5 +21,7 @@ export const DELETE_POLICE = 'DELETE_POLICE';
 
 export const ADD_DRIVER = 'ADD_DRIVER';
 
-export const GET_ERRORS = 'GET_ERRORS';
 
+export const GET_USER_PROFILE = 'GET_USER_PROFILE';
+
+export const GET_ERRORS = 'GET_ERRORS';

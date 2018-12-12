@@ -9,6 +9,11 @@ import Login from './Component/Authentication/Login'
 import ViewAllPolice from './Component/Police/viewAllPolice'
 import ViewPolice from './Component/Police/viewPolice'
 import DriverRegistration from './Component/Driver/driverRegistration'
+import ApproveTicketList from './Component/Ticket/approveTicketList'
+import ViewAllTicketDriver from './Component/Driver/viewAllDriverTicket'
+import AdminTicketSearch from './Component/Ticket/AdminTicketSearch'
+import UserProfile from './Component/Profile/userProfile'
+
 import setAuthToken from './Utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 import store from './store'
@@ -52,6 +57,10 @@ class App extends Component {
             <Route exact path="/police/view" component={ViewAllPolice} />
             <Route path="/police/view/:pid" component={ViewPolice} />
             <Route path="/register/driver" component={DriverRegistration} />
+            <Route path="/approveticket" component={ApproveTicketList} />
+            <Route path="/mytickets" component={ViewAllTicketDriver} />
+            <Route path="/admin/ticket/search" component={AdminTicketSearch} />
+            <Route path="/myprofile" component={UserProfile} />
           </Switch>
           <NotificationContainer />
         </div>

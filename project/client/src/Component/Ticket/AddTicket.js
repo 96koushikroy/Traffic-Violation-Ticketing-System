@@ -6,7 +6,7 @@ import Select from 'react-select'
 import {Link} from 'react-router-dom'
 import {NotificationManager} from 'react-notifications';
 import isEmpty from '../../Validation/isEmpty'
-
+import axios from 'axios'
 
 class AddTicket extends Component{
     state = {
@@ -16,7 +16,8 @@ class AddTicket extends Component{
         other_documents: '',
         amount: '',
         issue_date: '',
-        deadline_date: ''
+        deadline_date: '',
+        file: null
     }
 
     componentDidMount(){
@@ -39,6 +40,9 @@ class AddTicket extends Component{
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated == false) {
             this.props.history.push('/login');
+        }
+        if(nextProps.tickets.length != this.props.tickets){
+            this.props.getTickets();
         }
     }
 
@@ -65,15 +69,50 @@ class AddTicket extends Component{
             amount: '',
             issue_date: '',
             deadline_date: ''
+
         });
-        this.props.getTickets();
+        NotificationManager.success('Ticket Added Successfully!')
     }
 
     handleDelete = (e) => {
         let rr = window.confirm("Are you sure to delete this!?");
         if (rr == true) {
             this.props.deleteTicket(e.target.id)
+            NotificationManager.success('Ticket Deleted Successfully!')
         }
+    }
+
+
+
+    onChange = (e) => {
+        this.setState({
+            file:e.target.files[0]
+        })
+    }
+    handleFileSubmit = (e) => {
+        e.preventDefault()
+        const formData = new FormData();
+        formData.append('file',this.state.file);
+        formData.append('apikey','47cfc563df88957');
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+        axios.post("https://api.ocr.space/parse/image",formData,config)
+        .then((response) => {
+            console.log(response.data.ParsedResults[0]);
+            let ocrRes = response.data.ParsedResults[0].ParsedText
+            if(isEmpty(ocrRes)){
+                NotificationManager.error('Server did not return any result');
+            }
+            this.setState({
+                car_number: response.data.ParsedResults[0].ParsedText
+            })
+        })
+        .catch((error) => {
+            console.log(error)
+        });
     }
 
     render(){
@@ -123,13 +162,16 @@ class AddTicket extends Component{
         return(
             <div className="container">
                 <div className="row text-center">
-                    <div className="col-md-4"></div>
-                    <div className="col-md-4">
-
+                    <div className="col-md-6">
                         <form onSubmit={this.handleSubmit}>
                             <h5 className="text-center">Add Ticket</h5>
 
                             <div className="input-field">
+                                <label htmlFor="car_number_file">Upload the Car Number Photo: </label>
+                                <br/>
+                                <input type="file" id="car_number_file" onChange={this.onChange} />
+                                <button id="submitFile" onClick={this.handleFileSubmit}>Upload</button>
+                                <br/><br/>
                                 <label htmlFor="car_number">Car Number</label>
                                 <input type="text" id="car_number" className="form-control" value={this.state.car_number}  onChange={this.handleChange}/>
                             </div>
@@ -164,21 +206,12 @@ class AddTicket extends Component{
                                 <button className="btn btn-primary">Submit</button>
                             </div>
                         </form>
-
                     </div>
-                    
-                    <div className="col-md-4"></div>
+                    <div className="col-md-6">
+                        <h5>My Tickets</h5>
+                        {TicketList}
+                    </div>
                 </div>
-                <br/>
-                <br/>
-                <div className="row text-center">
-                        <div className="col-md-1"></div>
-                        <div className="col-md-10">
-                            <h5>My Tickets</h5>
-                            {TicketList}
-                        </div>
-                        <div className="col-md-1"></div>
-                    </div>
             </div>
         )
     }

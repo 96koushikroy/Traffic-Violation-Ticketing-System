@@ -6,7 +6,8 @@ const PoliceModel = require('../models/police')
 const DriverModel = require('../models/driver')
 const AdminModel = require('../models/admin')
 
-const sequelize = new Sequelize('ticketing_system', 'root', '', {
+//initialize orm with db name u_name and pass and pass the config options as obj.
+const sequelize = new Sequelize('ticketing_system', 'root', 'Qwert3201', {
     host: 'localhost',
     dialect: 'mysql',
     pool: {
@@ -22,7 +23,7 @@ const sequelize = new Sequelize('ticketing_system', 'root', '', {
     }
   });
 
-
+//connect Models with the ORM
 const TicketReason = TicketReasonModel(sequelize, Sequelize);
 const Ticket = TicketModel(sequelize, Sequelize);
 const Police = PoliceModel(sequelize, Sequelize);

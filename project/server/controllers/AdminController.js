@@ -1,6 +1,9 @@
 const { Admin, User } = require('../config/sequelize')
 var uniqid = require('uniqid');
 const bcrypt = require('bcryptjs');
+const jwt_decode = require('jwt-decode')
+const isEmpty = require('../Validation/isEmpty')
+
 
 exports.registerAdmin = (req,res) => {
     
@@ -54,9 +57,10 @@ exports.registerAdmin = (req,res) => {
     })
 }
 
-exports.viewAdminProfile= (res, req)=>{
+exports.viewAdminProfile = (req, res) => {
 
     const userToken = req.headers['authorization']
+    
     error = {}
     if(isEmpty(userToken)){
         error.title = "User not authorized"
@@ -64,12 +68,14 @@ exports.viewAdminProfile= (res, req)=>{
     }
     else{
         const decoded = jwt_decode(userToken)
-        Driver.findAll({
+        Admin.findOne({
             where: {
-                admin_id: decoded.id
+                id: decoded.id
             }
         })
-        .then(admins => res.json(admins, 200));
+        .then(admins => {
+            res.json(admins, 200)
+        });
     }
 
 }

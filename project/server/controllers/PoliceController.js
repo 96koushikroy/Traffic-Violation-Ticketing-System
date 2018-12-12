@@ -1,11 +1,13 @@
 const { Police, User } = require('../config/sequelize')
 var uniqid = require('uniqid');
 const bcrypt = require('bcryptjs');
+const jwt_decode = require('jwt-decode')
+const isEmpty = require('../Validation/isEmpty')
 
 exports.registerPolice = (req,res) => {
     
     let error = {}
-
+    /* First check User table if this user exists if exists then throw error else  generate an encrypted password using bcrypt and add the user to User and Police table*/
     User.findAll({
         where:{
             'email': req.body.email
@@ -18,6 +20,7 @@ exports.registerPolice = (req,res) => {
             return res.json(error, 401)
         }
         else{
+            //generate pass based on 10 salt rounds the result will be on salt var
             bcrypt.genSalt(10, (err, salt) => {
                 const PoliceObject = req.body
                 let pid = uniqid()
@@ -92,6 +95,11 @@ exports.deletePolice = (req, res) => {
         } 
     })
     .then(data => {
+        User.destroy({ 
+            where: { 
+                id: req.params.pid 
+            } 
+        })
         res.json(data, 200)
     })
     .catch(err => {
@@ -109,9 +117,9 @@ exports.viewPoliceProfile = (req, res) => {
     }
     else{
         const decoded = jwt_decode(userToken)
-        Police.findAll({
+        Police.findOne({
             where: {
-                police_id: decoded.id
+                id: decoded.id
             }
         })
         .then(polices => res.json(polices, 200));

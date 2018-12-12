@@ -179,16 +179,92 @@ exports.viewPoliceProfile = (req, res) => {
     }
 }
 
-exports.editPoliceProfile = (req, res) => {
-    Police.update(
-      {police_id: req.body.police_id},
-      {where: req.params.id}
-    )
-    .then((data) => {
-      res.json(data,200)
-    })
-    .catch(err => {
-        console.log(err)
-    })
 
-   })
+/*
+ API Method for editing profile of the logged in police officer
+*/
+
+exports.editPoliceProfile = (req, res) => {
+    const userToken = req.headers['authorization']
+    error = {}
+    if(isEmpty(userToken)){
+        error.title = "User not authorized"
+        res.status(401).json(error);
+    }
+    else{
+        const decoded = jwt_decode(userToken)
+        const Data = {
+            name: req.body.name,
+            email: req.body.email
+        }
+
+        const DataU = {
+            email: req.body.email
+        }
+
+        console.log(req.body)
+    
+        if(!isEmpty(req.body.password)){
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(req.body.password, salt, (err, hash) => {
+                    if (err) console.log(err);
+                    
+                    Data.password = hash;
+                    DataU.password = hash;
+
+                    User.update(DataU,{
+                        where: {
+                            id: decoded.id
+                        }
+                    })
+                    .then((data) => {
+                      res.json(data,200)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+
+                    Police.update(Data,{
+                        where: {
+                            id: decoded.id
+                        }
+                    })
+                    .then((data) => {
+                      res.json(data,200)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                    
+                });
+            });
+        }
+        else{
+            Police.update(Data,{
+                where: {
+                    id: decoded.id
+                }
+            })
+            .then((data) => {
+              res.json(data,200)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+            User.update(DataU,{
+                where: {
+                    id: decoded.id
+                }
+            })
+            .then((data) => {
+              res.json(data,200)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+        
+        
+    }
+}

@@ -3,11 +3,16 @@ var uniqid = require('uniqid');
 const bcrypt = require('bcryptjs');
 const jwt_decode = require('jwt-decode')
 const isEmpty = require('../Validation/isEmpty')
+
+/*
+ API Method for registering a new driver by the admin
+*/
 exports.registerDriver = (req,res) => {
     
     let error = {}
     const Data = req.body;
 
+    //checking if the required datas are empty
     if(Data.email.length == 0){
         error.title = "Email Cannot be empty"
         res.status(400).json(error)
@@ -32,7 +37,7 @@ exports.registerDriver = (req,res) => {
                 res.status(400).json(error)
             }
             else{
-    
+                //encrypt the password and create the records in the database
                 bcrypt.genSalt(10, (err, salt) => {
                     const DriverObject = req.body
                     let pid = uniqid()
@@ -69,6 +74,10 @@ exports.registerDriver = (req,res) => {
 
     
 }
+
+/*
+ API Method for viewing profile of the logged in driver
+*/
 exports.viewDriverProfile= (req, res)=>{
 
     const userToken = req.headers['authorization']
@@ -89,17 +98,89 @@ exports.viewDriverProfile= (req, res)=>{
 
 }
 
+/*
+ API Method for editing profile of the logged in driver
+*/
 exports.editDriverProfile = (req, res) => {
-    Driver.update(
-      {driver_id: req.body.driver_id},
-      {where: req.params.id}
-    )
-    .then((data) => {
-      res.json(data,200)
-    })
-    .catch(err => {
-        console.log(err)
-    })
+    const userToken = req.headers['authorization']
+    error = {}
+    if(isEmpty(userToken)){
+        error.title = "User not authorized"
+        res.status(401).json(error);
+    }
+    else{
+        const decoded = jwt_decode(userToken)
+        const Data = {
+            name: req.body.name,
+            email: req.body.email
+        }
 
-   })
+        const DataU = {
+            email: req.body.email
+        }
+    
+        if(!isEmpty(req.body.password)){
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(req.body.password, salt, (err, hash) => {
+                    if (err) console.log(err);
+                    
+                    Data.password = hash;
+                    DataU.password = hash;
+
+                    User.update(DataU,{
+                        where: {
+                            id: decoded.id
+                        }
+                    })
+                    .then((data) => {
+                      res.json(data,200)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+
+                    Driver.update(Data,{
+                        where: {
+                            id: decoded.id
+                        }
+                    })
+                    .then((data) => {
+                      res.json(data,200)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                    
+                });
+            });
+        }
+        else{
+            Driver.update(Data,{
+                where: {
+                    id: decoded.id
+                }
+            })
+            .then((data) => {
+              res.json(data,200)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+            User.update(DataU,{
+                where: {
+                    id: decoded.id
+                }
+            })
+            .then((data) => {
+              res.json(data,200)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+        
+        
+    }
+}
    

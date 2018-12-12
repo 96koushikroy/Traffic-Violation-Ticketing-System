@@ -2,10 +2,13 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import isEmpty from '../../Validation/isEmpty'
 import {NotificationManager} from 'react-notifications';
-import {getAdminProfile, getPoliceProfile, getDriverProfile} from '../../Actions/profileActions'
+import {getAdminProfile, getPoliceProfile, getDriverProfile, updateDriverProfile, updateAdminProfile, updatePoliceProfile} from '../../Actions/profileActions'
 class UserProfile extends Component {
     state = {
-
+        name:'',
+        email:'',
+        password:'',
+        car_number:''
     }
     componentDidMount(){
         if (this.props.auth.isAuthenticated == false) {
@@ -28,8 +31,36 @@ class UserProfile extends Component {
         if (nextProps.auth.isAuthenticated == false) {
             this.props.history.push('/login');
         }
+        if(!isEmpty(nextProps.profile)){
+            this.setState(nextProps.profile)
+            this.setState({
+                password:''
+            })
+        }
     }
+
     handleChange = (e) => {
+        this.setState({
+            [e.target.id]: e.target.value
+        })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+        const newData = this.state
+        delete newData.car_number
+
+        if(this.props.auth.user.user_type == 1){
+            this.props.updateDriverProfile(this.state)
+        }
+        else if(this.props.auth.user.user_type == 2){
+            this.props.updatePoliceProfile(newData)
+        }
+        else{
+            // user type  == 3 Admin
+            this.props.updateAdminProfile(newData)
+        }
+        NotificationManager.success('Profile Updated Successfully')
         
     }
 
@@ -45,23 +76,19 @@ class UserProfile extends Component {
                         User ID: {Profile.id}
                     </h3>
                     <ul className="list-group list-group-flush">
-                        <li className="list-group-item">Name: <input type="text" id="name" className="form-control" value={Profile.name} onChange={this.handleChange}/></li>
-                        <li className="list-group-item">Email: <input type="text" id="email" className="form-control" value={Profile.email} onChange={this.handleChange}/></li>
+                        <li className="list-group-item">Name: <input type="text" id="name" className="form-control" value={this.state.name} onChange={this.handleChange}/></li>
+                        <li className="list-group-item">Email: <input type="text" id="email" className="form-control" value={this.state.email} onChange={this.handleChange}/></li>
                         {   
                             this.props.auth.user.user_type == 1 ? (
-                                    <li className="list-group-item">Car Number: <input type="text" id="car_number" className="form-control" value={Profile.car_number} onChange={this.handleChange}/></li>
+                                    <li className="list-group-item">Car Number: <input type="text" id="car_number" className="form-control" value={this.state.car_number} onChange={this.handleChange}/></li>
                             ) : (
                                     <div></div>
                             )
-                                
                         }
                         <li className="list-group-item">Password: <input type="password" id="password" className="form-control" placeholder="Enter your new pass if you want to change" onChange={this.handleChange}/></li>
-                        
-                            
-                        
                     </ul>
                     <div className="card-footer text-muted">
-                        <button className="btn btn-primary">Save Changes</button>
+                        <button className="btn btn-primary" onClick={this.handleSubmit}>Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -95,4 +122,4 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps,{getAdminProfile, getPoliceProfile, getDriverProfile})(UserProfile)
+export default connect(mapStateToProps,{getAdminProfile, getPoliceProfile, getDriverProfile, updateDriverProfile, updateAdminProfile, updatePoliceProfile})(UserProfile)

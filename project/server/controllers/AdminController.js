@@ -4,7 +4,9 @@ const bcrypt = require('bcryptjs');
 const jwt_decode = require('jwt-decode')
 const isEmpty = require('../Validation/isEmpty')
 
-
+/*
+ API Method for registering an admin (Unused)
+*/
 exports.registerAdmin = (req,res) => {
     
     let error = {}
@@ -57,6 +59,10 @@ exports.registerAdmin = (req,res) => {
     })
 }
 
+
+/*
+ API Method for viewing profile of the logged in admin
+*/
 exports.viewAdminProfile = (req, res) => {
 
     const userToken = req.headers['authorization']
@@ -80,16 +86,89 @@ exports.viewAdminProfile = (req, res) => {
 
 }
 
-exports.editAdminProfile = (req, res) => {
-    Admin.update(
-      {admin_id: req.body.admin_id},
-      {where: req.params.id}
-    )
-    .then((data) => {
-      res.json(data,200)
-    })
-    .catch(err => {
-        console.log(err)
-    })
+/*
+ API Method for editing profile of the logged in admin
+*/
 
-   })
+exports.editAdminProfile = (req, res) => {
+    const userToken = req.headers['authorization']
+    error = {}
+    if(isEmpty(userToken)){
+        error.title = "User not authorized"
+        res.status(401).json(error);
+    }
+    else{
+        const decoded = jwt_decode(userToken)
+        const Data = {
+            name: req.body.name,
+            email: req.body.email
+        }
+
+        const DataU = {
+            email: req.body.email
+        }
+    
+        if(!isEmpty(req.body.password)){
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(req.body.password, salt, (err, hash) => {
+                    if (err) console.log(err);
+                    
+                    Data.password = hash;
+                    DataU.password = hash;
+
+                    User.update(DataU,{
+                        where: {
+                            id: decoded.id
+                        }
+                    })
+                    .then((data) => {
+                      res.json(data,200)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+
+                    Admin.update(Data,{
+                        where: {
+                            id: decoded.id
+                        }
+                    })
+                    .then((data) => {
+                      res.json(data,200)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                    
+                });
+            });
+        }
+        else{
+            Admin.update(Data,{
+                where: {
+                    id: decoded.id
+                }
+            })
+            .then((data) => {
+              res.json(data,200)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+            User.update(DataU,{
+                where: {
+                    id: decoded.id
+                }
+            })
+            .then((data) => {
+              res.json(data,200)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+        
+        
+    }
+}

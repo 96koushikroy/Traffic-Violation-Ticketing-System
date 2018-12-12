@@ -45,18 +45,17 @@ router.get('/api/ticket/driver/view', TicketController.viewDriverTickets) //api 
 
 /* API Set for viewing Users profile */
 router.get('/api/driver/viewprofile',DriverController.viewDriverProfile)
-router.post('/api/driver/editprofile',DriverController/editDriverProfile)
+router.post('/api/driver/editprofile',DriverController.editDriverProfile)
 router.get('/api/police/viewprofile',PoliceController.viewPoliceProfile)
-<<<<<<< HEAD
-router.post('/api/police/editprofile',PoliceController/editPoliceProfile)
+router.post('/api/police/editprofile',PoliceController.editPoliceProfile)
 router.get('/api/admin/viewprofile',AdminController.viewAdminProfile)
-router.post('/api/admin/editprofile',AdminController/editAdminProfile)
-=======
+router.post('/api/admin/editprofile',AdminController.editAdminProfile)
 router.get('/api/admin/viewprofile',AdminController.viewAdminProfile)
 
 
-
+//Ocr handler(unused)
 router.post('/api/ocr/handler',OCRAPIController.processImage)
 
->>>>>>> ffb8ec962e3f598625d204a11cdcff25d1e90ebc
+
+
 module.exports = router;

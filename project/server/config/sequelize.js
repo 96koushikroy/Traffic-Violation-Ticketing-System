@@ -7,7 +7,7 @@ const DriverModel = require('../models/driver')
 const AdminModel = require('../models/admin')
 
 //initialize orm with db name u_name and pass and pass the config options as obj.
-const sequelize = new Sequelize('ticketing_system', 'root', 'Qwert3201', {
+const sequelize = new Sequelize('ticketing_system', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
     pool: {

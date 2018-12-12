@@ -1,9 +1,9 @@
 import axios from 'axios'
-import {GET_USER_PROFILE, GET_ERRORS} from './actionType'
+import {GET_USER_PROFILE, UPDATE_USER_PROFILE, GET_ERRORS} from './actionType'
 import {NotificationManager} from 'react-notifications';
 
 
-//get admin profile form admin model on the server
+//get admin profile from admin model on the server
 export const getAdminProfile = () => dispatch => {
     axios
     .get('/api/admin/viewprofile')
@@ -22,7 +22,7 @@ export const getAdminProfile = () => dispatch => {
     })
 }
 
-//get police profile form police model on the server
+//get police profile from police model on the server
 export const getPoliceProfile = () => dispatch => {
     axios
     .get('/api/police/viewprofile')
@@ -41,13 +41,68 @@ export const getPoliceProfile = () => dispatch => {
     })
 }
 
-//get driver profile form driver model on the server
+//get driver profile from driver model on the server
 export const getDriverProfile = () => dispatch => {
     axios
     .get('/api/driver/viewprofile')
     .then(res => {
         dispatch({
             type: GET_USER_PROFILE,
+            payload: res.data
+        })
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+        NotificationManager.error(err.response.data.title);
+    })
+}
+
+//update driver profile
+export const updateDriverProfile = (Data) => dispatch => {
+    axios
+    .post('/api/driver/editprofile', Data)
+    .then(res => {
+        dispatch({
+            type: UPDATE_USER_PROFILE,
+            payload: res.data
+        })
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+        NotificationManager.error(err.response.data.title);
+    })
+}
+//update admin profile
+export const updateAdminProfile = (Data) => dispatch => {
+    axios
+    .post('/api/admin/editprofile', Data)
+    .then(res => {
+        dispatch({
+            type: UPDATE_USER_PROFILE,
+            payload: res.data
+        })
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+        NotificationManager.error(err.response.data.title);
+    })
+}
+//update police profile
+export const updatePoliceProfile = (Data) => dispatch => {
+    axios
+    .post('/api/police/editprofile', Data)
+    .then(res => {
+        dispatch({
+            type: UPDATE_USER_PROFILE,
             payload: res.data
         })
     })

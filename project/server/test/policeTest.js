@@ -147,3 +147,38 @@ describe('/POST INSERT Police with No Data', () => {
         });
     });
 });
+
+ /*
+        Test the /GET route for deleting one Police
+    */
+   describe('/GET DELETE one Police', () => {
+    it('it should return an object of all the Police', (done) => {
+        chai.request(server)
+        .get('/api/police/delete/:pid')
+        //set admin token
+        .set('authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Imt3MzYxc2pwOHF1dHdkIiwibmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJ1c2VyX3R5cGUiOjMsImlhdCI6MTU0NDM3NjU1MSwiZXhwIjoxNTQ0MzgwMTUxfQ.tLmwYfg3meXaMPhVtc5Vq9cZpGE87fVXG7HkdSEzIjo')
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+}); 
+
+ /*
+        Test the /GET route for deleting Police Profile
+    */
+   describe('/GET DELETE Police Profile', () => {
+    it('it should return an object of all the Police', (done) => {
+        chai.request(server)
+        .get('/api/police/delete')
+        //set admin token
+        .set('authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Imt3MzYxc2pwOHF1dHdkIiwibmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJ1c2VyX3R5cGUiOjMsImlhdCI6MTU0NDM3NjU1MSwiZXhwIjoxNTQ0MzgwMTUxfQ.tLmwYfg3meXaMPhVtc5Vq9cZpGE87fVXG7HkdSEzIjo')
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+});
+

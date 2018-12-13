@@ -127,6 +127,9 @@ exports.viewOneTicket = (req, res) => {
     //Ticket.hasOne(Police)
     
     //join the police model, Ticket Model and Ticket Reason Model
+
+    console.log(req.params)
+
     Police.hasMany(Ticket, {foreignKey: 'police_id'})
     Ticket.belongsTo(Police, {foreignKey: 'police_id'})
 

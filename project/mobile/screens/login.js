@@ -28,7 +28,7 @@ class LoginScreen extends React.Component {
         if(nextProps.auth.isAuthenticated == true){
             this.props.navigation.navigate('Dashboard')
         }
-        if (nextProps.error) {
+        if (!isEmpty(nextProps.error)) {
             this.setState({ error: nextProps.error });
         }
     }

@@ -43,7 +43,7 @@ router.get('/api/ticket/driver/view', TicketController.viewDriverTickets) //api 
 
 
 
-/* API Set for viewing Users profile */
+/* API Set for viewing and editing Users profile */
 router.get('/api/driver/viewprofile',DriverController.viewDriverProfile)
 router.post('/api/driver/editprofile',DriverController.editDriverProfile)
 router.get('/api/police/viewprofile',PoliceController.viewPoliceProfile)

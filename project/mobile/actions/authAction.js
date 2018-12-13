@@ -3,6 +3,8 @@ import { SET_CURRENT_USER, GET_ERRORS } from './actionType'
 import jwt_decode from 'jwt-decode'
 import { AsyncStorage } from "react-native"
 import isEmpty from '../Validation/isEmpty'
+import {BASE_URL} from '../config'
+
 
 const setAuthToken = token => {
     if (token) {
@@ -15,7 +17,7 @@ const setAuthToken = token => {
 };
 
 export const loginUser = userData => dispatch => {
-    axios.post('http://localhost:3001/api/login', userData)
+    axios.post(BASE_URL + '/api/login', userData)
     .then(res => {
         const {token} = res.data
         //store the token in browsers localstore

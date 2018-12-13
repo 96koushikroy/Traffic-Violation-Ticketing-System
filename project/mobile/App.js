@@ -10,9 +10,12 @@ import isEmpty from './Validation/isEmpty'
 import setAuthToken from './Utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 import {setCurrentUser, logoutUser} from './actions/authAction'
-
+import { COLOR, ThemeContext, getTheme } from 'react-native-material-ui';
 
 const AppContainer = createAppContainer(AppNavigator)
+const uiTheme = {
+
+};
 
 // check for token
 let Tok = '';
@@ -42,8 +45,11 @@ AsyncStorage.getItem('jwtToken').then(v => {
 class App extends React.Component{
   render(){
     return(
+      
       <Provider store={store}>
-        <AppContainer />
+        <ThemeContext.Provider value={getTheme(uiTheme)}>
+          <AppContainer />
+        </ThemeContext.Provider>
       </Provider>
     )
   }  

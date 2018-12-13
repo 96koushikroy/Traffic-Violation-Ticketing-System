@@ -1,12 +1,14 @@
 import React from 'react'
-import {View, Text, Button, AsyncStorage} from 'react-native'
+import {View, Text} from 'react-native'
 import {connect} from 'react-redux'
 import {logoutUser} from '../actions/authAction'
+import { Button } from 'react-native-material-ui';
 
 class DashboardScreen extends React.Component{
     static navigationOptions = {
         title: 'Dashboard',
-        headerLeft: null
+        headerLeft: null,
+        gesturesEnabled: false,
     };
 
     componentDidMount(){
@@ -25,22 +27,34 @@ class DashboardScreen extends React.Component{
 
         
         return(
-            <View>
-                <Text>Welcome, {this.props.auth.user.name}</Text>
+            <View style={{padding: 10}}>
+                <Text style={{textAlign: 'center', fontSize: 12}}>Welcome, {this.props.auth.user.name}{"\n"}</Text>
+                <Text>{"\n"}</Text>
                 <Button
-                    title="Add Ticket"
+                    primary
+                    raised
+                    text="Add Ticket"
                     onPress={() => this.props.navigation.navigate('AddTicket')}
                 />
+                <Text>{"\n"}</Text>
                 <Button
-                    title="My Tickets"
+                    primary
+                    raised
+                    text="My Tickets"
                     onPress={() => this.props.navigation.navigate('MyTickets')}
                 />
+                <Text>{"\n"}</Text>
                 <Button
-                    title="Profile"
+                    primary
+                    raised
+                    text="Profile"
                     onPress={() => this.props.navigation.navigate('MyProfile')}
                 />
+                <Text>{"\n"}</Text>
                 <Button
-                    title="Logout"
+                    text="Logout"
+                    primary
+                    raised
                     onPress={() => this.props.logoutUser()}
                 />
             </View>

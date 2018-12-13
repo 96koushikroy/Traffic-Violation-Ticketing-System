@@ -1,8 +1,11 @@
 import React from 'react'
-import {View, Text, Button, TextInput} from 'react-native'
+import {View, Text} from 'react-native'
 import {connect} from 'react-redux'
 import {loginUser} from '../actions/authAction'
 import isEmpty from '../Validation/isEmpty'
+import { Ionicons } from '@expo/vector-icons';
+import { Button } from 'react-native-material-ui';
+import TextInput from 'react-native-material-textinput'
 
 class LoginScreen extends React.Component {
     state = {
@@ -43,7 +46,11 @@ class LoginScreen extends React.Component {
         const ErrorMessage = () => {
             if(!isEmpty(error)){
                 return(
-                    <Text>{error.title}</Text>
+                    <Text style={{textAlign: 'center', fontSize: 12, color: 'red'}}>
+                        {"\n"}
+                        {error.title}
+                        {"\n"}
+                    </Text>
                 )
             }
             else{
@@ -54,18 +61,24 @@ class LoginScreen extends React.Component {
         }
 
         return(
-            <View>
-                <Text>Login Screen</Text>
-                
+            <View style={{padding: 10}}>
+                <Text style={{
+                    textAlign: 'center',
+                    fontSize: 20,
+
+                }}>Police Login</Text>
+
                 <ErrorMessage />
 
                 <TextInput
+                    label="Email Address:"
                     style={{height: 40, borderColor: 'black', borderWidth: 1}}
                     onChangeText={(text) => this.setState({email: text})}
                     placeholder="abc@abc.com"
                     value={this.state.text}
                 />
                 <TextInput
+                    label="Password:"
                     style={{height: 40, borderColor: 'black', borderWidth: 1}}
                     onChangeText={(text) => this.setState({password: text})}
                     placeholder="******"
@@ -73,9 +86,15 @@ class LoginScreen extends React.Component {
                     secureTextEntry={true}
                 />
                 <Button
-                    title="Login"
+                    primary
+                    raised
+                    icon={<Ionicons name="ios-log-in" size={32} color="white" />}
+                    style={{width:10}}
+                    text=" Login"
                     onPress={this.handleLogin}
                 />
+
+                
             </View>
         )
     }

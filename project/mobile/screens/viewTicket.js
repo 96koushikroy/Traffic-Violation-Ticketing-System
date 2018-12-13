@@ -37,11 +37,7 @@ class ViewTicket extends React.Component{
             this.props.navigation.navigate('Login')
         }
     }
-
-    handleDelete = () => {
-        console.log('del: ')
-    }
-
+    
     render(){
         const Ticket = this.props.ticket
         const tid = (!isEmpty(Ticket)) ? (

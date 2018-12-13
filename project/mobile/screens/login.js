@@ -75,7 +75,7 @@ class LoginScreen extends React.Component {
                     style={{height: 40, borderColor: 'black', borderWidth: 1}}
                     onChangeText={(text) => this.setState({email: text})}
                     placeholder="abc@abc.com"
-                    value={this.state.text}
+                    value={this.state.email}
                 />
                 <TextInput
                     label="Password:"

@@ -6,3 +6,7 @@ export const ADD_TICKET = 'ADD_TICKET';
 export const VIEW_TICKET = 'VIEW_TICKET';
 export const DELETE_TICKET = 'DELETE_TICKET';
 export const GET_ERRORS = 'GET_ERRORS';
+
+
+export const GET_USER_PROFILE = 'GET_USER_PROFILE';
+export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';

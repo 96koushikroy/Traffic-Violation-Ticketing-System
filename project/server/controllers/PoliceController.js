@@ -201,8 +201,6 @@ exports.editPoliceProfile = (req, res) => {
         const DataU = {
             email: req.body.email
         }
-
-        console.log(req.body)
     
         if(!isEmpty(req.body.password)){
             bcrypt.genSalt(10, (err, salt) => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, Picker} from 'react-native'
+import {View, Text, Switch, StyleSheet, Image, ActivityIndicator} from 'react-native'
 import { Button } from 'react-native-material-ui';
 import {getTicketReasons, addTicket} from '../actions/ticketAction'
 import {connect} from 'react-redux'
@@ -7,6 +7,9 @@ import TextInput from 'react-native-material-textinput'
 import DatePicker from 'react-native-datepicker'
 import { Select, Option } from 'react-native-select-list2';
 import isEmpty from '../Validation/isEmpty';
+import { Camera, Permissions, ImageManipulator } from 'expo';
+import axios from 'axios'
+import { BASE_URL } from '../config';
 
 class AddTicket extends React.Component {
     static navigationOptions = {
@@ -21,10 +24,15 @@ class AddTicket extends React.Component {
         amount: '',
         issue_date: '',
         deadline_date: '',
-        file: null
+        b64img: null,
+        switchValue: false,
+        hasCameraPermission: null,
+        type: Camera.Constants.Type.back,
+        imguri:'',
+        loading: false
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         if (this.props.auth.isAuthenticated == false) {
             this.props.navigation.navigate('Login')
             //NotificationManager.error('Please Login to continue..')
@@ -37,6 +45,11 @@ class AddTicket extends React.Component {
             this.setState({
                 police_id: this.props.auth.user.id
             });
+
+
+
+            const { status } = await Permissions.askAsync(Permissions.CAMERA);
+            this.setState({ hasCameraPermission: status === 'granted' });
             this.props.getTicketReasons();
         }
     }
@@ -55,15 +68,119 @@ class AddTicket extends React.Component {
             other_documents: '',
             amount: '',
             issue_date: '',
-            deadline_date: ''
+            deadline_date: '',
+            b64img:''
 
         });
         //NotificationManager.success('Ticket Added Successfully!')
     }
 
+    /* Work with the ocr api */
+    handleFileSubmit = async (uri, b64) => {
+        const rr = await ImageManipulator.manipulateAsync(uri,[{resize:{
+            width: 500, height: 500
+        }}],{base64: true})
+        //rr.base64
+        this.setState({ b64img: rr.base64, imguri: rr.uri });
+
+        const formData = new FormData();
+        
+        formData.append('base64Image', 'data:image/jpg;base64,'+rr.base64);
+        formData.append('apikey','47cfc563df88957');
+
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+        this.setState({
+            loading: true
+        })
+        axios.post("https://api.ocr.space/parse/image", formData, config)
+        .then((response) => {
+            console.log(response.data);
+            let ocrRes = response.data.ParsedResults[0].ParsedText
+            if(isEmpty(ocrRes)){
+                //NotificationManager.error('Server did not return any result');
+                console.log('error')
+            }
+            this.setState({
+                car_number: response.data.ParsedResults[0].ParsedText
+            })
+            this.setState({
+                loading: false
+            })
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+
+    }
+
+    snapPhoto = async () => {
+        if (this.camera) {
+            let photo = await this.camera.takePictureAsync({ width:50, height:50, quality: 0, base64: true });
+            if (photo) {
+                this.handleFileSubmit(photo.uri, 'data:image/jpg;base64,'+photo.base64)
+                this.setState({
+                    switchValue: false
+                })
+            }
+        }
+    };
+
     render(){
+        const { hasCameraPermission } = this.state;
         return(
             <View style={{padding: 10}}>
+
+                <Text>Show camera</Text>    
+                <Switch 
+                    onValueChange={value => {
+                        this.setState({ switchValue: value });
+                    }}
+                    value={this.state.switchValue}
+                />
+
+                {this.state.loading == true ? (
+                    <ActivityIndicator size="large" color="#0000ff" />
+                ) : (
+                    <Text></Text>
+                )
+
+                }
+
+                {/*!isEmpty(this.state.imguri) ? (
+                    <Image source={{uri: this.state.imguri}}
+                        style={{width: 400, height: 400}} />
+                ): (
+                    <Text></Text>
+                )
+                  */  
+                }
+                
+                {this.state.switchValue == true && hasCameraPermission === true ? (
+                        <View>
+                            <View style={styles.cameraview}> 
+                                <Camera base64={true} ref={ref => { this.camera = ref; }} style={styles.camera} type={this.state.type}></Camera>
+                                
+                            </View>
+                            <Button
+                                primary
+                                raised
+                                style={{width:10}}
+                                text="Capture"
+                                onPress={this.snapPhoto}
+                            />
+                        </View>
+                        
+                    
+                    ) : (
+                        <Text></Text>
+                    )
+                }
+                    
+
                 <TextInput
                     label="Car Number:"
                     style={{height: 40, borderColor: 'black', borderWidth: 1}}
@@ -128,7 +245,6 @@ class AddTicket extends React.Component {
     }
 }
 
-
 const mapStateToProps = (state, ownProps) => {
     return {
         reasons: state.ticket.reasons,
@@ -136,4 +252,65 @@ const mapStateToProps = (state, ownProps) => {
         auth: state.auth
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "#1dd1a1",
+      alignItems: "center",
+      justifyContent: "flex-start"
+    },
+    switchview: {
+      marginTop: 50,
+      backgroundColor: "white",
+      padding: 10,
+      alignItems: "center",
+      borderRadius: 5,
+      marginBottom: 5
+    },
+    switch: {
+      padding: 5
+    },
+    cameraview: {
+      height: 400,
+      width: "90%",
+      backgroundColor: "white",
+      borderRadius: 5,
+      justifyContent: "center",
+      alignItems: "center"
+    },
+    camera: {
+      height: "95%",
+      width: "95%",
+      backgroundColor: "white",
+      borderRadius: 5,
+      justifyContent: "center",
+      alignItems: "center"
+    },
+    camerabuttonview: {
+      height: "100%",
+      backgroundColor: "transparent"
+    },
+    cameraButtons: {
+      borderColor: "#fff",
+      borderWidth: 2,
+      padding: 10,
+      borderRadius: 5,
+      margin: 5
+    },
+    captureButtonView: {
+      height: 200
+    },
+    buttonsView: {
+      height: 200,
+      width: "100%",
+      flexDirection: "row",
+      justifyContent: "center"
+    },
+    uploadedImage: {
+      height: "90%",
+      width: "90%",
+      padding: 10
+    }
+  });
 export default connect(mapStateToProps, {getTicketReasons, addTicket})(AddTicket);

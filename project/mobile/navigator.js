@@ -5,6 +5,7 @@ import AddTicket from './screens/addTicket'
 import MyTickets from './screens/myTickets'
 import Profile from './screens/profile'
 import ViewTicket from './screens/viewTicket'
+import CameraE from './screens/cam'
 
 const AppNavigator = createStackNavigator({
     Login: {
@@ -24,6 +25,9 @@ const AppNavigator = createStackNavigator({
     },
     ViewTicket:{
       screen: ViewTicket
+    },
+    Cam:{
+      screen: CameraE
     }
 });
 

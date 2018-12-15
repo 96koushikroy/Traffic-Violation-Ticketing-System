@@ -41,7 +41,7 @@ class AddTicket extends Component{
         if (nextProps.auth.isAuthenticated == false) {
             this.props.history.push('/login');
         }
-        if(nextProps.tickets.length != this.props.tickets){
+        if(nextProps.tickets.length != this.props.tickets.length){
             this.props.getTickets();
         }
     }

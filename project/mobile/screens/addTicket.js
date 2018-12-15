@@ -9,7 +9,10 @@ import { Select, Option } from 'react-native-select-list2';
 import isEmpty from '../Validation/isEmpty';
 import { Camera, Permissions, ImageManipulator } from 'expo';
 import axios from 'axios'
-import { BASE_URL } from '../config';
+import { showMessage } from "react-native-flash-message";
+
+
+
 
 class AddTicket extends React.Component {
     static navigationOptions = {
@@ -61,7 +64,7 @@ class AddTicket extends React.Component {
 
     handleSubmit = () => {
         this.props.addTicket(this.state);
-        this.setState({
+        /*this.setState({
             car_number: '',
             police_id: '',
             selectedReason: 0,
@@ -71,8 +74,7 @@ class AddTicket extends React.Component {
             deadline_date: '',
             b64img:''
 
-        });
-        //NotificationManager.success('Ticket Added Successfully!')
+        });*/
     }
 
     /* Work with the ocr api */
@@ -102,7 +104,10 @@ class AddTicket extends React.Component {
             let ocrRes = response.data.ParsedResults[0].ParsedText
             if(isEmpty(ocrRes)){
                 //NotificationManager.error('Server did not return any result');
-                console.log('error')
+                showMessage({
+                    message: "Server did not return any result",
+                    type: "danger",
+                });
             }
             this.setState({
                 car_number: response.data.ParsedResults[0].ParsedText
@@ -222,6 +227,7 @@ class AddTicket extends React.Component {
                 <Text>Ticket Reason:</Text>
                 {!isEmpty(this.props.reasons) ? (
                     <Select onSelect= {(t,v)=>{this.setState({selectedReason: t})}}>
+                        <Option key="xx" value="x">Select a Ticket Reason</Option>
                         {this.props.reasons.map(rr => {
                             return (<Option key={rr.id} value={rr.id}>{rr.reason_name}</Option>)
                         })}

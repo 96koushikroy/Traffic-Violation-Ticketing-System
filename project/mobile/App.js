@@ -11,6 +11,7 @@ import setAuthToken from './Utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 import {setCurrentUser, logoutUser} from './actions/authAction'
 import { COLOR, ThemeContext, getTheme } from 'react-native-material-ui';
+import FlashMessage from "react-native-flash-message";
 
 const AppContainer = createAppContainer(AppNavigator)
 const uiTheme = {
@@ -49,6 +50,7 @@ class App extends React.Component{
       <Provider store={store}>
         <ThemeContext.Provider value={getTheme(uiTheme)}>
           <AppContainer />
+          <FlashMessage position="top" />
         </ThemeContext.Provider>
       </Provider>
     )

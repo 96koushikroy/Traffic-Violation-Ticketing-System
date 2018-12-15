@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode'
 import { AsyncStorage } from "react-native"
 import isEmpty from '../Validation/isEmpty'
 import {BASE_URL} from '../config'
+import { showMessage } from "react-native-flash-message";
 
 
 const setAuthToken = token => {
@@ -31,6 +32,10 @@ export const loginUser = userData => dispatch => {
             type: GET_ERRORS,
             payload: err.response.data
         })
+        showMessage({
+            message: err.response.data.title,
+            type: "danger",
+        });
     })
 }
 
@@ -92,4 +97,8 @@ export const logoutUser = () => dispatch => {
     setAuthToken(false);
     // Set current user to {} which will set isAuthenticated to false
     dispatch(setCurrentUser({}));
+    showMessage({
+        message: "Logged out Successfully",
+        type: "success",
+    });
 };

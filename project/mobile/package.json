@@ -16,6 +16,7 @@
     "react-native-cloudinary": "^1.0.1",
     "react-native-cloudinary-x": "^1.0.3",
     "react-native-datepicker": "^1.7.2",
+    "react-native-flash-message": "^0.1.10",
     "react-native-image-resizer": "^1.0.0",
     "react-native-material-textinput": "^1.1.0",
     "react-native-material-ui": "^1.30.1",

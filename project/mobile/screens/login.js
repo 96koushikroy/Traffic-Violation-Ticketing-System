@@ -6,6 +6,7 @@ import isEmpty from '../Validation/isEmpty'
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from 'react-native-material-ui';
 import TextInput from 'react-native-material-textinput'
+import { showMessage } from "react-native-flash-message";
 
 class LoginScreen extends React.Component {
     state = {

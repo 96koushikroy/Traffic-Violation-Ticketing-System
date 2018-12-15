@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {GET_USER_PROFILE, UPDATE_USER_PROFILE, GET_ERRORS} from './actionType'
 import {BASE_URL} from '../config'
+import { showMessage } from "react-native-flash-message";
 
 //get police profile from police model on the server
 export const getPoliceProfile = () => dispatch => {
@@ -17,6 +18,10 @@ export const getPoliceProfile = () => dispatch => {
             type: GET_ERRORS,
             payload: err.response.data
         })
+        showMessage({
+            message: err.response.data.title,
+            type: "danger",
+        });
         //NotificationManager.error(err.response.data.title);
     })
 }
@@ -30,12 +35,21 @@ export const updatePoliceProfile = (Data) => dispatch => {
             type: UPDATE_USER_PROFILE,
             payload: res.data
         })
+
+        showMessage({
+            message: "Profile updated successfully.",
+            type: "success",
+        });
     })
     .catch(err => {
         dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         })
+        showMessage({
+            message: err.response.data.title,
+            type: "danger",
+        });
         //NotificationManager.error(err.response.data.title);
     })
 }

@@ -1,9 +1,11 @@
 import {ADD_TICKET, GET_TICKET_REASONS, GET_TICKETS, VIEW_TICKET, DELETE_TICKET} from './actionType'
 import axios from 'axios'
 import {BASE_URL} from '../config'
+import { showMessage } from "react-native-flash-message";
 
 //method to add a new ticket
 export const addTicket = (TicketData) => dispatch => {
+    console.log(TicketData)
     TicketData.reason_id = TicketData.selectedReason;
     delete TicketData.selectedReason;
 
@@ -16,19 +18,27 @@ export const addTicket = (TicketData) => dispatch => {
     var yyyymmdd = y + '-' + m + '-' + d;
 
     TicketData.issue_date = yyyymmdd; //issue date will be stored here in yyyy-mm-dd format
-
-    axios
+    
+    /*axios
     .post(BASE_URL + '/api/ticket/insert', TicketData)
     .then(res => {
         dispatch({
             type: ADD_TICKET,
             payload: res.data
         })
+        showMessage({
+            message: "Ticket Added Successfully",
+            type: "success",
+        });
     })
     .catch(err => {
-        NotificationManager.error(err.response.data.title);
-    })
-    
+        showMessage({
+            message: err.response.data.title,
+            type: "danger",
+        });
+        //NotificationManager.error(err.response.data.title);
+    })*/
+
     //// handle error with an action .catch()
 }
 
@@ -59,6 +69,10 @@ export const getTickets = () => dispatch => {
             type: GET_ERRORS,
             payload: err.response.data
         })
+        showMessage({
+            message: err.response.data.title,
+            type: "error",
+        });
     })
 }
 
@@ -70,6 +84,10 @@ export const deleteTicket = (id) => dispatch => {
             type: DELETE_TICKET,
             payload: id
         })
+        showMessage({
+            message: "Ticket Deleted Successfully",
+            type: "success",
+        });
     })
 }
 

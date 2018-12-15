@@ -3,6 +3,7 @@ var uniqid = require('uniqid');
 const bcrypt = require('bcryptjs');
 const jwt_decode = require('jwt-decode')
 const isEmpty = require('../Validation/isEmpty')
+var validator = require('validator');
 
 /*
  API Method for registering a new driver by the admin
@@ -25,7 +26,12 @@ exports.registerDriver = (req,res) => {
         error.title = "Car number Cannot be empty"
         res.status(400).json(error)
     }
+    else if(!validator.isEmail(Data.email)){
+        error.title = "Not a valid email address"
+        res.status(400).json(error);
+    }
     else{
+        //checking if the user exists
         User.findAll({
             where:{
                 'email': req.body.email
@@ -58,6 +64,7 @@ exports.registerDriver = (req,res) => {
                             }
                             User.create(UserObject)
                             .then(data =>{
+                                //return the newly added object
                                 res.status(200).json(driver)                            
                             })
     
@@ -104,7 +111,17 @@ exports.viewDriverProfile= (req, res)=>{
 exports.editDriverProfile = (req, res) => {
     const userToken = req.headers['authorization']
     error = {}
-    if(isEmpty(userToken)){
+    const email = req.body.email
+
+    if(isEmpty(email)){
+        error.title = "Email Cannot be empty"
+        res.status(400).json(error);
+    }
+    else if(!validator.isEmail(email)){
+        error.title = "Not a valid email address"
+        res.status(400).json(error);
+    }
+    else if(isEmpty(userToken)){
         error.title = "User not authorized"
         res.status(401).json(error);
     }

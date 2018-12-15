@@ -3,6 +3,7 @@ var uniqid = require('uniqid');
 const bcrypt = require('bcryptjs');
 const jwt_decode = require('jwt-decode')
 const isEmpty = require('../Validation/isEmpty')
+var validator = require('validator');
 /*
  API Method for registering a police officer by the admin
 */
@@ -22,6 +23,10 @@ exports.registerPolice = (req,res) => {
             }
             else if(isEmpty(req.body.password)){
                 error.title = "Password cannot be empty"
+                res.status(400).json(error);
+            }
+            else if(!validator.isEmail(req.body.email)){
+                error.title = "Not a valid email address"
                 res.status(400).json(error);
             }
             else{
@@ -187,7 +192,17 @@ exports.viewPoliceProfile = (req, res) => {
 exports.editPoliceProfile = (req, res) => {
     const userToken = req.headers['authorization']
     error = {}
-    if(isEmpty(userToken)){
+    const email = req.body.email
+
+    if(isEmpty(email)){
+        error.title = "Email Cannot be empty"
+        res.status(400).json(error);
+    }
+    else if(!validator.isEmail(email)){
+        error.title = "Not a valid email address"
+        res.status(400).json(error);
+    }
+    else if(isEmpty(userToken)){
         error.title = "User not authorized"
         res.status(401).json(error);
     }

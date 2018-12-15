@@ -1,6 +1,7 @@
 const { Ticket, Driver, Police, TicketReason } = require('../config/sequelize')
 const isEmpty = require('../Validation/isEmpty')
 const jwt_decode = require('jwt-decode')
+var validator = require('validator');
 
 /*
  API Method to insert a ticket into the database
@@ -26,6 +27,10 @@ exports.insertTicket = (req,res) => {
             }
             else if(isEmpty(Data.amount)){
                 error.title = "Amount is empty"
+                res.status(400).json(error);
+            }
+            else if(!validator.isInt(Data.amount)){
+                error.title = "Amount has to be a number"
                 res.status(400).json(error);
             }
             else if(isEmpty(Data.deadline_date)){

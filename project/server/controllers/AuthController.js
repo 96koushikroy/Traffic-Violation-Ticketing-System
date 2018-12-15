@@ -9,6 +9,7 @@ const secretKey = "someSecretKey";
 const jwt_decode = require('jwt-decode')
 const isEmpty = require('../Validation/isEmpty')
 var uniqid = require('uniqid');
+var validator = require('validator');
 
 /*
     Method Used for General Login Purpose
@@ -17,103 +18,124 @@ exports.login = (req, res) => {
     let error = {}
     const email = req.body.email;
     const password = req.body.password;
-    
-    User.findOne({
-        where:{
-            'email': email
-        }
-    })
-    .then(user => {
-        if(isEmpty(user)){
-            error.title = "User not found"
-            res.status(401).json(error);
-        }
-        else{
-            bcrypt.compare(password, user.password).then(match => {
-                if(match == true){
-                    let dddd = {};
-                    if(user.user_type == DRIVER_TYPE){
-                        Driver.findOne({
-                            where: {
-                                id: user.id
-                            },
-                            attributes:['name']
-                        })
-                        .then(driver => {
-                            dddd = {
-                                'id': user.id,
-                                'name': driver.name,
-                                'email': user.email,
-                                'user_type': user.user_type
-                            }
-                            sendJWT(dddd);
-                        })
-                    }
-                    else if(user.user_type == POLICE_TYPE){
-                        Police.findOne({
-                            where: {
-                                id: user.id
-                            },
-                            attributes:['name']
-                        })
-                        .then(police => {
-                            dddd = {
-                                'id': user.id,
-                                'name': police.name,
-                                'email': user.email,
-                                'user_type': user.user_type
-                            }
-                            
-                            sendJWT(dddd);
-                        })
-                    }
-                    else if(user.user_type == ADMIN_TYPE){
-                        Admin.findOne({
-                            where: {
-                                id: user.id
-                            },
-                            attributes:['name']
-                        })
-                        .then(admin => {
-                            dddd = {
-                                'id': user.id,
-                                'name': admin.name,
-                                'email': user.email,
-                                'user_type': user.user_type
-                            }
-                            sendJWT(dddd);
-                        })   
-                    }
-                }
-                else{
-                    error.title = "Password did not match"
-                    res.status(401).json(error);
-                }
-            });
-
-        }
-    })
-/*
-    Method Used for sending JWT
-*/
-    sendJWT = (data) => {
-        jwt.sign(
-            data,
-            secretKey,
-            { expiresIn: 3600 },
-            (err, token) => {
-                res.status(200).json({
-                    success: true,
-                    token: 'Bearer '+token
-                });
-            }
-        );
+    //email(presence and format check) and password (presence check)
+    if(isEmpty(email)){
+        error.title = "Email Cannot be empty"
+        res.status(400).json(error);
     }
+    else if(!validator.isEmail(email)){
+        error.title = "Not a valid email address"
+        res.status(400).json(error);
+    }
+    else if(isEmpty(password)){
+        error.title = "Password Cannot be empty"
+        res.status(400).json(error);
+    }
+    else{
+        //check if the user is present in the users table
+        User.findOne({
+            where:{
+                'email': email
+            }
+        })
+        .then(user => {
+            if(isEmpty(user)){
+                error.title = "User not found"
+                res.status(401).json(error);
+            }
+            else{
+                bcrypt.compare(password, user.password).then(match => {
+                    if(match == true){
+                        let dddd = {};
+                        if(user.user_type == DRIVER_TYPE){
+                            Driver.findOne({
+                                where: {
+                                    id: user.id
+                                },
+                                attributes:['name']
+                            })
+                            .then(driver => {
+                                dddd = {
+                                    'id': user.id,
+                                    'name': driver.name,
+                                    'email': user.email,
+                                    'user_type': user.user_type
+                                }
+                                sendJWT(dddd);
+                            })
+                        }
+                        else if(user.user_type == POLICE_TYPE){
+                            Police.findOne({
+                                where: {
+                                    id: user.id
+                                },
+                                attributes:['name']
+                            })
+                            .then(police => {
+                                dddd = {
+                                    'id': user.id,
+                                    'name': police.name,
+                                    'email': user.email,
+                                    'user_type': user.user_type
+                                }
+                                
+                                sendJWT(dddd);
+                            })
+                        }
+                        else if(user.user_type == ADMIN_TYPE){
+                            Admin.findOne({
+                                where: {
+                                    id: user.id
+                                },
+                                attributes:['name']
+                            })
+                            .then(admin => {
+                                dddd = {
+                                    'id': user.id,
+                                    'name': admin.name,
+                                    'email': user.email,
+                                    'user_type': user.user_type
+                                }
+                                sendJWT(dddd);
+                            })   
+                        }
+                    }
+                    else{
+                        error.title = "Password did not match"
+                        res.status(401).json(error);
+                    }
+                });
+    
+            }
+        })
+    /*
+        Method Used for sending JWT
+    */
+        sendJWT = (data) => {
+            jwt.sign(
+                data,
+                secretKey,
+                { expiresIn: 3600 },
+                (err, token) => {
+                    res.status(200).json({
+                        success: true,
+                        token: 'Bearer '+token
+                    });
+                }
+            );
+        }
+    }
+
+
+
 
     
 
 }
 
+/* 
+    Method used for Google OAuth Login only 
+*/
 
 exports.googleLogin = (req, res) => {
     let error = {}
@@ -209,7 +231,9 @@ exports.googleLogin = (req, res) => {
 
 }
 
-
+/* 
+    Method used for Google OAuth Sign up only for Drivers as they require an additional car number along with usual info
+*/
 exports.googleSignup = (req, res) => {
     let error = {}
     let dddd = {}
@@ -266,7 +290,9 @@ exports.googleSignup = (req, res) => {
     }
 
 }
-
+/*
+    Method used for getting the current user when the jwt is passed as argument
+*/
 exports.getCurrentUserProfile = (req, res) => {
     const userToken = req.headers['authorization']
     error = {}

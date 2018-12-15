@@ -3,6 +3,7 @@ var uniqid = require('uniqid');
 const bcrypt = require('bcryptjs');
 const jwt_decode = require('jwt-decode')
 const isEmpty = require('../Validation/isEmpty')
+var validator = require('validator');
 
 /*
  API Method for registering an admin (Unused)
@@ -92,8 +93,19 @@ exports.viewAdminProfile = (req, res) => {
 
 exports.editAdminProfile = (req, res) => {
     const userToken = req.headers['authorization']
+    const email = req.body.email
+
     error = {}
-    if(isEmpty(userToken)){
+
+    if(isEmpty(email)){
+        error.title = "Email Cannot be empty"
+        res.status(400).json(error);
+    }
+    else if(!validator.isEmail(email)){
+        error.title = "Not a valid email address"
+        res.status(400).json(error);
+    }
+    else if(isEmpty(userToken)){
         error.title = "User not authorized"
         res.status(401).json(error);
     }

@@ -1,10 +1,12 @@
 import React from 'react'
 import {View, Text, Picker} from 'react-native'
 import { Button } from 'react-native-material-ui';
-import {getTicketReasons} from '../actions/ticketAction'
+import {getTicketReasons, addTicket} from '../actions/ticketAction'
 import {connect} from 'react-redux'
 import TextInput from 'react-native-material-textinput'
 import DatePicker from 'react-native-datepicker'
+import { Select, Option } from 'react-native-select-list2';
+import isEmpty from '../Validation/isEmpty';
 
 class AddTicket extends React.Component {
     static navigationOptions = {
@@ -14,7 +16,7 @@ class AddTicket extends React.Component {
     state = {
         car_number: '',
         police_id: '',
-        selectedReason: '',
+        selectedReason: 0,
         other_documents: '',
         amount: '',
         issue_date: '',
@@ -45,7 +47,18 @@ class AddTicket extends React.Component {
     }
 
     handleSubmit = () => {
-        console.log(this.state)
+        this.props.addTicket(this.state);
+        this.setState({
+            car_number: '',
+            police_id: '',
+            selectedReason: 0,
+            other_documents: '',
+            amount: '',
+            issue_date: '',
+            deadline_date: ''
+
+        });
+        //NotificationManager.success('Ticket Added Successfully!')
     }
 
     render(){
@@ -89,6 +102,20 @@ class AddTicket extends React.Component {
                     onDateChange={(date) => {this.setState({deadline_date: date})}}
                 />
                 <Text>{"\n"}</Text>
+                <Text>Ticket Reason:</Text>
+                {!isEmpty(this.props.reasons) ? (
+                    <Select onSelect= {(t,v)=>{this.setState({selectedReason: t})}}>
+                        {this.props.reasons.map(rr => {
+                            return (<Option key={rr.id} value={rr.id}>{rr.reason_name}</Option>)
+                        })}
+                    </Select>
+                    ) : (
+                        <Text></Text>
+                    ) 
+                }
+                
+                <Text>{"\n"}</Text>
+                
                 <Button
                     primary
                     raised
@@ -109,4 +136,4 @@ const mapStateToProps = (state, ownProps) => {
         auth: state.auth
     }
 }
-export default connect(mapStateToProps, {getTicketReasons})(AddTicket);
+export default connect(mapStateToProps, {getTicketReasons, addTicket})(AddTicket);

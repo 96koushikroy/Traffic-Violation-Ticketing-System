@@ -1,6 +1,38 @@
-import {GET_TICKET_REASONS, GET_TICKETS, VIEW_TICKET, DELETE_TICKET} from './actionType'
+import {ADD_TICKET, GET_TICKET_REASONS, GET_TICKETS, VIEW_TICKET, DELETE_TICKET} from './actionType'
 import axios from 'axios'
 import {BASE_URL} from '../config'
+
+//method to add a new ticket
+export const addTicket = (TicketData) => dispatch => {
+    TicketData.reason_id = TicketData.selectedReason;
+    delete TicketData.selectedReason;
+
+    var x = new Date();
+    var y = x.getFullYear().toString();
+    var m = (x.getMonth() + 1).toString();
+    var d = x.getDate().toString();
+    (d.length == 1) && (d = '0' + d);
+    (m.length == 1) && (m = '0' + m);
+    var yyyymmdd = y + '-' + m + '-' + d;
+
+    TicketData.issue_date = yyyymmdd; //issue date will be stored here in yyyy-mm-dd format
+
+    axios
+    .post(BASE_URL + '/api/ticket/insert', TicketData)
+    .then(res => {
+        dispatch({
+            type: ADD_TICKET,
+            payload: res.data
+        })
+    })
+    .catch(err => {
+        NotificationManager.error(err.response.data.title);
+    })
+    
+    //// handle error with an action .catch()
+}
+
+
 
 //common ticketreason getter 
 export const getTicketReasons = () => dispatch => {

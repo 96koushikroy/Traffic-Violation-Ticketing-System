@@ -59,5 +59,6 @@ export const deletePolice = (id) => dispatch => {
             type: DELETE_POLICE,
             payload: id
         })
+        NotificationManager.success('Deleted Successfully!')
     })
 }

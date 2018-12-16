@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode'
 import isEmpty from '../Validation/isEmpty'
 import {NotificationManager} from 'react-notifications';
 
+//set jwt token to every header
 const setAuthToken = token => {
     if (token) {
       // apply to every request
@@ -14,6 +15,9 @@ const setAuthToken = token => {
     }
 };
 
+/* 
+    Action Method to login a user which will set the jwt in the localstore
+*/
 export const loginUser = userData => dispatch => {
     axios.post('/api/login', userData)
     .then(res => {
@@ -31,7 +35,9 @@ export const loginUser = userData => dispatch => {
         })
     })
 }
-
+/* 
+    Action Method to login a user using google which will set the jwt in the localstore
+*/
 export const googleLoginUser = userData => dispatch => {
     axios.post('/api/oauth/google/login', userData)
     .then(res => {

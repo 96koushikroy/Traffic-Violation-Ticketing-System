@@ -1,3 +1,7 @@
+/* 
+    All the action types are defined here
+*/
+
 export const GET_TICKET_REASONS = 'GET_TICKET_REASONS';
 export const ADD_TICKET_REASONS = 'ADD_TICKET_REASONS';
 export const DELETE_TICKET_REASON = 'DELETE_TICKET_REASON';

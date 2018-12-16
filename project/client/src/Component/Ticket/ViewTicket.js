@@ -31,7 +31,6 @@ class ViewTicket extends Component {
             this.props.approveSingleTicket(e.target.id)
             let tid = this.props.match.params.tid;
             this.props.viewTicket(tid);
-            NotificationManager.success('Approved Successfully!')   
         }
     }
     

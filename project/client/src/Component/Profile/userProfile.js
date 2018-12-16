@@ -60,7 +60,6 @@ class UserProfile extends Component {
             // user type  == 3 Admin
             this.props.updateAdminProfile(newData)
         }
-        NotificationManager.success('Profile Updated Successfully')
         
     }
 

@@ -50,14 +50,12 @@ class AddTicketReason extends Component{
             reason_name:'',
             reason_details:''
         });
-        NotificationManager.success('Ticket Reason Added Successfully')
     }
 
     handleDelete = (e) => {
         let rr = window.confirm("Are you sure to delete this!?");
         if (rr == true) {
             this.props.deleteTicketReason(e.target.id);
-            NotificationManager.success('Deleted Successfully!')
         }
     }
 

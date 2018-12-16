@@ -24,6 +24,7 @@ export const addTicket = (TicketData) => dispatch => {
             type: ADD_TICKET,
             payload: res.data
         })
+        NotificationManager.success('Ticket Added Successfully!')
     })
     .catch(err => {
         NotificationManager.error(err.response.data.title);
@@ -47,10 +48,11 @@ export const getTickets = () => dispatch => {
             type: GET_ERRORS,
             payload: err.response.data
         })
+        NotificationManager.error(err.response.data.title);
     })
     
 }
-
+//delete one ticket based on the ticket id on the params
 export const deleteTicket = (id) => dispatch => {
     axios.get(`/api/ticket/delete/${id}`)
     .then(res =>{
@@ -58,9 +60,11 @@ export const deleteTicket = (id) => dispatch => {
             type: DELETE_TICKET,
             payload: id
         })
+        NotificationManager.success('Ticket Deleted Successfully!')
     })
 }
 
+//view one ticket based on the ticket id on the params
 export const viewTicket = (id) => dispatch => {
     axios.get(`/api/ticket/view/details/${id}`)
     .then(res =>{
@@ -86,6 +90,7 @@ export const getAdminTickets = () => dispatch => {
             type: GET_ERRORS,
             payload: err.response.data
         })
+        NotificationManager.error(err.response.data.title);
     })
     
 }
@@ -98,12 +103,14 @@ export const approveTicket = (tid) => dispatch => {
             type: APPROVE_TICKET,
             payload: tid
         })
+        NotificationManager.success('Approved Successfully!')
     })
     .catch(err => {
         dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         })
+        NotificationManager.error(err.response.data.title);
     })
 }
 
@@ -115,13 +122,14 @@ export const approveSingleTicket = (tid) => dispatch => {
             type: APPROVE_SINGLE_TICKET,
             payload: tid
         })
-        
+        NotificationManager.success('Approved Successfully!')   
     })
     .catch(err => {
         dispatch({
             type: GET_ERRORS,
             payload: err.response.data
         })
+        NotificationManager.error(err.response.data.title);
     })
 }
 
@@ -139,6 +147,7 @@ export const getDriverTickets = () => dispatch => {
             type: GET_ERRORS,
             payload: err.response.data
         })
+        NotificationManager.error(err.response.data.title);
     })
 }
 
@@ -146,7 +155,6 @@ export const getDriverTickets = () => dispatch => {
 export const getAdminAllTickets = () => dispatch => {
     axios.get('/api/ticket/admin/viewall')
     .then(res =>{
-        console.log(res)
         dispatch({
             type: GET_ADMIN_ALL_TICKETS,
             payload: res.data
@@ -157,6 +165,7 @@ export const getAdminAllTickets = () => dispatch => {
             type: GET_ERRORS,
             payload: err.response.data
         })
+        NotificationManager.error(err.response.data.title);
     })
     
 }

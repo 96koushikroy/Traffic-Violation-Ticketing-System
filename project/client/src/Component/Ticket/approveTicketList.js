@@ -49,7 +49,6 @@ class ApproveTicketList extends Component {
         let rr = window.confirm("Are you sure to approve this!?");
         if (rr == true) {
             this.props.approveTicket(e.target.id)
-            NotificationManager.success('Approved Successfully!')
         }
     }
 

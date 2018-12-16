@@ -69,6 +69,7 @@ export const updateDriverProfile = (Data) => dispatch => {
             type: UPDATE_USER_PROFILE,
             payload: res.data
         })
+        NotificationManager.success('Profile Updated Successfully')
     })
     .catch(err => {
         dispatch({
@@ -87,6 +88,8 @@ export const updateAdminProfile = (Data) => dispatch => {
             type: UPDATE_USER_PROFILE,
             payload: res.data
         })
+
+        NotificationManager.success('Profile Updated Successfully')
     })
     .catch(err => {
         dispatch({
@@ -105,6 +108,8 @@ export const updatePoliceProfile = (Data) => dispatch => {
             type: UPDATE_USER_PROFILE,
             payload: res.data
         })
+
+        NotificationManager.success('Profile Updated Successfully')
     })
     .catch(err => {
         dispatch({

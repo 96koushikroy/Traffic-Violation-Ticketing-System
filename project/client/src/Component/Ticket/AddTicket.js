@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom'
 import {NotificationManager} from 'react-notifications';
 import isEmpty from '../../Validation/isEmpty'
 import axios from 'axios'
+import { ClipLoader } from 'react-spinners';
 
 class AddTicket extends Component{
     state = {
@@ -17,7 +18,8 @@ class AddTicket extends Component{
         amount: '',
         issue_date: '',
         deadline_date: '',
-        file: null
+        file: null,
+        loading: false
     }
 
     componentDidMount(){
@@ -71,14 +73,12 @@ class AddTicket extends Component{
             deadline_date: ''
 
         });
-        NotificationManager.success('Ticket Added Successfully!')
     }
 
     handleDelete = (e) => {
         let rr = window.confirm("Are you sure to delete this!?");
         if (rr == true) {
             this.props.deleteTicket(e.target.id)
-            NotificationManager.success('Ticket Deleted Successfully!')
         }
     }
 
@@ -99,9 +99,15 @@ class AddTicket extends Component{
                 'content-type': 'multipart/form-data'
             }
         };
+        this.setState({
+            loading: true
+        })
         axios.post("https://api.ocr.space/parse/image",formData,config)
         .then((response) => {
             console.log(response.data.ParsedResults[0]);
+            this.setState({
+                loading: false
+            })
             let ocrRes = response.data.ParsedResults[0].ParsedText
             if(isEmpty(ocrRes)){
                 NotificationManager.error('Server did not return any result');
@@ -172,6 +178,13 @@ class AddTicket extends Component{
                                 <input type="file" id="car_number_file" onChange={this.onChange} />
                                 <button id="submitFile" onClick={this.handleFileSubmit}>Upload</button>
                                 <br/><br/>
+                                <ClipLoader
+                                    sizeUnit={"px"}
+                                    size={50}
+                                    color={'#123abc'}
+                                    loading={this.state.loading}
+                                />
+                                <br/>
                                 <label htmlFor="car_number">Car Number</label>
                                 <input type="text" id="car_number" className="form-control" value={this.state.car_number}  onChange={this.handleChange}/>
                             </div>

@@ -1,5 +1,6 @@
 import {ADD_TICKET_REASONS, DELETE_TICKET_REASON, GET_TICKET_REASONS} from './actionType'
 import axios from 'axios'
+import {NotificationManager} from 'react-notifications';
 
 //action to add a ticket reason
 export const addTicketReason = (TicketReasonData) => dispatch => {
@@ -10,6 +11,8 @@ export const addTicketReason = (TicketReasonData) => dispatch => {
             type: ADD_TICKET_REASONS,
             payload: res.data
         })
+
+        NotificationManager.success('Ticket Reason Added Successfully')
     })
     
     //// handle error with an action .catch()
@@ -35,5 +38,7 @@ export const deleteTicketReason = (id) => dispatch => {
             type: DELETE_TICKET_REASON,
             payload: id
         })
+
+        NotificationManager.success('Deleted Successfully')
     })
 }

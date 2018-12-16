@@ -44,7 +44,6 @@ class ViewAllPolice extends Component {
         let rr = window.confirm("Are you sure to delete this!?");
         if (rr == true) {
             this.props.deletePolice(e.target.id)
-            NotificationManager.success('Deleted Successfully!')
         }
     }
 

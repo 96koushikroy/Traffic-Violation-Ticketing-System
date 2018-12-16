@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {viewPolice} from '../../Actions/policeActions'
+import {viewPolice,deletePolice} from '../../Actions/policeActions'
 import {NotificationManager} from 'react-notifications';
 
 class ViewPolice extends Component {
@@ -32,8 +32,7 @@ class ViewPolice extends Component {
         console.log('deleting ' + e.target.id)
         let rr = window.confirm("Are you sure to delete this!?");
         if (rr == true) {
-            //this.props.deletePolice(e.target.id)
-            NotificationManager.success('Deleted Successfully!')
+            this.props.deletePolice(e.target.id)
             this.props.history.push('/police/view');
         }
         
@@ -72,4 +71,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, {viewPolice})(ViewPolice)
+export default connect(mapStateToProps, {viewPolice,deletePolice})(ViewPolice)

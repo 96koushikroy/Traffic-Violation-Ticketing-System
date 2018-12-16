@@ -28,7 +28,6 @@ class AddTicketReason extends Component{
         if (nextProps.auth.isAuthenticated == false) {
             this.props.history.push('/login');
         }
-        this.props.getTicketReasons();
     }
 
     handleChange = (e) => {

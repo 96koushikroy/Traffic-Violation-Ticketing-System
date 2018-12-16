@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import {loginUser, googleLoginUser} from '../../Actions/authActions'
 import isEmpty from '../../Validation/isEmpty'
 import { GoogleLogin } from 'react-google-login';
+import { ClipLoader } from 'react-spinners';
 
 class DriverRegistration extends Component{
     state = {
@@ -13,7 +14,8 @@ class DriverRegistration extends Component{
         email:'',
         password:'',
         car_number: '',
-        file: null
+        file: null,
+        loading: false
     }
 
     componentDidMount() {
@@ -84,8 +86,14 @@ class DriverRegistration extends Component{
                 'content-type': 'multipart/form-data'
             }
         };
+        this.setState({
+            loading: true
+        })
         axios.post("https://api.ocr.space/parse/image",formData,config)
         .then((response) => {
+            this.setState({
+                loading: false
+            })
             console.log(response.data.ParsedResults[0]);
             let ocrRes = response.data.ParsedResults[0].ParsedText
             if(isEmpty(ocrRes)){
@@ -152,6 +160,13 @@ class DriverRegistration extends Component{
                                 <input type="file" id="car_number_file" onChange={this.onChange} />
                                 <button id="submitFile" onClick={this.handleFileSubmit}>Upload</button>
                                 <br/><br/>
+                                <ClipLoader
+                                    sizeUnit={"px"}
+                                    size={50}
+                                    color={'#123abc'}
+                                    loading={this.state.loading}
+                                />
+                                <br/>
                                 <label htmlFor="car_number">Car Number</label>
                                 <input type="text" id="car_number" className="form-control" value={this.state.car_number}  onChange={this.handleChange}/>
                                 

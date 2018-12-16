@@ -5,9 +5,9 @@ import { showMessage } from "react-native-flash-message";
 
 //method to add a new ticket
 export const addTicket = (TicketData) => dispatch => {
-    console.log(TicketData)
     TicketData.reason_id = TicketData.selectedReason;
     delete TicketData.selectedReason;
+    TicketData.status = 0
 
     var x = new Date();
     var y = x.getFullYear().toString();
@@ -32,7 +32,6 @@ export const addTicket = (TicketData) => dispatch => {
         });
     })
     .catch(err => {
-        console.log('tket',err)
         showMessage({
             message: err.response.data.title,
             type: "danger",

@@ -11,8 +11,8 @@ module.exports = (sequelize, type) => {
         reason_id: type.INTEGER,
         amount: type.INTEGER,
         other_documents: type.STRING,
-        issue_date: type.DATE,
-        deadline_date: type.DATE,
+        issue_date: type.DATEONLY,
+        deadline_date: type.DATEONLY,
         status: type.INTEGER,
     },{
         timestamps: false

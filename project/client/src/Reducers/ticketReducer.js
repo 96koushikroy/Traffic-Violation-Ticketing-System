@@ -16,9 +16,9 @@ const ticketReducer = (state = initState, action) => {
     if(action.type === ADD_TICKET){
         let dd = state.tickets;
         dd.push(action.payload);
+        state.tickets = JSON.parse(JSON.stringify(dd));
         return{
-            ...state,
-            tickets: dd
+            ...state
         }
     }
     else if(action.type === GET_TICKETS){
@@ -56,9 +56,10 @@ const ticketReducer = (state = initState, action) => {
     else if(action.type === APPROVE_SINGLE_TICKET){
         let dd = state.ticket
         dd.status = 1;
+        let xx = JSON.parse(JSON.stringify(dd));
         return{
             ...state,
-            ticket: dd
+            ticket: xx
         }
     }
     else if(action.type === GET_DRIVER_TICKETS){

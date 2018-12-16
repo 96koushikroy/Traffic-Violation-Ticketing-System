@@ -38,6 +38,7 @@ exports.insertTicket = (req,res) => {
                 res.status(400).json(error);
             }
             else{
+
                 Driver.findOne({
                     where: {
                         car_number: Car_Number
@@ -51,6 +52,8 @@ exports.insertTicket = (req,res) => {
                     }
                     else{
                         Data.driver_id = DriverId.dataValues.id
+
+                        console.log(Data)
                         Ticket.create(Data)
                         .then(data => res.status(200).json(data))
                         .catch(err => console.log(err))

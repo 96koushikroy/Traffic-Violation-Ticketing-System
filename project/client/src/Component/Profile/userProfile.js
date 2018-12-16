@@ -32,6 +32,7 @@ class UserProfile extends Component {
             this.props.history.push('/login');
         }
         if(!isEmpty(nextProps.profile)){
+            //console.log(this.props.profile)
             this.setState(nextProps.profile)
             this.setState({
                 password:''
@@ -47,7 +48,8 @@ class UserProfile extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        const newData = this.state
+        
+        const newData = JSON.parse(JSON.stringify(this.state));
         delete newData.car_number
 
         if(this.props.auth.user.user_type == 1){

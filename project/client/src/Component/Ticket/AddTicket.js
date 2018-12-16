@@ -32,6 +32,7 @@ class AddTicket extends Component{
             NotificationManager.error('You are not allowed to enter this link')
         }
         else if(this.props.auth.isAuthenticated && this.props.auth.user.user_type == 2){    
+            //console.log(this.props.auth)
             this.setState({
                 police_id: this.props.auth.user.id
             });
@@ -39,12 +40,10 @@ class AddTicket extends Component{
             this.props.getTickets();
         }
     }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated == false) {
             this.props.history.push('/login');
-        }
-        if(nextProps.tickets.length != this.props.tickets.length){
-            this.props.getTickets();
         }
     }
 
@@ -62,17 +61,21 @@ class AddTicket extends Component{
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.addTicket(this.state);
-        this.setState({
-            car_number: '',
-            police_id: '',
-            selectedReason: null,
-            other_documents: '',
-            amount: '',
-            issue_date: '',
-            deadline_date: ''
-
-        });
+        if(this.state.selectedReason == null){
+            NotificationManager.error('Please Select a ticket Reason')
+        }
+        else{
+            this.props.addTicket(this.state);
+            this.setState({
+                car_number: '',
+                selectedReason: null,
+                other_documents: '',
+                amount: '',
+                issue_date: '',
+                deadline_date: ''
+            });
+        }
+        
     }
 
     handleDelete = (e) => {
@@ -81,8 +84,6 @@ class AddTicket extends Component{
             this.props.deleteTicket(e.target.id)
         }
     }
-
-
 
     onChange = (e) => {
         this.setState({
@@ -128,7 +129,7 @@ class AddTicket extends Component{
                 options.push({value: reasons.id, label: reasons.reason_name})
             )
         })
-        const Tickets = this.props.tickets;
+        const Tickets = this.props.tickets.tickets;
         const TicketList = !isEmpty(Tickets) ? (
             <table className="table table-hover">
                 <thead>
@@ -233,7 +234,7 @@ class AddTicket extends Component{
 const mapStateToProps = (state, ownProps) => {
     return {
         reasons: state.ticketReason.reasons,
-        tickets: state.ticket.tickets,
+        tickets: state.ticket,
         errors: state.error,
         auth: state.auth
     }

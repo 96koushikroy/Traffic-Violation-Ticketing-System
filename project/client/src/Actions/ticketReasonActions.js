@@ -14,6 +14,9 @@ export const addTicketReason = (TicketReasonData) => dispatch => {
 
         NotificationManager.success('Ticket Reason Added Successfully')
     })
+    .catch(err=>{
+        NotificationManager.error(err.response.data.title);
+    })
     
     //// handle error with an action .catch()
 }
@@ -26,6 +29,9 @@ export const getTicketReasons = () => dispatch => {
             type: GET_TICKET_REASONS,
             payload: res.data
         })
+    })
+    .catch(err=>{
+        NotificationManager.error(err.response.data.title);
     })
 }
 
@@ -40,5 +46,8 @@ export const deleteTicketReason = (id) => dispatch => {
         })
 
         NotificationManager.success('Deleted Successfully')
+    })
+    .catch(err=>{
+        NotificationManager.error(err.response.data.title);
     })
 }

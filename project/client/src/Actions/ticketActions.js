@@ -6,6 +6,7 @@ import {NotificationManager} from 'react-notifications';
 export const addTicket = (TicketData) => dispatch => {
     TicketData.reason_id = TicketData.selectedReason.value;
     delete TicketData.selectedReason;
+    TicketData.status = 0
 
     var x = new Date();
     var y = x.getFullYear().toString();
@@ -16,7 +17,7 @@ export const addTicket = (TicketData) => dispatch => {
     var yyyymmdd = y + '-' + m + '-' + d;
 
     TicketData.issue_date = yyyymmdd; //issue date will be stored here in yyyy-mm-dd format
-
+    
     axios
     .post('/api/ticket/insert', TicketData)
     .then(res => {

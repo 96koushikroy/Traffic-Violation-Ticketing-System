@@ -125,11 +125,16 @@ exports.editDriverProfile = (req, res) => {
         error.title = "User not authorized"
         res.status(401).json(error);
     }
+    else if(isEmpty(req.body.car_number)){
+        error.title = "Car Number Cannot be empty"
+        res.status(400).json(error);
+    }
     else{
         const decoded = jwt_decode(userToken)
         const Data = {
             name: req.body.name,
-            email: req.body.email
+            email: req.body.email,
+            car_number: req.body.car_number
         }
 
         const DataU = {
@@ -150,23 +155,23 @@ exports.editDriverProfile = (req, res) => {
                         }
                     })
                     .then((data) => {
-                      res.json(data,200)
+                        Driver.update(Data,{
+                            where: {
+                                id: decoded.id
+                            }
+                        })
+                        .then((data) => {
+                          res.json(data,200)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
                     })
                     .catch(err => {
                         console.log(err)
                     })
 
-                    Driver.update(Data,{
-                        where: {
-                            id: decoded.id
-                        }
-                    })
-                    .then((data) => {
-                      res.json(data,200)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+                    
                     
                 });
             });
@@ -178,23 +183,25 @@ exports.editDriverProfile = (req, res) => {
                 }
             })
             .then((data) => {
-              res.json(data,200)
+                
+                User.update(DataU,{
+                    where: {
+                        id: decoded.id
+                    }
+                })
+                .then((data) => {
+                  res.json(data,200)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+
             })
             .catch(err => {
                 console.log(err)
             })
 
-            User.update(DataU,{
-                where: {
-                    id: decoded.id
-                }
-            })
-            .then((data) => {
-              res.json(data,200)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+            
         }
         
         

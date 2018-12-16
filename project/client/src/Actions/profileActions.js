@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {GET_USER_PROFILE, UPDATE_USER_PROFILE, GET_ERRORS} from './actionType'
+import {GET_USER_PROFILE, UPDATE_USER_PROFILE, GET_ERRORS, SET_CURRENT_USER_NAME} from './actionType'
 import {NotificationManager} from 'react-notifications';
 
 
@@ -67,7 +67,11 @@ export const updateDriverProfile = (Data) => dispatch => {
     .then(res => {
         dispatch({
             type: UPDATE_USER_PROFILE,
-            payload: res.data
+            payload: Data
+        })
+        dispatch({
+            type: SET_CURRENT_USER_NAME,
+            payload: Data.name
         })
         NotificationManager.success('Profile Updated Successfully')
     })
@@ -86,9 +90,12 @@ export const updateAdminProfile = (Data) => dispatch => {
     .then(res => {
         dispatch({
             type: UPDATE_USER_PROFILE,
-            payload: res.data
+            payload: Data
         })
-
+        dispatch({
+            type: SET_CURRENT_USER_NAME,
+            payload: Data.name
+        })
         NotificationManager.success('Profile Updated Successfully')
     })
     .catch(err => {
@@ -106,9 +113,12 @@ export const updatePoliceProfile = (Data) => dispatch => {
     .then(res => {
         dispatch({
             type: UPDATE_USER_PROFILE,
-            payload: res.data
+            payload: Data
         })
-
+        dispatch({
+            type: SET_CURRENT_USER_NAME,
+            payload: Data.name
+        })
         NotificationManager.success('Profile Updated Successfully')
     })
     .catch(err => {

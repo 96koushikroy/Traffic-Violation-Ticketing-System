@@ -10,9 +10,9 @@ const ticketReasonReducer = (state = initState, action) => {
     if(action.type === ADD_TICKET_REASONS){
         let dd = state.reasons;
         dd.push(action.payload);
+        state.reasons = JSON.parse(JSON.stringify(dd));
         return{
-            ...state,
-            reasons: dd
+            ...state
         }
     }
     else if(action.type === GET_TICKET_REASONS){

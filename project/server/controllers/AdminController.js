@@ -6,7 +6,7 @@ const isEmpty = require('../Validation/isEmpty')
 var validator = require('validator');
 
 /*
- API Method for registering an admin (Unused)
+ API Method for registering an admin (Unused for now)
 */
 exports.registerAdmin = (req,res) => {
     
@@ -71,7 +71,7 @@ exports.viewAdminProfile = (req, res) => {
     error = {}
     if(isEmpty(userToken)){
         error.title = "User not authorized"
-        res.json(error, 401);
+        res.status(401).json(error);
     }
     else{
         const decoded = jwt_decode(userToken)
@@ -81,7 +81,7 @@ exports.viewAdminProfile = (req, res) => {
             }
         })
         .then(admins => {
-            res.json(admins, 200)
+            res.status(200).json(admins)
         });
     }
 
@@ -134,23 +134,23 @@ exports.editAdminProfile = (req, res) => {
                         }
                     })
                     .then((data) => {
-                      res.json(data,200)
+                        Admin.update(Data,{
+                            where: {
+                                id: decoded.id
+                            }
+                        })
+                        .then((data) => {
+                          res.status(200).json(data)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
                     })
                     .catch(err => {
                         console.log(err)
                     })
 
-                    Admin.update(Data,{
-                        where: {
-                            id: decoded.id
-                        }
-                    })
-                    .then((data) => {
-                      res.json(data,200)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+                    
                     
                 });
             });
@@ -162,23 +162,23 @@ exports.editAdminProfile = (req, res) => {
                 }
             })
             .then((data) => {
-              res.json(data,200)
+                User.update(DataU,{
+                    where: {
+                        id: decoded.id
+                    }
+                })
+                .then((data) => {
+                  res.status(200).json(data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
             })
             .catch(err => {
                 console.log(err)
             })
 
-            User.update(DataU,{
-                where: {
-                    id: decoded.id
-                }
-            })
-            .then((data) => {
-              res.json(data,200)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+            
         }
         
         

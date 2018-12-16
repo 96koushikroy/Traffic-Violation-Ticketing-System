@@ -22,7 +22,7 @@ class AddTicket extends React.Component {
     state = {
         car_number: '',
         police_id: '',
-        selectedReason: 0,
+        selectedReason: 1,
         other_documents: '',
         amount: '',
         issue_date: '',
@@ -59,7 +59,15 @@ class AddTicket extends React.Component {
     }
 
     handleSubmit = () => {
-        this.props.addTicket(this.state);
+        if(isEmpty(this.state.selectedReason)){
+            showMessage({
+                message: "Please Reselect Ticket Reason",
+                type: "danger",
+            });
+        }
+        else{
+            this.props.addTicket(this.state);
+        }
         /*this.setState({
             car_number: '',
             police_id: '',

@@ -24,7 +24,6 @@ class DashboardScreen extends React.Component{
     }
 
     render(){
-
         
         return(
             <View style={{padding: 10}}>

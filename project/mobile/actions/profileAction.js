@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {GET_USER_PROFILE, UPDATE_USER_PROFILE, GET_ERRORS} from './actionType'
+import {GET_USER_PROFILE, UPDATE_USER_PROFILE, GET_ERRORS, SET_CURRENT_USER_NAME} from './actionType'
 import {BASE_URL} from '../config'
 import { showMessage } from "react-native-flash-message";
 
@@ -21,7 +21,7 @@ export const getPoliceProfile = () => dispatch => {
         showMessage({
             message: err.response.data.title,
             type: "danger",
-        });
+        })
         //NotificationManager.error(err.response.data.title);
     })
 }
@@ -31,15 +31,21 @@ export const updatePoliceProfile = (Data) => dispatch => {
     axios
     .post(BASE_URL + '/api/police/editprofile', Data)
     .then(res => {
+        
         dispatch({
             type: UPDATE_USER_PROFILE,
             payload: res.data
         })
 
+        dispatch({
+            type: SET_CURRENT_USER_NAME,
+            payload: Data.name
+        })
+
         showMessage({
             message: "Profile updated successfully.",
             type: "success",
-        });
+        })
     })
     .catch(err => {
         dispatch({
@@ -49,7 +55,6 @@ export const updatePoliceProfile = (Data) => dispatch => {
         showMessage({
             message: err.response.data.title,
             type: "danger",
-        });
-        //NotificationManager.error(err.response.data.title);
+        })
     })
 }

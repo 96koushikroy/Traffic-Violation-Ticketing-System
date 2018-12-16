@@ -19,7 +19,7 @@ export const addTicket = (TicketData) => dispatch => {
 
     TicketData.issue_date = yyyymmdd; //issue date will be stored here in yyyy-mm-dd format
     
-    /*axios
+    axios
     .post(BASE_URL + '/api/ticket/insert', TicketData)
     .then(res => {
         dispatch({
@@ -32,13 +32,12 @@ export const addTicket = (TicketData) => dispatch => {
         });
     })
     .catch(err => {
+        console.log('tket',err)
         showMessage({
             message: err.response.data.title,
             type: "danger",
         });
-        //NotificationManager.error(err.response.data.title);
-    })*/
-
+    })
     //// handle error with an action .catch()
 }
 

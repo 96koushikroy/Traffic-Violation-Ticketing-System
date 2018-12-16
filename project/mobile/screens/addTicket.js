@@ -27,22 +27,18 @@ class AddTicket extends React.Component {
         amount: '',
         issue_date: '',
         deadline_date: '',
-        b64img: null,
         switchValue: false,
         hasCameraPermission: null,
         type: Camera.Constants.Type.back,
-        imguri:'',
         loading: false
     }
 
     async componentDidMount(){
         if (this.props.auth.isAuthenticated == false) {
             this.props.navigation.navigate('Login')
-            //NotificationManager.error('Please Login to continue..')
         }
         else if(this.props.auth.user.user_type != 2){
             this.props.navigation.navigate('Dashboard')
-            //NotificationManager.error('You are not allowed to enter this link')
         }
         else if(this.props.auth.isAuthenticated && this.props.auth.user.user_type == 2){    
             this.setState({
@@ -83,7 +79,6 @@ class AddTicket extends React.Component {
             width: 500, height: 500
         }}],{base64: true})
         //rr.base64
-        this.setState({ b64img: rr.base64, imguri: rr.uri });
 
         const formData = new FormData();
         
@@ -227,7 +222,6 @@ class AddTicket extends React.Component {
                 <Text>Ticket Reason:</Text>
                 {!isEmpty(this.props.reasons) ? (
                     <Select onSelect= {(t,v)=>{this.setState({selectedReason: t})}}>
-                        <Option key="xx" value="x">Select a Ticket Reason</Option>
                         {this.props.reasons.map(rr => {
                             return (<Option key={rr.id} value={rr.id}>{rr.reason_name}</Option>)
                         })}

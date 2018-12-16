@@ -1,4 +1,4 @@
-import {SET_CURRENT_USER} from '../actions/actionType'
+import {SET_CURRENT_USER, SET_CURRENT_USER_NAME} from '../actions/actionType'
 import isEmpty from '../Validation/isEmpty'
 
 const initialState = {
@@ -14,6 +14,13 @@ export default function(state = initialState, action) {
           ...state,
           isAuthenticated: !isEmpty(action.payload),
           user: action.payload
+        };
+      case SET_CURRENT_USER_NAME:
+        let uu = state.user
+        uu.name = action.payload
+        return {
+          ...state,
+          user: uu
         };
       default:
         return state;

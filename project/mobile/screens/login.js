@@ -43,23 +43,6 @@ class LoginScreen extends React.Component {
     }
 
     render(){
-        const {error} = this.state;
-        const ErrorMessage = () => {
-            if(!isEmpty(error)){
-                return(
-                    <Text style={{textAlign: 'center', fontSize: 12, color: 'red'}}>
-                        {"\n"}
-                        {error.title}
-                        {"\n"}
-                    </Text>
-                )
-            }
-            else{
-                return(
-                    <Text></Text> //need to return an empty div to finish the condition
-                )
-            }
-        }
 
         return(
             <View style={{padding: 10}}>
@@ -69,7 +52,6 @@ class LoginScreen extends React.Component {
 
                 }}>Police Login</Text>
 
-                <ErrorMessage />
 
                 <TextInput
                     label="Email Address:"
@@ -94,8 +76,6 @@ class LoginScreen extends React.Component {
                     text=" Login"
                     onPress={this.handleLogin}
                 />
-
-                
             </View>
         )
     }

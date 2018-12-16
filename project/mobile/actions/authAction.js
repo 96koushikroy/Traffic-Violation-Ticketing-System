@@ -21,11 +21,21 @@ export const loginUser = userData => dispatch => {
     axios.post(BASE_URL + '/api/login', userData)
     .then(res => {
         const {token} = res.data
-        //store the token in browsers localstore
-        AsyncStorage.setItem('jwtToken', token)
-        setAuthToken(token)
         const decoded = jwt_decode(token);
-        dispatch(setCurrentUser(decoded));
+        //ensuring only police can sign into this app
+        if(decoded.user_type == 2){
+            //store the token in browsers localstore
+            AsyncStorage.setItem('jwtToken', token)
+            setAuthToken(token)
+            dispatch(setCurrentUser(decoded));
+        }
+        else{
+            showMessage({
+                message: 'Only Police Officers can use this app',
+                type: "danger",
+            });
+        }
+        
     })
     .catch(err => {
         dispatch({

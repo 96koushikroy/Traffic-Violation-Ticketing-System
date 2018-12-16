@@ -23,15 +23,9 @@ class Profile extends React.Component {
         if (this.props.auth.isAuthenticated == false) {
             this.props.navigation.navigate('Login')
         }
-        else if(this.props.auth.user.user_type == 1){
-            //this.props.getDriverProfile()
-        }
-        else if(this.props.auth.user.user_type == 2){
-            this.props.getPoliceProfile()
-        }
         else{
-            // user type  == 3 Admin
-            //this.props.getAdminProfile()
+            // fetch the police profile
+            this.props.getPoliceProfile()
         }
     }
 
@@ -50,36 +44,11 @@ class Profile extends React.Component {
     handleSubmit = () => {
         const newData = this.state
         delete newData.car_number
-
-        if(this.props.auth.user.user_type == 1){
-            //this.props.updateDriverProfile(this.state)
-        }
-        else if(this.props.auth.user.user_type == 2){
-            this.props.updatePoliceProfile(newData)
-        }
-        //NotificationManager.success('Profile Updated Successfully')
-        
+        this.props.updatePoliceProfile(newData)
     }
 
 
     render(){
-        const {error} = this.state;
-        const ErrorMessage = () => {
-            if(!isEmpty(error)){
-                return(
-                    <Text style={{textAlign: 'center', fontSize: 12, color: 'red'}}>
-                        {"\n"}
-                        {error.title}
-                        {"\n"}
-                    </Text>
-                )
-            }
-            else{
-                return(
-                    <Text></Text> //need to return an empty div to finish the condition
-                )
-            }
-        }
         let Profile = this.props.profile;
         
         let ProfileData = isEmpty(Profile) ? (
@@ -119,8 +88,6 @@ class Profile extends React.Component {
         )
         return(
             <View style={{padding: 10}}>
-                <ErrorMessage />
-                
                 {ProfileData}
             </View>
         )

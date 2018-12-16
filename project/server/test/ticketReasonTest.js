@@ -66,7 +66,7 @@ describe('Testing Ticket Reasons API', () => {
         Test the /POST route for INSERTING a Ticket Reason with an invalid data
     */
     describe('/POST INSERT Ticket Reason with Long Data', () => {
-        it('it should return an error ans reason_name is too long', (done) => {
+        it('it should return an error as reason_name is too long', (done) => {
             
             const Data = {
                 reason_name: 'Unit Test Reason asdlkjfhajksldfhas ashsdkjfhasldkfjhas asjdkfhaslkjdhfalks asdlkjfhasldkjfha aslkjdhflaskjdhf',

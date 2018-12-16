@@ -77,6 +77,54 @@ describe('Testing Driver API', () => {
     });
 
     /*
+        Test the /POST route for Driver Registration with invalid email
+    */
+    describe('/POST Register as a new Driver with invalid Email', () => {
+        it('it should return an object which contains the error message', (done) => {
+            const Data = {
+                email: 'aaaaaaa',
+                password: 'driver',
+                name: 'Unit Test',
+                car_number: '898989989'
+            }
+            
+            chai.request(server)
+            .post('/api/driver/register')
+            .type('form')
+            .send(Data)
+            .end((err, res) => {
+                res.should.have.status(400);
+                res.body.should.be.a('object');
+                done();
+            });
+        });
+    });
+
+    /*
+        Test the /POST route for Driver Registration with existing email
+    */
+    describe('/POST Register as a new Driver with existing Email', () => {
+        it('it should return an object which contains the error message', (done) => {
+            const Data = {
+                email: 'unitTest@driver.com',
+                password: 'driver',
+                name: 'Unit Test',
+                car_number: '898989989'
+            }
+            
+            chai.request(server)
+            .post('/api/driver/register')
+            .type('form')
+            .send(Data)
+            .end((err, res) => {
+                res.should.have.status(400);
+                res.body.should.be.a('object');
+                done();
+            });
+        });
+    });
+
+    /*
         Test the /POST route for Driver Registration with empty password
     */
     describe('/POST Register as a new Driver with empty Password', () => {

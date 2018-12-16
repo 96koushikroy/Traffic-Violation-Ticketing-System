@@ -19,8 +19,8 @@ const sequelize = new Sequelize('ticketing_system', 'root', 'Qwert3201', {
     define: {
         //prevent sequelize from pluralizing table names
         freezeTableName: true,
-        operatorsAliases: false
     },
+    operatorsAliases: false,
     logging: false
   });
 

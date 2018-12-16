@@ -66,7 +66,7 @@ exports.registerAdmin = (req,res) => {
 */
 exports.viewAdminProfile = (req, res) => {
 
-    const userToken = req.headers['authorization']
+    const userToken = req.headers['authorization'] // will get the jwt in the auth header
     
     error = {}
     if(isEmpty(userToken)){

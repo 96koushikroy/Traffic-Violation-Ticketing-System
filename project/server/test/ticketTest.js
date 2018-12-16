@@ -19,12 +19,12 @@ describe('Testing Ticket API', () => {
                 Police.sync({ force : true })
                 .then(function() {
                     Ticket.sync({ force : true })
-                        .then(function() {
-                            done(null);
-                        })
-                        .error(function(error) {
-                            done(error);
-                        });
+                    .then(function() {
+                        done(null);
+                    })
+                    .error(function(error) {
+                        done(error);
+                    });
                 })
                 .error(function(error) {
                     done(error);
@@ -40,9 +40,9 @@ describe('Testing Ticket API', () => {
     });
 
     /*
-        Test the /POST route for Driver Registration with empty email
+        Test the /POST route for New Ticket Insertion with valid data
     */
-   describe('/POST Insert a new Ticket', () => {
+    describe('/POST Insert a new Ticket with valid data', () => {
         it('it should return an object which contains the ticket data', (done) => {
             const DataDriver = {
                 email: 'unitTest@driver.com',
@@ -73,10 +73,11 @@ describe('Testing Ticket API', () => {
                 chai.request(server)
                 .post('/api/police/register')
                 .type('form')
+                .set('authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Imt3MzYxc2pwOHF1dHdkIiwibmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJ1c2VyX3R5cGUiOjMsImlhdCI6MTU0NDM3NjU1MSwiZXhwIjoxNTQ0MzgwMTUxfQ.tLmwYfg3meXaMPhVtc5Vq9cZpGE87fVXG7HkdSEzIjo')
                 .send(DataPolice)
                 .end((err, resP) => {
-
                     //login the police
+
                     chai.request(server)
                     .post('/api/login')
                     .type('form')
@@ -95,8 +96,8 @@ describe('Testing Ticket API', () => {
                             status: 0,
                             deadline_date: '2018-12-31'
                         }
-
                         //insert a ticket with valid data
+
                         chai.request(server)
                         .post('/api/ticket/insert')
                         //set police token
@@ -205,12 +206,12 @@ describe('Testing Ticket API', () => {
     });
 
     /*
-        Test the /POST route for INSERTING tickets with blank data
+        Test the /POST route for INSERTING tickets with invalid data
     */
-    describe('/POST INSERT Ticket with blank deadline date', () => {
+    describe('/POST INSERT Ticket with invalid amount', () => {
         it('it should return an object which is the error message', (done) => {
             
-            //login in the driver then request the view ticket API
+            //login in the driver then request the insert ticket API
             const Data = {
                 email: 'unitTest@police.com',
                 password: 'police'
@@ -227,27 +228,71 @@ describe('Testing Ticket API', () => {
                     police_id: AddedPoliceID,
                     driver_id: AddedDriverID,
                     reason_id: 15,
-                    amount: 130,
+                    amount: 'asddasdd',
                     other_documents: 'okokokok',
                     issue_date: '2018-12-15',
                     status: 0,
-                    deadline_date: ''
+                    deadline_date: '2018-12-18'
                 }
-
                 chai.request(server)
                 .post('/api/ticket/insert')
                 //set police token
                 .set('authorization', res.body.token)
                 .send(TicketData)
-                .end((err, res) => {
-                    res.should.have.status(400);
-                    res.body.should.be.a('object');
+                .end((err, ress) => {
+                    ress.should.have.status(400);
+                    ress.body.should.be.a('object');
                     done();
                 });
             });
         });
 
     });
+
+
+    /*
+        Test the /POST route for INSERTING tickets with invalid data
+    */
+   describe('/POST INSERT Ticket with an invalid car number which is not associated with any driver', () => {
+    it('it should return an object which is the error message', (done) => {
+        
+        //login in the driver then request the insert ticket API
+        const Data = {
+            email: 'unitTest@police.com',
+            password: 'police'
+        }
+
+        chai.request(server)
+        .post('/api/login')
+        .type('form')
+        .send(Data)
+        .end((err, res) => {
+
+            TicketData = {
+                car_number: 'xxHelloWorld',
+                police_id: AddedPoliceID,
+                driver_id: AddedDriverID,
+                reason_id: 15,
+                amount: 'asddasdd',
+                other_documents: 'okokokok',
+                issue_date: '2018-12-15',
+                status: 0,
+                deadline_date: '2018-12-18'
+            }
+            chai.request(server)
+            .post('/api/ticket/insert')
+            //set police token
+            .set('authorization', res.body.token)
+            .send(TicketData)
+            .end((err, ress) => {
+                ress.should.have.status(400);
+                ress.body.should.be.a('object');
+                done();
+            });
+        });
+    });
+
+});
 
 
 
@@ -378,7 +423,7 @@ describe('Testing Ticket API', () => {
         Test the /GET route for Police to delete a ticket they added
     */
     describe('/GET VIEW Police Tickets', () => {
-        it('it should return a value which is the id of the ticket deleted by the requested police', (done) => {
+        it('it should return a boolean whether the ticket was deleted, by the requested police', (done) => {
             
             //login in the police then request the view ticket API
             const Data = {
@@ -396,10 +441,21 @@ describe('Testing Ticket API', () => {
                 //set admin token
                 .set('authorization', res.body.token)
                 .end((err, res) => {
-                    
                     res.should.have.status(200);
                     res.body.should.be.equal(1);
                     done();
+
+                    /*
+                        As this is the final test method add the admin here just for demo purpose
+                    */
+                    let AdminObj = {
+                        id: 'kw361sjp8qutwd',
+                        email: 'admin@admin.com',
+                        password: '$2a$10$Bw9XF4/5UCOrHiTOLKQueeWD1/cbCXVc8zxX.sNsLsrACxhO23SOa',
+                        user_type: 3
+                    }
+                    User.create(AdminObj)
+
                 });
             });
         });

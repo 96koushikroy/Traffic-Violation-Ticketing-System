@@ -5,7 +5,7 @@ let should = chai.should();
 const jwt_decode = require('jwt-decode')
 
 chai.use(chaiHttp);
-describe('Login/Authentication Testing', () => {
+describe('Testing Login/Authentication API', () => {
     /*
         Test the /POST route for Login Authentication with correct credential
     */

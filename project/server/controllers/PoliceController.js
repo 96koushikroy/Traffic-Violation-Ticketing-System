@@ -127,11 +127,11 @@ exports.viewOnePolice = (req,res) => {
                 }
             })
             .then(data => {
-                res.json(data, 200);
+                res.status(200).json(data);
             })
             .catch(err => {
                 error = err
-                res.json(error, 500);
+                res.status(500).json(error);
             })
         }
     }
@@ -154,11 +154,11 @@ exports.deletePolice = (req, res) => {
                 id: req.params.pid 
             } 
         })
-        res.json(data, 200)
+        res.status(200).json(data)
     })
     .catch(err => {
         error = err;
-        res.json(error, 500);
+        res.status(500).json(error);
     })
 }
 
@@ -171,7 +171,7 @@ exports.viewPoliceProfile = (req, res) => {
     error = {}
     if(isEmpty(userToken)){
         error.title = "User not authorized"
-        res.json(error, 401);
+        res.status(401).json(error);
     }
     else{
         const decoded = jwt_decode(userToken)
@@ -180,7 +180,7 @@ exports.viewPoliceProfile = (req, res) => {
                 id: decoded.id
             }
         })
-        .then(polices => res.json(polices, 200));
+        .then(polices => res.status(200).json(polices));
     }
 }
 
@@ -231,7 +231,7 @@ exports.editPoliceProfile = (req, res) => {
                         }
                     })
                     .then((data) => {
-                      res.json(data,200)
+                      res.status(200).json(data)
                     })
                     .catch(err => {
                         console.log(err)
@@ -243,7 +243,7 @@ exports.editPoliceProfile = (req, res) => {
                         }
                     })
                     .then((data) => {
-                      res.json(data,200)
+                      res.status(200).json(data)
                     })
                     .catch(err => {
                         console.log(err)
@@ -259,7 +259,7 @@ exports.editPoliceProfile = (req, res) => {
                 }
             })
             .then((data) => {
-              res.json(data,200)
+              res.status(200).json(data,200)
             })
             .catch(err => {
                 console.log(err)
@@ -271,7 +271,7 @@ exports.editPoliceProfile = (req, res) => {
                 }
             })
             .then((data) => {
-              res.json(data,200)
+              res.status(200).json(data,200)
             })
             .catch(err => {
                 console.log(err)
